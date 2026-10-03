@@ -1,0 +1,59 @@
+\begin{thebibliography}{10}
+
+\bibitem{acan-burnette-eberhard-schmutz-thomas}
+Huseyin Acan, Charles Burnette, Sean Eberhard, Eric Schmutz, and James Thomas.
+\newblock Permutations with equal orders.
+\newblock {\em Combin. Probab. Comput.}, 30(5):800--810, 2021.
+
+\bibitem{eberhard}
+Sean Eberhard.
+\newblock What is the probability that two random permutations have the same order?
+\newblock MathOverflow.
+\newblock https://mathoverflow.net/q/312352 (version: 2018-10-09).
+
+\bibitem{erdos-turan-groups-i}
+P.~Erd\H{o}s and P.~Tur\'an.
+\newblock On some problems of a statistical group-theory. {I}.
+\newblock {\em Z. Wahrscheinlichkeitstheorie und Verw. Gebiete}, 4:175--186, 1965.
+
+\bibitem{erdos-turan-groups-ii}
+P.~Erd\H{o}s and P.~Tur\'{a}n.
+\newblock On some problems of a statistical group-theory. {II}.
+\newblock {\em Acta Math. Acad. Sci. Hungar.}, 18:151--163, 1967.
+
+\bibitem{erdos-turan-groups-iii}
+P.~Erd\H{o}s and P.~Tur\'an.
+\newblock On some problems of a statistical group-theory. {III}.
+\newblock {\em Acta Math. Acad. Sci. Hungar.}, 18:309--320, 1967.
+
+\bibitem{erdos-turan-groups-iv}
+P.~Erd\H{o}s and P.~Tur\'{a}n.
+\newblock On some problems of a statistical group-theory. {IV}.
+\newblock {\em Acta Math. Acad. Sci. Hungar.}, 19:413--435, 1968.
+
+\bibitem{feller}
+William Feller.
+\newblock {\em An {I}ntroduction to {P}robability {T}heory and {I}ts {A}pplications}, volume~1 of {\em Wiley Series in Probability and Statistics}.
+\newblock John Wiley \& Sons, Inc., third edition, 1968.
+
+\bibitem{ford}
+Kevin Ford.
+\newblock Cycle {T}ype of {R}andom {P}ermutations: a {T}oolkit.
+\newblock {\em Discrete Anal.}, pages Paper No. 9, 36, 2022.
+
+\bibitem{landau}
+Edmund Landau.
+\newblock Über die {M}aximalordnung der {P}ermutationen gegebenen {G}rades [on the maximal order of permutations of given degree].
+\newblock {\em Arch. Math. Phys. Ser. 3}, 5, 1903.
+
+\bibitem{tenenbaum}
+G\'erald Tenenbaum.
+\newblock {\em Introduction to {A}nalytic and {P}robabilistic {N}umber {T}heory}, volume 163 of {\em Graduate Studies in Mathematics}.
+\newblock American Mathematical Society, Providence, RI, third edition, 2015.
+
+\bibitem{warlimont}
+Richard Warlimont.
+\newblock \"uber die {A}nzahl der {L}\"osungen von {$x\sp{n}=1$} in der symmetrischen {G}ruppe {$S\sb{n}$}.
+\newblock {\em Arch. Math. (Basel)}, 30(6):591--594, 1978.
+
+\end{thebibliography}

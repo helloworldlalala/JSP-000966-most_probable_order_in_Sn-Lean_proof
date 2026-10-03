@@ -1,0 +1,11 @@
+name = "most_probable_order"
+version = "0.1.0"
+defaultTargets = ["MostProbableOrder"]
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4"
+rev = "v4.30.0"
+
+[[lean_lib]]
+name = "MostProbableOrder"

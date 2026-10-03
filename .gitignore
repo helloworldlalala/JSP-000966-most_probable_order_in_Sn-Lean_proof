@@ -1,0 +1,13 @@
+# Build outputs
+.lake/
+build/
+# Workspace data (local only)
+.workbuddy/
+# Local reference materials (not part of the formalization)
+资料/
+# Temporary files
+*.olean
+*.olean.lock
+*.trace
+scratch*.lean
+fix_*.py

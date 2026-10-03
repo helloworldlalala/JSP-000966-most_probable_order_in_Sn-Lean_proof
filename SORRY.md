@@ -1,0 +1,31 @@
+# SORRY 记录台账
+
+按用户要求：临时 `sorry` 必须逐条登记，记录论文出处与解除前置，为后续消除做准备。
+ID 全局唯一、单调递增、永不复用；解除后将源码标记删除、条目移入 Discharged 区保留 ID 供审计。
+
+## Open
+
+（空 — 全部 sorry 已解除，项目零 sorry。）
+
+## Discharged
+
+| ID | 文件:行 | 陈述 | 论文出处 | 解除方式 | 状态 |
+|---|---|---|---|---|---|
+| MP-008 | MostProbableOrder/Perm/Warlimont.lean `prop_exact_order`（原 Theorem12.lean） | ∃C>0, ∃N, ∀n≥N, ∀k∈Kₙ, \|pₙ(n−k) − (1/(n−k) + η(n,k))\| ≤ C·n^{−5/2}（即 Proposition 4.1 `prop:exact_order`，误差是论文 `O(n^{−3+o(1)})` 的实例，因 `n^{−3+o(1)} = o(n^{−5/2})`） | §4 Prop 4.1（`prop:exact_order`）；`η` 定义见 Theorem12.lean，`2^{⌊log₂k⌋+1} ∣ n−k` 时取 0、否则 `2^{1−⌊log₂k⌋}/(n−k)²` | **Warlimont Tᵢ 分解完整形式化**（δ=1/10，τ≤C^{1/20}n^{1/20}）：`restProb_le_T_parts`（restProb ≤ T₀+T₁+T₂s+T₂r+T₃₊，经 `sum_eq_filter_card_parts` 分解 + 各 filter 子集/相等）；T₀≤ν≤2⁴⁵/n³（`sum_cycleTypeWeight_no_large_le_nu`+`nuNoLong_bound`）；T₁≤Σ(1/d)ν(n−d)≤τ·n^{−9/10}·4⁴⁵/n³≤C^{1/20}4⁴⁵n^{−5/2}（`sum_cycleTypeWeight_one_large_le`+`nuNoLong_le_const_div_cube_uniform`+`sum_inv_largeDivs_le`）；T₂ 特殊对≤η（`sum_cycleTypeWeight_two_large_special_le`）且 **η≤T₂s+T₃₊**（`eta_le_special_add_ge_three`，2^⌊log₂k⌋ 自身为大圈时 {a,a,2^s} 是三圈情形）；T₂r≤(Σ1/(d₁d₂))·24⁴⁵/n³≤C^{1/10}24⁴⁵n^{−5/2}（`sum_cycleTypeWeight_two_large_rest_le`+`nuNoLong_le_const_div_cube_uniform_sixth`+二重和分解）；T₃₊≤(Σ1/(xyz))≤C^{3/20}n^{−51/20}（`sum_cycleTypeWeight_ge_three_large_le`+三重和分解）；rpow 指数算术（rpow_add/rpow_mul/rpow_neg/rpow_natCast、77/20=5/2+27/20>5/2 等）与 abs_le 双侧组装 | discharged (2026-10-03, M10e) |
+| MP-001 | MostProbableOrder/Basic.lean `rotation_isCycle` | 对 n≥2，`finRotate n`（即 `rotation n`）是单圈 | 背景引理（用于公式 (2) 中 n-圈存在性） | 引用 mathlib `isCycle_finRotate_of_le`（`Mathlib.GroupTheory.Perm.Fin`） | discharged (2026-09-30, M1) |
+| MP-003 | Arithmetic/DivisorBounds.lean `omega_le_log_div_loglog` | ∃C>0, ∀m≥3, ω(m) ≤ C·logm/loglogm | §2；Prop 3.1 E₁ | `(ω+1)! ≤ m`（排序：`Finset.orderEmbOfFin` + `factorial_succ_le_prod` + `prod_primeFactors_le`，常数 C=100）；对数反解 `log_div_loglog_le`（`r log r - r ≤ log m` 经 `log_factorial_lower`；二分 `log r ≷ (1/2)loglogm`；case B 用 `Real.log_le_rpow_div`→`log t ≤ 2√t`） | discharged (2026-09-30, M2b) |
+| MP-002 | Arithmetic/DivisorBounds.lean `tau_pow_sixteen_le` | ∃C>0, ∀m, τ(m)^16 ≤ C·m（即 τ(m) ≤ C^{1/16}m^{1/16}） | §2「τ(m) ≤ m^{o(1)}」；Thm 1.1 只需 ε=1/16（因 m ≤ n^{4/3}） | 纯 ℕ 二分：大素数 p>2^16 用 `(a+1)^16 ≤ 2^{16a} ≤ p^a`；小素数用 `(a+1)^16 ≤ 2^{a+130} ≤ 2^{130}p^a`（`succ_pow_sixteen_le`，经 `Nat.card_divisors` + `Finset.prod_pow`/`prod_filter_mul_prod_filter_not`/`prod_factorization_pow_eq_self`） | discharged (2026-09-30, M2b) |
+| MP-005 | Arithmetic/DivisorBounds.lean `sum_inv_primes_le` | ∃B>0, ∀x≥2, Σ_{p≤x}1/p ≤ loglog x + B | §2（Euler 上界）；MP-004 的输入 | **Mertens 第一定理** `sum_log_div_primes_le`：`∏p^{⌊x/p⌋}\|x!`（`prod_pow_natDiv_dvd_factorial`，Legendre `Nat.factorization_factorial`）→ 取 log（`Nat.factorial_le_pow` + `Real.log_prod`/`log_pow`）→ `Σ(logp)/p ≤ logx + log4`（`Chebyshev.theta_le_log4_mul_x`）。**Abel 变换** `abel_identity`（`Finset.sum_Ioc_by_parts`）+ telescoping 界 `sum_log_sub_div_le`/`sum_inv_log_diff_eq`（`log(1+x) ≥ x/(1+x)` 经 `Real.one_sub_inv_le_log_of_pos`），常数 B = 1 + 2·log4/log2 − log(log 2) | discharged (2026-10-01, M2b) |
+| MP-004 | Arithmetic/DivisorBounds.lean `sigma_div_le_loglog` | ∃C>0, ∀m≥3, σ(m)/m ≤ C·loglog m | §2（σ/m ≪ loglogm，Gronwall）；Prop 3.1 的 E₂ | **Gronwall 界**：Euler 乘积 `σ/n ≤ ∏_{p\|n}p/(p−1)`（`Nat.sum_divisors` + `geom_sum_le_pow_mul` + `prod_factorization_pow_eq_self`）→ 取 log → `Σ−log(1−1/p) ≤ Σ(1/p+2/p²)`（`neg_log_one_sub_le`，经 `Real.log_inv`/`log_le_sub_one_of_pos`）→ `Σ1/p² ≤ 1`（`sum_inv_sq_primes_le`，telescoping `1/(k(k−1))=1/(k−1)−1/k`）。**三重 log 拆分和** `sum_inv_primes_factors_le`：阈值 M=`Nat.log 2 m`（无 floor），小素数 `≤ Σ_{p≤M}1/p ≤ loglog M + B`（MP-005），大素数 `≤ ω(m)/M ≤ 1`（`omega_le_log_two`）；`M ≤ 2 log m`（`Nat.pow_log_le_self` 取 log + `log 2 > 1/2` 经 `exp(1/2)² = exp 1 < 4`）→ `loglog M ≤ logloglog m + 1`（m≥8，经 `log(1+u) ≤ u`）。指数化得 σ/m ≤ e^{B+4}·loglog m；小 m（3..7）用 σ/m ≤ m+1 ≤ 8 配常数 8/loglog3 | discharged (2026-10-01, M2b) |
+| MP-006 | MostProbableOrder/Perm/Decompose.lean `card_cycleLen_eq_factorial_pred` | ∀ 1≤d≤n, `#{π ∈ S_n | cycleLen π = d} = (n-1)!`（**均匀圈长**） | §2（Cor 2.2 的根基，Feller） | 完整构造**圈删除双射** `cycleRemovalEquiv {k} : {π : S_{n+1} // cycleLen π = k+1} ≃ (Fin k ↪ Fin n) × S_{n-k}`（正向 `π ↦ (tupleOf π h, residualFwd π h)`，逆向 `(t,σ) ↦ cycleThroughZero t * liftResidual t σ`），left_inv 用 `cycleThroughZero_tupleOf` + `liftResidual_residualFwd` + `decompose_mul`，right_inv 用 `tupleOf_mul_liftResidual` + `residualFwd_mul_liftResidual`。计数用 `cases n; cases d` 消去 off-by-one，`Fintype.card_congr` + `Fintype.card_embedding_eq` + `card_symmetricGroup` + `Nat.factorial_mul_descFactorial`；n=1 边例（n'=0）单独处理 | discharged (2026-10-01, M3) |
+| MP-007 | MostProbableOrder/Perm/Decompose.lean `card_cycleLen_orderOf_eq` | ∀ 1≤d≤n, `#{π | cycleLen π=d ∧ orderOf π=m} = descFactorial(n-1)(d-1) · #{σ ∈ S_{n-d} | lcm(d, orderOf σ)=m}` | §2（Cor 2.2 第一陈述的计数形式） | 同一双射 + 阶保持 `orderOf_eq_lcm_cycleLen_residualFwd`（由 `orderOf_eq_lcm_cycleLen_residual` + `orderOf_residualFwd` 得 `orderOf π = lcm(k+1, orderOf(residualFwd π h))`），把 `orderOf π = m` 过滤搬成 `lcm(d'+1, orderOf σ) = m`；`e' : source ≃ target`（`Subtype.ext` 组装）→ `e'' : target ≃ (Fin d' ↪ Fin n') × {σ // …}` → 计数。n=1 边例（S₁、S₀ 均为单点群）单独用 `card_symmetricGroup`/`Fintype.card_eq_zero_iff` 处理 | discharged (2026-10-01, M3) |
+
+## 备注
+
+- 审计闸门（M10）：`grep -rn "sorry\|admit\|axiom\|native_decide" MostProbableOrder/`
+  仅允许在 `MostProbableOrder/Checks.lean` 出现 `native_decide`（数值检验白名单，不进默认 import 链）。
+  **截至 M10e（2026-10-03）：`grep sorry/admit/axiom` 零命中（唯一匹配为 Checks.lean 注释文字），`native_decide` 仅 Checks.lean。项目零 sorry。**
+- `tau_pow_sixteen_le` 的常数 `2^(130·(2^16+1))` 触发 exponentiation.threshold 警告（无害，仅表示未求值）。
+- M4 新增 `Perm/RestrictedBound.lean`：本次全部**零 sorry 直接证完**，未登记任何新 MP 接口（平均化/计数恒等式/Lemma2.3/Cor2.4 均完全形式化）。
+- M10e（2026-10-03）：MP-008 解除后，`prop_exact_order`、`restProb_le_T_parts`、`p_k0_gt_p_k`、`theorem_equality_case`（Theorem 1.2）全部零 sorry 完成，位于 `MostProbableOrder/Perm/Warlimont.lean` 末尾；`lake build` 3390 作业全绿。
+- 第十二轮（2026-10-03）：论文 Remark（`rem:sharp_asymp`）形式化为 `M_sub_one_div_le_log`（`M(n)=1/n+O(log n/n²)`，常数 C=15，零 sorry）：max Kₙ ≪ log n 用**初等二项式下界** `Chebyshev.two_pow_le_mul_lcmUpto`（`2^k ≤ (k+1)lcm(1..k)`）替代论文的 PNT 引用。Warlimont.lean 新增 `import Mathlib.NumberTheory.Chebyshev`。
