@@ -2,11 +2,13 @@
 
 *Generated with the `lean-verify` skill (pre-submission self-check), 2026-10-04 (GMT+8). Report language: English (skill default).*
 
+**Update (2026-10-04, second run):** this report was re-run against the sharpened commit `9c1e39e53c61e19b53beef6aa24aca1b57e5abeb`, which improves Proposition 4.1 from `C·n^{-5/2}` to `C·n^{-149/56}` (via a new `τ(m)^24 ≤ C·m` divisor bound and the tightened large-cycle threshold θ = 13/14). All checks passed identically: clean rebuild 3390 jobs exit 0; `audit.py run` mechanical status `standard_axioms_only` for all 7 targets; `leanchecker` kernel replay exit 0 for `Warlimont`, `Theorem11`, the bridge, and `DivisorBounds`.
+
 ## Conclusion
 
 > **Overall verdict: Verification passed.**
 >
-> For JSP-000966 ("Which element order is shared by the most permutations in a symmetric group?"), the Lean submission at proof-repository commit `59e3e1eaa15d25f04eb13e917ce3c241e62f4ede` **fully solves** the original problem. Decisive reason: the target `MostProbableOrder.theorem_equality_case` is Beker's Theorem 1.2 (arXiv:2510.11698) verbatim; at the pinned commit it was rebuilt from clean source in an isolated checkout with the pinned toolchain, all 7 targets (6 submitted theorems + 1 independent auditor bridge) pass `#print axioms` with only `[propext, Classical.choice, Quot.sound]`, kernel replay via `leanchecker` succeeds, and the independent bridge connects the original problem's mode-set reading to the submitted theorem.
+> For JSP-000966 ("Which element order is shared by the most permutations in a symmetric group?"), the Lean submission at proof-repository commit `9c1e39e53c61e19b53beef6aa24aca1b57e5abeb` (and its ancestor `59e3e1e…`) **fully solves** the original problem. Decisive reason: the target `MostProbableOrder.theorem_equality_case` is Beker's Theorem 1.2 (arXiv:2510.11698) verbatim; at the pinned commit it was rebuilt from clean source in an isolated checkout with the pinned toolchain, all 7 targets (6 submitted theorems + 1 independent auditor bridge) pass `#print axioms` with only `[propext, Classical.choice, Quot.sound]`, kernel replay via `leanchecker` succeeds, and the independent bridge connects the original problem's mode-set reading to the submitted theorem.
 
 | Required question | Explicit judgment | Decisive evidence |
 | --- | --- | --- |
@@ -33,7 +35,7 @@ Per-problem summary:
 - **JSP entry (base):** `problems/catalog-0901-1000.md#JSP-000966` @ base SHA — "Which element order is shared by the most permutations in a symmetric group?", Group theory, Solved; Publication details: Beker, arXiv:2510.11698 (2025).
 - **Original mathematical source:** Beker, *The most probable order of a random permutation*, arXiv:2510.11698. Theorem 1.2 (`thm:equality_case`): *"For all sufficiently large n, we have pₙ(m) = M(n) if and only if m = n − max Kₙ."* Also Theorem 1.1 (`thm:asymp_for_max`), Proposition 4.1 (local limit law for `pₙ(n−k)`), and remark `rem:sharp_asymp` (`M(n) = 1/n + O(log n/n²)`).
 - **Lean proof repository:** https://github.com/helloworldlalala/JSP-000966-most_probable_order_in_Sn-Lean_proof
-  - checked commit `59e3e1eaa15d25f04eb13e917ce3c241e62f4ede` (the full SHA pinned in the PR body and in the catalog entry); project root = repository root; claimed branch `main`.
+  - checked commit `9c1e39e53c61e19b53beef6aa24aca1b57e5abeb` (the `59e3e1e…` version verified in the first run remains an ancestor) (the full SHA pinned in the PR body and in the catalog entry); project root = repository root; claimed branch `main`.
   - `git cat-file -t` = commit; checkout HEAD matches; working tree clean; the checked commit **is an ancestor of `origin/main`** (`git merge-base --is-ancestor` exit 0).
   - `lean-toolchain`: `leanprover/lean4:v4.30.0`; `lakefile.toml` pins mathlib `v4.30.0`; `lake-manifest.json` resolves mathlib to `c5ea00351c28e24afc9f0f84379aa41082b1188f` (actual local checkout HEAD verified equal).
 - **Revision conflicts:** none found between PR body, catalog entry, and the proof repository.
@@ -56,7 +58,7 @@ Lean correspondence (all at the pinned commit):
 | Theorem 1.2 | `theorem_equality_case : ∀ᶠ n : ℕ in atTop, ∀ m : ℕ, p n m = M n ↔ m = n − k0 n` | `Warlimont.lean:5281` |
 | Theorem 1.1 (asymptotics) | `tendsto_n_mul_M_one : Tendsto (fun n => (n:ℝ) * M n) atTop (𝓝 1)` | `Theorem11.lean:1316` |
 | Theorem 1.1 (characterization) | `p_ge_one_div_n_implies_mem_K : ∀ᶠ n, ∀ m, 1/n ≤ p n m → (n − m ∈ K n) ∧ m ≤ n` | `Theorem11.lean:1157` |
-| Proposition 4.1 | `prop_exact_order : ∃ C>0, ∃ N, ∀ n≥N, ∀ k∈K n, |p n (n−k) − (1/(n−k) + eta n k)| ≤ C/n^{5/2}` | `Warlimont.lean:4744` |
+| Proposition 4.1 | `prop_exact_order : ∃ C>0, ∃ N, ∀ n≥N, ∀ k∈K n, |p n (n−k) − (1/(n−k) + eta n k)| ≤ C/n^{149/56}` (sharpened from `C/n^{5/2}` via `tau_pow_twentyfour_le`) | `Warlimont.lean:4744` |
 | Strict dominance step | `p_k0_gt_p_k : ∀ᶠ n, ∀ k, k ∈ K n → k < k0 n → p n (n−k) < p n (n−k0 n)` | `Warlimont.lean:5187` |
 | Final remark | `M_sub_one_div_le_log : ∃ C>0, ∀ᶠ n, |M n − 1/n| ≤ C·log n/n²` | `Warlimont.lean:5450` |
 
@@ -82,8 +84,8 @@ Coverage matrix (requirements → targets, `audit/targets.json`):
 | OS/architecture/isolation | Windows x86_64; isolated checkout under `%TEMP%\lean-verify-pr4695-20261004\sources\proof` (separate from the author's working tree; no credentials in the environment). Full container/VM isolation is unavailable on this machine — disclosed limitation; execution was confined to the fresh checkout with no writes to the author's tree. |
 | Toolchain | `leanprover/lean4:v4.30.0` (pin); elan toolchain `leanprover--lean4---v4.30.0`, Lean 4.30.0 commit `d024af099ca4bf2c86f649261ebf59565dc8c622`, Lake 5.0.0-src+d024af0 (paths recorded in `audit/check-02/version-*.log`) |
 | Dependencies | `lake-manifest.json` hash recorded; mathlib resolved SHA `c5ea00351c28e24afc9f0f84379aa41082b1188f` — the isolated checkout's `.lake/packages/mathlib` HEAD verified equal; mathlib oleans taken from the official mathlib cache (`~/.cache/mathlib`, .ltar provenance) and the dependency-package checkouts copied from the author's local lake cache (each HEAD re-verified); dependency SHAs in `logs/` |
-| Unmodified build | `lake build` in the isolated checkout after moving stale oleans aside (forces full re-elaboration of the project's own 18 files; mathlib/other dependencies reused trusted caches): **exit 0, 3390 jobs, ~9 min** (`logs/build3.log`) |
-| Explicit target checks | `audit.py run` executed, per target: `lake build +Module`, `lake env lean <source>`, `lake env lean AuditXXXX.lean` (`#check @name` / `#print name` / `#print axioms name`) — all 7 targets passed (`audit/check-02/result.json`, exit 0) |
+| Unmodified build | `lake build` in the isolated checkout after moving stale oleans aside (forces full re-elaboration of the project's own 18 files; mathlib/other dependencies reused trusted caches): **exit 0, 3390 jobs, ~11 min** (`logs/build5.log`, second run at `9c1e39e`; first run `logs/build3.log`) |
+| Explicit target checks | `audit.py run` executed, per target: `lake build +Module`, `lake env lean <source>`, `lake env lean AuditXXXX.lean` (`#check @name` / `#print name` / `#print axioms name`) — all 7 targets passed (`audit/check-02/result.json` for `59e3e1e`, `audit/check-03/result.json` for `9c1e39e`, exit 0 each) |
 | Semantic bridges and axiom audit | bridge `MostProbableOrder.Bridge.JSP000966Bridge.intended_mode_set` checked by the script (standard axioms only) and kernel-replayed; per-target axiom lists: `['propext', 'Classical.choice', 'Quot.sound']` for every one of the 7 targets |
 | Kernel/external cross-checks | `leanchecker` (Lean 4.30.0 built-in) replayed `MostProbableOrder.Perm.Warlimont`, `MostProbableOrder.Perm.Theorem11`, `MostProbableOrder.Bridge.JSP000966Bridge` oleans — exit 0 each, no problems reported. Independent challenge/comparator: not run (no comparator configured); recorded as a non-blocking gap |
 | Post-run state | `git status` unchanged except the untracked harness `MostProbableOrder/Bridge/`; `audit.py` reports `inputs_stable: true`; PR head re-checked unchanged (`17b006f…`) |
@@ -110,5 +112,6 @@ Automation (`scripts/audit.py`, sha256 recorded in `result.json`): `mechanical_s
 - `evidence/` — PR API snapshots (`pulls_4695*.json`), PR body, retrieval time.
 - `audit/targets.json` (7 targets, 6 requirements), `audit/preflight-02/`, `audit/prepared-01/`, `audit/check-02/` (full `audit.py` results incl. per-target axiom logs and the generated `AuditXXXX.lean` files).
 - `sources/proof/` — isolated checkout at `59e3e1eaa15d25f04eb13e917ce3c241e62f4ede` + untracked harness `MostProbableOrder/Bridge/JSP000966Bridge.lean`.
-- `logs/` — `build3.log` (clean rebuild), version logs, checker logs.
+- `logs/` — `build3.log` / `build5.log` (clean rebuilds), version logs, checker logs.
 - Reproduction commands (from `sources/proof`): `lake build` (after `lake exe cache get` or cache reuse); `python3 scripts/audit.py run audit/targets.json --out audit/check-NN --lake <abs path>/lake.exe --timeout 900`; `LEAN_PATH=$(lake env printenv LEAN_PATH) leanchecker MostProbableOrder.Perm.Warlimont` (in `.lake/build/lib/lean`).
+- Sharpening diff: commit `9c1e39e` adds `tau_pow_twentyfour_le` in `Arithmetic/DivisorBounds.lean` and re-tunes the Tᵢ threshold constants in `Perm/Warlimont.lean` (θ = 13/14, T₁/T₂/T₃ = `n^{-653/168}` / `n^{-401/84}` / `n^{-149/56}`).
