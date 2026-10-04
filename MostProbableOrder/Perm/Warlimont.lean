@@ -482,11 +482,11 @@ lemma sum_cycleTypeWeight_add_le (n : ℕ) (L : Multiset ℕ) (hL2 : ∀ d ∈ L
     _ ≤ (1 / (L.prod : ℝ)) * 1 := mul_le_mul_of_nonneg_left hsum_all_le hnonneg
     _ = 1 / (L.prod : ℝ) := by ring
 
-/-! ### The divisor bound and the threshold `n^{9/10}` (the `δ = 1/10` instance)
+/-! ### The divisor bound and the threshold `n^{13/14}` (the `δ = 1/14` instance)
 
-For the `Tᵢ` estimates we fix `δ = 1/10`: a *large* cycle is one of length
-`d ≥ n^{9/10}`, contributing a factor `1/d ≤ n^{-9/10}`. The divisor function
-is bounded by `τ(m) ≤ C^{1/16} m^{1/16}`, so `τ(n-k) n^{-9/10} = O(n^{-67/80}) → 0`.
+For the `Tᵢ` estimates we fix `δ = 1/14`: a *large* cycle is one of length
+`d ≥ n^{13/14}`, contributing a factor `1/d ≤ n^{-13/14}`. The divisor function
+is bounded by `τ(m) ≤ C^{1/16} m^{1/16}`, so `τ(n-k) n^{-13/14} = O(n^{-67/80}) → 0`.
 -/
 
 /-- `τ(m) ≤ C^{1/16} m^{1/16}` (the `ε = 1/16` divisor bound, from
@@ -511,65 +511,65 @@ lemma tau_le_rpow_sixteenth (m C : ℕ) (hC : (tau m)^16 ≤ C * m) :
   rw [h1] at hmono
   exact hmono
 
-/-- For a *large* cycle length `d ≥ n^{9/10}`, the reciprocal is at most
-`n^{-9/10}` (the `δ = 1/10` threshold inequality). -/
+/-- For a *large* cycle length `d ≥ n^{13/14}`, the reciprocal is at most
+`n^{-13/14}` (the `δ = 1/14` threshold inequality). -/
 lemma one_div_le_rpow_neg (n d : ℕ) (hn : 0 < n) (hd : 0 < d)
-    (h : (n : ℝ)^(9/10 : ℝ) ≤ (d : ℝ)) : (1 : ℝ) / (d : ℝ) ≤ (n : ℝ)^(-(9/10 : ℝ)) := by
+    (h : (n : ℝ)^(13/14 : ℝ) ≤ (d : ℝ)) : (1 : ℝ) / (d : ℝ) ≤ (n : ℝ)^(-(13/14 : ℝ)) := by
   have hnR : 0 < (n : ℝ) := by exact_mod_cast hn
-  have hpow_pos : 0 < (n : ℝ)^(9/10 : ℝ) := Real.rpow_pos_of_pos hnR _
-  have h1 : (1 : ℝ) / (d : ℝ) ≤ 1 / (n : ℝ)^(9/10 : ℝ) :=
+  have hpow_pos : 0 < (n : ℝ)^(13/14 : ℝ) := Real.rpow_pos_of_pos hnR _
+  have h1 : (1 : ℝ) / (d : ℝ) ≤ 1 / (n : ℝ)^(13/14 : ℝ) :=
     one_div_le_one_div_of_le hpow_pos h
-  have hrew : 1 / (n : ℝ)^(9/10 : ℝ) = (n : ℝ)^(-(9/10 : ℝ)) := by
-    simpa [div_eq_mul_inv] using (Real.rpow_neg (le_of_lt hnR) (9/10 : ℝ)).symm
-  calc (1 : ℝ) / (d : ℝ) ≤ 1 / (n : ℝ)^(9/10 : ℝ) := h1
-    _ = (n : ℝ)^(-(9/10 : ℝ)) := hrew
+  have hrew : 1 / (n : ℝ)^(13/14 : ℝ) = (n : ℝ)^(-(13/14 : ℝ)) := by
+    simpa [div_eq_mul_inv] using (Real.rpow_neg (le_of_lt hnR) (13/14 : ℝ)).symm
+  calc (1 : ℝ) / (d : ℝ) ≤ 1 / (n : ℝ)^(13/14 : ℝ) := h1
+    _ = (n : ℝ)^(-(13/14 : ℝ)) := hrew
 
 /-- Every cycle length of a cycle type divides its lcm. -/
 lemma dvd_lcm_of_mem_cycleType {n : ℕ} {lam : Multiset ℕ} {d : ℕ} (h : d ∈ lam) : d ∣ lam.lcm :=
   Multiset.dvd_lcm h
 
-/-- For a *large* multiset `L` (each entry `≥ n^{9/10}`), the product `L.prod` is at
-least `n^{(9/10)·L.card}` (i.e. the reciprocal is at most `n^{-(9/10)·L.card}`). -/
+/-- For a *large* multiset `L` (each entry `≥ n^{13/14}`), the product `L.prod` is at
+least `n^{(13/14)·L.card}` (i.e. the reciprocal is at most `n^{-(13/14)·L.card}`). -/
 lemma prod_le_rpow_of_large (n : ℕ) (L : Multiset ℕ) (hn : 0 < n)
-    (hlarge : ∀ d ∈ L, (n : ℝ)^(9/10 : ℝ) ≤ (d : ℝ)) :
-    (n : ℝ)^((9/10 : ℝ) * (L.card : ℝ)) ≤ (L.prod : ℝ) := by
+    (hlarge : ∀ d ∈ L, (n : ℝ)^(13/14 : ℝ) ≤ (d : ℝ)) :
+    (n : ℝ)^((13/14 : ℝ) * (L.card : ℝ)) ≤ (L.prod : ℝ) := by
   induction L using Multiset.induction_on with
   | empty => simp
   | cons d L' ih =>
-      have hd : (n : ℝ)^(9/10 : ℝ) ≤ (d : ℝ) := hlarge d (Multiset.mem_cons.mpr (Or.inl rfl))
-      have hL' : ∀ x ∈ L', (n : ℝ)^(9/10 : ℝ) ≤ (x : ℝ) := fun x hx =>
+      have hd : (n : ℝ)^(13/14 : ℝ) ≤ (d : ℝ) := hlarge d (Multiset.mem_cons.mpr (Or.inl rfl))
+      have hL' : ∀ x ∈ L', (n : ℝ)^(13/14 : ℝ) ≤ (x : ℝ) := fun x hx =>
         hlarge x (Multiset.mem_cons.mpr (Or.inr hx))
-      have ih' : (n : ℝ)^((9/10 : ℝ) * (L'.card : ℝ)) ≤ (L'.prod : ℝ) := ih hL'
+      have ih' : (n : ℝ)^((13/14 : ℝ) * (L'.card : ℝ)) ≤ (L'.prod : ℝ) := ih hL'
       have hnR : 0 < (n : ℝ) := by exact_mod_cast hn
-      have hpow : (n : ℝ)^((9/10 : ℝ) * ((L'.card + 1 : ℕ) : ℝ)) =
-          (n : ℝ)^(9/10 : ℝ) * (n : ℝ)^((9/10 : ℝ) * (L'.card : ℝ)) := by
+      have hpow : (n : ℝ)^((13/14 : ℝ) * ((L'.card + 1 : ℕ) : ℝ)) =
+          (n : ℝ)^(13/14 : ℝ) * (n : ℝ)^((13/14 : ℝ) * (L'.card : ℝ)) := by
         rw [Nat.cast_add, Nat.cast_one]
         rw [mul_add]
         norm_num
-        rw [Real.rpow_add hnR ((9/10 : ℝ) * (L'.card : ℝ)) (9/10 : ℝ)]
+        rw [Real.rpow_add hnR ((13/14 : ℝ) * (L'.card : ℝ)) (13/14 : ℝ)]
         rw [mul_comm]
       rw [Multiset.card_cons, Multiset.prod_cons]
       rw [hpow]
       rw [Nat.cast_mul]
       exact mul_le_mul hd ih' (Real.rpow_nonneg (Nat.cast_nonneg n) _) (Nat.cast_nonneg d)
 
-/-- `1/L.prod ≤ n^{-(9/10)·L.card}` for a *large* multiset `L` (each entry `≥ n^{9/10}`). -/
+/-- `1/L.prod ≤ n^{-(13/14)·L.card}` for a *large* multiset `L` (each entry `≥ n^{13/14}`). -/
 lemma inv_prod_le_rpow_of_large (n : ℕ) (L : Multiset ℕ) (hn : 0 < n)
-    (hlarge : ∀ d ∈ L, (n : ℝ)^(9/10 : ℝ) ≤ (d : ℝ)) (hL2 : ∀ d ∈ L, 2 ≤ d) :
-    (1 : ℝ) / (L.prod : ℝ) ≤ (n : ℝ)^(-((9/10 : ℝ) * (L.card : ℝ))) := by
+    (hlarge : ∀ d ∈ L, (n : ℝ)^(13/14 : ℝ) ≤ (d : ℝ)) (hL2 : ∀ d ∈ L, 2 ≤ d) :
+    (1 : ℝ) / (L.prod : ℝ) ≤ (n : ℝ)^(-((13/14 : ℝ) * (L.card : ℝ))) := by
   have h := prod_le_rpow_of_large n L hn hlarge
   have hLprod_pos : 0 < (L.prod : ℝ) := by
     exact_mod_cast (Multiset.prod_pos (fun d hd => Nat.succ_le_iff.mp (by
       have := hL2 d hd; omega)))
-  have hpow_pos : 0 < (n : ℝ)^((9/10 : ℝ) * (L.card : ℝ)) :=
+  have hpow_pos : 0 < (n : ℝ)^((13/14 : ℝ) * (L.card : ℝ)) :=
     Real.rpow_pos_of_pos (by exact_mod_cast hn) _
-  have h1 : (1 : ℝ) / (L.prod : ℝ) ≤ 1 / (n : ℝ)^((9/10 : ℝ) * (L.card : ℝ)) :=
+  have h1 : (1 : ℝ) / (L.prod : ℝ) ≤ 1 / (n : ℝ)^((13/14 : ℝ) * (L.card : ℝ)) :=
     one_div_le_one_div_of_le hpow_pos h
-  have hrew : 1 / (n : ℝ)^((9/10 : ℝ) * (L.card : ℝ)) = (n : ℝ)^(-((9/10 : ℝ) * (L.card : ℝ))) := by
+  have hrew : 1 / (n : ℝ)^((13/14 : ℝ) * (L.card : ℝ)) = (n : ℝ)^(-((13/14 : ℝ) * (L.card : ℝ))) := by
     simpa [div_eq_mul_inv] using (Real.rpow_neg (le_of_lt (by exact_mod_cast hn))
-      ((9/10 : ℝ) * (L.card : ℝ))).symm
-  calc (1 : ℝ) / (L.prod : ℝ) ≤ 1 / (n : ℝ)^((9/10 : ℝ) * (L.card : ℝ)) := h1
-    _ = (n : ℝ)^(-((9/10 : ℝ) * (L.card : ℝ))) := hrew
+      ((13/14 : ℝ) * (L.card : ℝ))).symm
+  calc (1 : ℝ) / (L.prod : ℝ) ≤ 1 / (n : ℝ)^((13/14 : ℝ) * (L.card : ℝ)) := h1
+    _ = (n : ℝ)^(-((13/14 : ℝ) * (L.card : ℝ))) := hrew
 
 /-- `τ(n-k) ≤ C^{1/16} n^{1/16}` (the divisor bound at `n-k`). -/
 lemma tau_sub_le (n k C : ℕ) (hC : (tau (n - k))^16 ≤ C * (n - k)) :
@@ -581,37 +581,37 @@ lemma tau_sub_le (n k C : ℕ) (hC : (tau (n - k))^16 ≤ C * (n - k)) :
   have hC16_nonneg : 0 ≤ (C : ℝ)^(1/16 : ℝ) := Real.rpow_nonneg (Nat.cast_nonneg C) _
   exact le_trans h (mul_le_mul_of_nonneg_left hle hC16_nonneg)
 
-/-! ### The `ε = 1/20` divisor bound and the geometric/factorial tails -/
+/-! ### The `ε = 1/24` divisor bound and the geometric/factorial tails -/
 
-/-- `τ(m) ≤ C^{1/20} m^{1/20}` (the `ε = 1/20` divisor bound, from `tau_pow_twenty_le`). -/
-lemma tau_le_rpow_twentieth (m C : ℕ) (hC : (tau m)^20 ≤ C * m) :
-    (tau m : ℝ) ≤ (C : ℝ)^(1/20 : ℝ) * (m : ℝ)^(1/20 : ℝ) := by
-  have hcast : (tau m : ℝ)^20 ≤ ((C * m : ℕ) : ℝ) := by exact_mod_cast hC
+/-- `τ(m) ≤ C^{1/24} m^{1/24}` (the `ε = 1/24` divisor bound, from `tau_pow_twentyfour_le`). -/
+lemma tau_le_rpow_twentyfourth (m C : ℕ) (hC : (tau m)^24 ≤ C * m) :
+    (tau m : ℝ) ≤ (C : ℝ)^(1/24 : ℝ) * (m : ℝ)^(1/24 : ℝ) := by
+  have hcast : (tau m : ℝ)^24 ≤ ((C * m : ℕ) : ℝ) := by exact_mod_cast hC
   have hnonneg : 0 ≤ (tau m : ℝ) := Nat.cast_nonneg _
-  have hmono : ((tau m : ℝ)^20)^(1/20 : ℝ) ≤ ((C * m : ℕ) : ℝ)^(1/20 : ℝ) :=
-    Real.rpow_le_rpow (by positivity : 0 ≤ (tau m : ℝ)^20) hcast (by norm_num : 0 ≤ (1/20 : ℝ))
-  have hrew : ((tau m : ℝ)^20)^(1/20 : ℝ) = (tau m : ℝ) := by
-    rw [show (tau m : ℝ)^20 = (tau m : ℝ)^(20 : ℝ) by exact (Real.rpow_natCast (tau m : ℝ) 20).symm]
-    rw [← Real.rpow_mul hnonneg (20 : ℝ) (1/20 : ℝ)]
-    rw [show (tau m : ℝ)^((20 : ℝ) * (1/20 : ℝ)) = (tau m : ℝ)^(1 : ℝ) by congr 1; norm_num]
+  have hmono : ((tau m : ℝ)^24)^(1/24 : ℝ) ≤ ((C * m : ℕ) : ℝ)^(1/24 : ℝ) :=
+    Real.rpow_le_rpow (by positivity : 0 ≤ (tau m : ℝ)^24) hcast (by norm_num : 0 ≤ (1/24 : ℝ))
+  have hrew : ((tau m : ℝ)^24)^(1/24 : ℝ) = (tau m : ℝ) := by
+    rw [show (tau m : ℝ)^24 = (tau m : ℝ)^(24 : ℝ) by exact (Real.rpow_natCast (tau m : ℝ) 24).symm]
+    rw [← Real.rpow_mul hnonneg (24 : ℝ) (1/24 : ℝ)]
+    rw [show (tau m : ℝ)^((24 : ℝ) * (1/24 : ℝ)) = (tau m : ℝ)^(1 : ℝ) by congr 1; norm_num]
     rw [Real.rpow_one]
   rw [hrew] at hmono
   have hC_nonneg : 0 ≤ (C : ℝ) := Nat.cast_nonneg C
   have hm_nonneg : 0 ≤ (m : ℝ) := Nat.cast_nonneg m
-  have h1 : ((C * m : ℕ) : ℝ)^(1/20 : ℝ) = (C : ℝ)^(1/20 : ℝ) * (m : ℝ)^(1/20 : ℝ) := by
+  have h1 : ((C * m : ℕ) : ℝ)^(1/24 : ℝ) = (C : ℝ)^(1/24 : ℝ) * (m : ℝ)^(1/24 : ℝ) := by
     rw [Nat.cast_mul]
     exact Real.mul_rpow hC_nonneg hm_nonneg
   rw [h1] at hmono
   exact hmono
 
-/-- `τ(n-k) ≤ C^{1/20} n^{1/20}` (the `ε = 1/20` divisor bound at `n-k`). -/
-lemma tau_sub_le_twentieth (n k C : ℕ) (hC : (tau (n - k))^20 ≤ C * (n - k)) :
-    (tau (n - k) : ℝ) ≤ (C : ℝ)^(1/20 : ℝ) * (n : ℝ)^(1/20 : ℝ) := by
-  have h := tau_le_rpow_twentieth (n - k) C hC
-  have hle : ((n - k : ℕ) : ℝ)^(1/20 : ℝ) ≤ (n : ℝ)^(1/20 : ℝ) := by
+/-- `τ(n-k) ≤ C^{1/24} n^{1/24}` (the `ε = 1/24` divisor bound at `n-k`). -/
+lemma tau_sub_le_twentyfourth (n k C : ℕ) (hC : (tau (n - k))^24 ≤ C * (n - k)) :
+    (tau (n - k) : ℝ) ≤ (C : ℝ)^(1/24 : ℝ) * (n : ℝ)^(1/24 : ℝ) := by
+  have h := tau_le_rpow_twentyfourth (n - k) C hC
+  have hle : ((n - k : ℕ) : ℝ)^(1/24 : ℝ) ≤ (n : ℝ)^(1/24 : ℝ) := by
     exact Real.rpow_le_rpow (Nat.cast_nonneg (n - k)) (by exact_mod_cast (Nat.sub_le n k))
-      (by norm_num : 0 ≤ (1/20 : ℝ))
-  have hC20_nonneg : 0 ≤ (C : ℝ)^(1/20 : ℝ) := Real.rpow_nonneg (Nat.cast_nonneg C) _
+      (by norm_num : 0 ≤ (1/24 : ℝ))
+  have hC20_nonneg : 0 ≤ (C : ℝ)^(1/24 : ℝ) := Real.rpow_nonneg (Nat.cast_nonneg C) _
   exact le_trans h (mul_le_mul_of_nonneg_left hle hC20_nonneg)
 
 /-- The tail of the geometric series from exponent 3: `∑_{i=3}^{N} x^i ≤ 2x³` for `0 ≤ x ≤ 1/2`. -/
@@ -643,11 +643,11 @@ lemma geom_series_tail_le {x : ℝ} (hx0 : 0 ≤ x) (hx : x ≤ 1 / 2) (N : ℕ)
     simpa [mul_comm, mul_left_comm, mul_assoc] using h
   exact le_trans hle2 hle3
 
-/-- For large cycles `d₁, d₂, d₃ ≥ n^{9/10}`, `1/(d₁d₂d₃) ≤ (n^{-9/10})³`. -/
+/-- For large cycles `d₁, d₂, d₃ ≥ n^{13/14}`, `1/(d₁d₂d₃) ≤ (n^{-13/14})³`. -/
 lemma one_div_mul_three_le_rpow_neg_three (n d₁ d₂ d₃ : ℕ) (hn : 0 < n)
-    (h₁ : (n : ℝ)^(9/10 : ℝ) ≤ (d₁ : ℝ)) (h₂ : (n : ℝ)^(9/10 : ℝ) ≤ (d₂ : ℝ))
-    (h₃ : (n : ℝ)^(9/10 : ℝ) ≤ (d₃ : ℝ)) :
-    (1 : ℝ) / ((d₁ * d₂ * d₃ : ℕ) : ℝ) ≤ ((n : ℝ)^(-(9/10 : ℝ))) ^ 3 := by
+    (h₁ : (n : ℝ)^(13/14 : ℝ) ≤ (d₁ : ℝ)) (h₂ : (n : ℝ)^(13/14 : ℝ) ≤ (d₂ : ℝ))
+    (h₃ : (n : ℝ)^(13/14 : ℝ) ≤ (d₃ : ℝ)) :
+    (1 : ℝ) / ((d₁ * d₂ * d₃ : ℕ) : ℝ) ≤ ((n : ℝ)^(-(13/14 : ℝ))) ^ 3 := by
   have hd₁ : 0 < d₁ := by
     have h := lt_of_lt_of_le (Real.rpow_pos_of_pos (by exact_mod_cast hn) _) h₁
     exact_mod_cast (Nat.pos_of_ne_zero (by
@@ -665,13 +665,13 @@ lemma one_div_mul_three_le_rpow_neg_three (n d₁ d₂ d₃ : ℕ) (hn : 0 < n)
     rw [Nat.cast_mul, Nat.cast_mul]
     rw [one_div_mul_one_div, one_div_mul_one_div]
   rw [hprod]
-  have hnpow_nonneg : 0 ≤ (n : ℝ)^(-(9/10 : ℝ)) :=
+  have hnpow_nonneg : 0 ≤ (n : ℝ)^(-(13/14 : ℝ)) :=
     Real.rpow_nonneg (by exact_mod_cast (le_of_lt hn)) _
   have hle12 : ((1 : ℝ) / (d₁ : ℝ)) * ((1 : ℝ) / (d₂ : ℝ)) ≤
-      ((n : ℝ)^(-(9/10 : ℝ))) * ((n : ℝ)^(-(9/10 : ℝ))) :=
+      ((n : ℝ)^(-(13/14 : ℝ))) * ((n : ℝ)^(-(13/14 : ℝ))) :=
     mul_le_mul hi₁ hi₂ (by positivity : 0 ≤ (1 : ℝ) / (d₂ : ℝ)) hnpow_nonneg
   have hle123 : ((1 : ℝ) / (d₁ : ℝ)) * ((1 : ℝ) / (d₂ : ℝ)) * ((1 : ℝ) / (d₃ : ℝ)) ≤
-      ((n : ℝ)^(-(9/10 : ℝ))) * ((n : ℝ)^(-(9/10 : ℝ))) * ((n : ℝ)^(-(9/10 : ℝ))) :=
+      ((n : ℝ)^(-(13/14 : ℝ))) * ((n : ℝ)^(-(13/14 : ℝ))) * ((n : ℝ)^(-(13/14 : ℝ))) :=
     mul_le_mul hle12 hi₃ (by positivity : 0 ≤ (1 : ℝ) / (d₃ : ℝ)) (mul_nonneg hnpow_nonneg hnpow_nonneg)
   simpa [pow_three, mul_assoc] using hle123
 
@@ -1372,15 +1372,15 @@ lemma log_le_c_mul_pow15 :
   exact hn
 
 lemma exp_two_pow_neg_le_two :
-    ∀ᶠ n : ℕ in atTop, Real.exp (2 * (n : ℝ) ^ (-(1/30 : ℝ))) ≤ 2 := by
-  have hneg : Tendsto (fun n : ℕ => (n : ℝ) ^ (-(1/30 : ℝ))) atTop (𝓝 0) :=
-    tendsto_rpow_neg_nat_atTop (1/30 : ℝ) (by norm_num)
-  have htwo : Tendsto (fun n : ℕ => 2 * (n : ℝ) ^ (-(1/30 : ℝ))) atTop (𝓝 0) := by
+    ∀ᶠ n : ℕ in atTop, Real.exp (2 * (n : ℝ) ^ (-(1/210 : ℝ))) ≤ 2 := by
+  have hneg : Tendsto (fun n : ℕ => (n : ℝ) ^ (-(1/210 : ℝ))) atTop (𝓝 0) :=
+    tendsto_rpow_neg_nat_atTop (1/210 : ℝ) (by norm_num)
+  have htwo : Tendsto (fun n : ℕ => 2 * (n : ℝ) ^ (-(1/210 : ℝ))) atTop (𝓝 0) := by
     simpa only [mul_zero] using (hneg.const_mul 2)
-  have hexp : Tendsto (fun n : ℕ => Real.exp (2 * (n : ℝ) ^ (-(1/30 : ℝ)))) atTop (𝓝 1) := by
+  have hexp : Tendsto (fun n : ℕ => Real.exp (2 * (n : ℝ) ^ (-(1/210 : ℝ)))) atTop (𝓝 1) := by
     have h : Tendsto Real.exp (𝓝 0) (𝓝 (Real.exp 0)) := Real.continuous_exp.tendsto 0
     simpa [Real.exp_zero] using h.comp htwo
-  have hlt : ∀ᶠ n : ℕ in atTop, Real.exp (2 * (n : ℝ) ^ (-(1/30 : ℝ))) < 2 := by
+  have hlt : ∀ᶠ n : ℕ in atTop, Real.exp (2 * (n : ℝ) ^ (-(1/210 : ℝ))) < 2 := by
     exact hexp (Iio_mem_nhds (by norm_num : (1 : ℝ) < 2))
   exact hlt.mono (fun n hn => le_of_lt hn)
 
@@ -1451,43 +1451,43 @@ lemma sum_fin_inv_add_one_eq (r : ℕ) :
 
 lemma exp_sum_fin_le_half_pow15 :
     ∀ᶠ n : ℕ in atTop,
-      (∑ j : Fin (⌈(n : ℝ)^(9/10 : ℝ)⌉₊),
+      (∑ j : Fin (⌈(n : ℝ)^(13/14 : ℝ)⌉₊),
         Real.exp ((n : ℝ) ^ (-(14/15 : ℝ))) ^ (j.val + 1) / ((j.val + 1 : ℕ) : ℝ)) ≤
       (n : ℝ) ^ (1/15 : ℝ) / 2 := by
   filter_upwards [Filter.eventually_ge_atTop (1 : ℕ), exp_two_pow_neg_le_two,
       log_le_c_mul_pow15, one_add_log_two_le_pow15_div_eight] with n hn1 hexp2 hlog hconst
   let x : ℝ := Real.exp ((n : ℝ) ^ (-(14/15 : ℝ)))
-  let r : ℕ := ⌈(n : ℝ) ^ (9/10 : ℝ)⌉₊
+  let r : ℕ := ⌈(n : ℝ) ^ (13/14 : ℝ)⌉₊
   have hnR0 : 0 ≤ (n : ℝ) := by exact_mod_cast (Nat.zero_le n)
   have hnR1 : 1 ≤ (n : ℝ) := by exact_mod_cast hn1
   have hnRpos : 0 < (n : ℝ) := by exact_mod_cast (by omega : 0 < n)
   have hx1 : 1 ≤ x := by
     dsimp [x]
     exact Real.one_le_exp (Real.rpow_nonneg hnR0 _)
-  have hr_le : (r : ℝ) ≤ (n : ℝ) ^ (9/10 : ℝ) + 1 := by
+  have hr_le : (r : ℝ) ≤ (n : ℝ) ^ (13/14 : ℝ) + 1 := by
     dsimp [r]
     exact le_of_lt (Nat.ceil_lt_add_one (Real.rpow_nonneg hnR0 _))
-  have hpow910_ge1 : 1 ≤ (n : ℝ) ^ (9/10 : ℝ) := by
-    have h := Real.rpow_le_rpow (by norm_num : 0 ≤ (1 : ℝ)) hnR1 (by norm_num : 0 ≤ (9/10 : ℝ))
+  have hpow910_ge1 : 1 ≤ (n : ℝ) ^ (13/14 : ℝ) := by
+    have h := Real.rpow_le_rpow (by norm_num : 0 ≤ (1 : ℝ)) hnR1 (by norm_num : 0 ≤ (13/14 : ℝ))
     simpa [Real.one_rpow] using h
-  have hr_le2 : (r : ℝ) ≤ 2 * (n : ℝ) ^ (9/10 : ℝ) := by
+  have hr_le2 : (r : ℝ) ≤ 2 * (n : ℝ) ^ (13/14 : ℝ) := by
     nlinarith [hr_le, hpow910_ge1]
   have hnpow_nonneg : 0 ≤ (n : ℝ) ^ (-(14/15 : ℝ)) := Real.rpow_nonneg hnR0 _
-  have hpowadd : (n : ℝ)^(9/10 : ℝ) * (n : ℝ)^(-(14/15 : ℝ)) = (n : ℝ)^(-(1/30 : ℝ)) := by
-    rw [← Real.rpow_add hnRpos (9/10 : ℝ) (-(14/15 : ℝ))]
+  have hpowadd : (n : ℝ)^(13/14 : ℝ) * (n : ℝ)^(-(14/15 : ℝ)) = (n : ℝ)^(-(1/210 : ℝ)) := by
+    rw [← Real.rpow_add hnRpos (13/14 : ℝ) (-(14/15 : ℝ))]
     congr 1
     norm_num
-  have hnpow_le : (n : ℝ)^(-(14/15 : ℝ)) ≤ (n : ℝ)^(-(1/30 : ℝ)) := by
+  have hnpow_le : (n : ℝ)^(-(14/15 : ℝ)) ≤ (n : ℝ)^(-(1/210 : ℝ)) := by
     refine Real.rpow_le_rpow_of_exponent_le hnR1 ?_
     norm_num
-  have hr_npow : (r : ℝ) * (n : ℝ) ^ (-(14/15 : ℝ)) ≤ 2 * (n : ℝ) ^ (-(1/30 : ℝ)) := by
+  have hr_npow : (r : ℝ) * (n : ℝ) ^ (-(14/15 : ℝ)) ≤ 2 * (n : ℝ) ^ (-(1/210 : ℝ)) := by
     have h1 : (r : ℝ) * (n : ℝ) ^ (-(14/15 : ℝ)) ≤
-        ((n : ℝ)^(9/10 : ℝ) + 1) * (n : ℝ)^(-(14/15 : ℝ)) :=
+        ((n : ℝ)^(13/14 : ℝ) + 1) * (n : ℝ)^(-(14/15 : ℝ)) :=
       mul_le_mul_of_nonneg_right hr_le hnpow_nonneg
-    have h2 : ((n : ℝ)^(9/10 : ℝ) + 1) * (n : ℝ)^(-(14/15 : ℝ)) ≤
-        2 * (n : ℝ)^(-(1/30 : ℝ)) := by
-      have h' : ((n : ℝ)^(9/10 : ℝ) + 1) * (n : ℝ)^(-(14/15 : ℝ)) =
-          (n : ℝ)^(-(1/30 : ℝ)) + (n : ℝ)^(-(14/15 : ℝ)) := by
+    have h2 : ((n : ℝ)^(13/14 : ℝ) + 1) * (n : ℝ)^(-(14/15 : ℝ)) ≤
+        2 * (n : ℝ)^(-(1/210 : ℝ)) := by
+      have h' : ((n : ℝ)^(13/14 : ℝ) + 1) * (n : ℝ)^(-(14/15 : ℝ)) =
+          (n : ℝ)^(-(1/210 : ℝ)) + (n : ℝ)^(-(14/15 : ℝ)) := by
         rw [add_mul, hpowadd, one_mul]
       rw [h']
       nlinarith [hnpow_le]
@@ -1498,7 +1498,7 @@ lemma exp_sum_fin_le_half_pow15 :
       rw [Real.exp_nat_mul]
     rw [hxr]
     have hle : Real.exp ((r : ℝ) * (n : ℝ) ^ (-(14/15 : ℝ))) ≤
-        Real.exp (2 * (n : ℝ) ^ (-(1/30 : ℝ))) := by
+        Real.exp (2 * (n : ℝ) ^ (-(1/210 : ℝ))) := by
       exact Real.exp_le_exp.mpr hr_npow
     exact le_trans hle hexp2
   have hfin_le : (∑ j : Fin r, (1 : ℝ) / ((j.val + 1 : ℕ) : ℝ)) ≤
@@ -1508,15 +1508,15 @@ lemma exp_sum_fin_le_half_pow15 :
       exact Nat.succ_le_iff.mpr (Nat.ceil_pos.mpr (by
         exact Real.rpow_pos_of_pos hnRpos _)))
     have hreidx := sum_fin_inv_add_one_eq r
-    have hlogr : Real.log (r : ℝ) ≤ Real.log 2 + (9/10 : ℝ) * Real.log (n : ℝ) := by
+    have hlogr : Real.log (r : ℝ) ≤ Real.log 2 + (13/14 : ℝ) * Real.log (n : ℝ) := by
       have hrpos : 0 < (r : ℝ) := by
         exact_mod_cast (Nat.ceil_pos.mpr (Real.rpow_pos_of_pos hnRpos _))
-      have h1 : (r : ℝ) ≤ 2 * (n : ℝ) ^ (9/10 : ℝ) := hr_le2
-      have h2 : Real.log (r : ℝ) ≤ Real.log (2 * (n : ℝ) ^ (9/10 : ℝ)) :=
+      have h1 : (r : ℝ) ≤ 2 * (n : ℝ) ^ (13/14 : ℝ) := hr_le2
+      have h2 : Real.log (r : ℝ) ≤ Real.log (2 * (n : ℝ) ^ (13/14 : ℝ)) :=
         Real.log_le_log hrpos (le_trans h1 (by nlinarith))
-      have h3 : Real.log (2 * (n : ℝ) ^ (9/10 : ℝ)) = Real.log 2 + (9/10 : ℝ) * Real.log (n : ℝ) := by
+      have h3 : Real.log (2 * (n : ℝ) ^ (13/14 : ℝ)) = Real.log 2 + (13/14 : ℝ) * Real.log (n : ℝ) := by
         rw [Real.log_mul (by norm_num : (2 : ℝ) ≠ 0) (by exact ne_of_gt (Real.rpow_pos_of_pos hnRpos _))]
-        rw [Real.log_rpow hnRpos (9/10 : ℝ)]
+        rw [Real.log_rpow hnRpos (13/14 : ℝ)]
       exact le_trans h2 (le_of_eq h3)
     have hlog_le := (log_le_c_mul_pow15)
     have hsum_le : (∑ j : Fin r, (1 : ℝ) / ((j.val + 1 : ℕ) : ℝ)) ≤ 1 + Real.log (r : ℝ) := by
@@ -1524,12 +1524,12 @@ lemma exp_sum_fin_le_half_pow15 :
       exact hharm
     have hmain : 1 + Real.log (r : ℝ) ≤ (n : ℝ) ^ (1/15 : ℝ) / 4 := by
       have hlog_n : Real.log (n : ℝ) ≤ (1/100 : ℝ) * (n : ℝ) ^ (1/15 : ℝ) := hlog
-      have h910log : (9/10 : ℝ) * Real.log (n : ℝ) ≤ (n : ℝ) ^ (1/15 : ℝ) / 8 := by
-        have hcoef : (9/10 : ℝ) * (1/100 : ℝ) ≤ (1/8 : ℝ) := by norm_num
-        have h := mul_le_mul_of_nonneg_left hlog_n (by norm_num : 0 ≤ (9/10 : ℝ))
-        calc (9/10 : ℝ) * Real.log (n : ℝ)
-            ≤ (9/10 : ℝ) * ((1/100 : ℝ) * (n : ℝ) ^ (1/15 : ℝ)) := h
-          _ = ((9/10 : ℝ) * (1/100 : ℝ)) * (n : ℝ) ^ (1/15 : ℝ) := by ring
+      have h910log : (13/14 : ℝ) * Real.log (n : ℝ) ≤ (n : ℝ) ^ (1/15 : ℝ) / 8 := by
+        have hcoef : (13/14 : ℝ) * (1/100 : ℝ) ≤ (1/8 : ℝ) := by norm_num
+        have h := mul_le_mul_of_nonneg_left hlog_n (by norm_num : 0 ≤ (13/14 : ℝ))
+        calc (13/14 : ℝ) * Real.log (n : ℝ)
+            ≤ (13/14 : ℝ) * ((1/100 : ℝ) * (n : ℝ) ^ (1/15 : ℝ)) := h
+          _ = ((13/14 : ℝ) * (1/100 : ℝ)) * (n : ℝ) ^ (1/15 : ℝ) := by ring
           _ ≤ (1/8 : ℝ) * (n : ℝ) ^ (1/15 : ℝ) :=
                 mul_le_mul_of_nonneg_right hcoef (Real.rpow_nonneg hnR0 _)
           _ = (n : ℝ) ^ (1/15 : ℝ) / 8 := by ring
@@ -1575,11 +1575,11 @@ lemma exp_sum_fin_le_half_pow15 :
 
 
 lemma nuNoLong_bound :
-    ∀ᶠ n : ℕ in atTop, nuNoLong n (⌈(n : ℝ)^(9/10 : ℝ)⌉₊) ≤ (2^45 : ℝ) / (n : ℝ)^3 := by
+    ∀ᶠ n : ℕ in atTop, nuNoLong n (⌈(n : ℝ)^(13/14 : ℝ)⌉₊) ≤ (2^45 : ℝ) / (n : ℝ)^3 := by
   filter_upwards [Filter.eventually_ge_atTop (1 : ℕ), exp_sum_fin_le_half_pow15,
       exp_neg_half_pow15_le] with n hn1 hsum hexpdecay
   let x : ℝ := Real.exp ((n : ℝ) ^ (-(14/15 : ℝ)))
-  let r : ℕ := ⌈(n : ℝ) ^ (9/10 : ℝ)⌉₊
+  let r : ℕ := ⌈(n : ℝ) ^ (13/14 : ℝ)⌉₊
   have hnR0 : 0 ≤ (n : ℝ) := by exact_mod_cast (Nat.zero_le n)
   have hnRpos : 0 < (n : ℝ) := by exact_mod_cast (by omega : 0 < n)
   have hx1 : 1 ≤ x := by
@@ -1684,41 +1684,41 @@ lemma one_add_log_two_le_pow15_div_sixteen :
 
 lemma exp_sum_fin_le_quarter_pow15 :
     ∀ᶠ n : ℕ in atTop,
-      (∑ j : Fin (⌈(n : ℝ)^(9/10 : ℝ)⌉₊),
+      (∑ j : Fin (⌈(n : ℝ)^(13/14 : ℝ)⌉₊),
         Real.exp ((n : ℝ) ^ (-(14/15 : ℝ))) ^ (j.val + 1) / ((j.val + 1 : ℕ) : ℝ)) ≤
       (n : ℝ) ^ (1/15 : ℝ) / 4 := by
   filter_upwards [Filter.eventually_ge_atTop (1 : ℕ), exp_two_pow_neg_le_two,
       log_le_c_mul_pow15, one_add_log_two_le_pow15_div_sixteen] with n hn1 hexp2 hlog hconst
   let x : ℝ := Real.exp ((n : ℝ) ^ (-(14/15 : ℝ)))
-  let r : ℕ := ⌈(n : ℝ) ^ (9/10 : ℝ)⌉₊
+  let r : ℕ := ⌈(n : ℝ) ^ (13/14 : ℝ)⌉₊
   have hnR0 : 0 ≤ (n : ℝ) := by exact_mod_cast (Nat.zero_le n)
   have hnR1 : 1 ≤ (n : ℝ) := by exact_mod_cast hn1
   have hnRpos : 0 < (n : ℝ) := by exact_mod_cast (by omega : 0 < n)
   have hx1 : 1 ≤ x := by
     dsimp [x]
     exact Real.one_le_exp (Real.rpow_nonneg hnR0 _)
-  have hr_le : (r : ℝ) ≤ (n : ℝ) ^ (9/10 : ℝ) + 1 := by
+  have hr_le : (r : ℝ) ≤ (n : ℝ) ^ (13/14 : ℝ) + 1 := by
     dsimp [r]
     exact le_of_lt (Nat.ceil_lt_add_one (Real.rpow_nonneg hnR0 _))
-  have hpow910_ge1 : 1 ≤ (n : ℝ) ^ (9/10 : ℝ) := by
-    have h := Real.rpow_le_rpow (by norm_num : 0 ≤ (1 : ℝ)) hnR1 (by norm_num : 0 ≤ (9/10 : ℝ))
+  have hpow910_ge1 : 1 ≤ (n : ℝ) ^ (13/14 : ℝ) := by
+    have h := Real.rpow_le_rpow (by norm_num : 0 ≤ (1 : ℝ)) hnR1 (by norm_num : 0 ≤ (13/14 : ℝ))
     simpa [Real.one_rpow] using h
   have hnpow_nonneg : 0 ≤ (n : ℝ) ^ (-(14/15 : ℝ)) := Real.rpow_nonneg hnR0 _
-  have hpowadd : (n : ℝ)^(9/10 : ℝ) * (n : ℝ)^(-(14/15 : ℝ)) = (n : ℝ)^(-(1/30 : ℝ)) := by
-    rw [← Real.rpow_add hnRpos (9/10 : ℝ) (-(14/15 : ℝ))]
+  have hpowadd : (n : ℝ)^(13/14 : ℝ) * (n : ℝ)^(-(14/15 : ℝ)) = (n : ℝ)^(-(1/210 : ℝ)) := by
+    rw [← Real.rpow_add hnRpos (13/14 : ℝ) (-(14/15 : ℝ))]
     congr 1
     norm_num
-  have hnpow_le : (n : ℝ)^(-(14/15 : ℝ)) ≤ (n : ℝ)^(-(1/30 : ℝ)) := by
+  have hnpow_le : (n : ℝ)^(-(14/15 : ℝ)) ≤ (n : ℝ)^(-(1/210 : ℝ)) := by
     refine Real.rpow_le_rpow_of_exponent_le hnR1 ?_
     norm_num
-  have hr_npow : (r : ℝ) * (n : ℝ) ^ (-(14/15 : ℝ)) ≤ 2 * (n : ℝ) ^ (-(1/30 : ℝ)) := by
+  have hr_npow : (r : ℝ) * (n : ℝ) ^ (-(14/15 : ℝ)) ≤ 2 * (n : ℝ) ^ (-(1/210 : ℝ)) := by
     have h1 : (r : ℝ) * (n : ℝ) ^ (-(14/15 : ℝ)) ≤
-        ((n : ℝ)^(9/10 : ℝ) + 1) * (n : ℝ)^(-(14/15 : ℝ)) :=
+        ((n : ℝ)^(13/14 : ℝ) + 1) * (n : ℝ)^(-(14/15 : ℝ)) :=
       mul_le_mul_of_nonneg_right hr_le hnpow_nonneg
-    have h2 : ((n : ℝ)^(9/10 : ℝ) + 1) * (n : ℝ)^(-(14/15 : ℝ)) ≤
-        2 * (n : ℝ)^(-(1/30 : ℝ)) := by
-      have h' : ((n : ℝ)^(9/10 : ℝ) + 1) * (n : ℝ)^(-(14/15 : ℝ)) =
-          (n : ℝ)^(-(1/30 : ℝ)) + (n : ℝ)^(-(14/15 : ℝ)) := by
+    have h2 : ((n : ℝ)^(13/14 : ℝ) + 1) * (n : ℝ)^(-(14/15 : ℝ)) ≤
+        2 * (n : ℝ)^(-(1/210 : ℝ)) := by
+      have h' : ((n : ℝ)^(13/14 : ℝ) + 1) * (n : ℝ)^(-(14/15 : ℝ)) =
+          (n : ℝ)^(-(1/210 : ℝ)) + (n : ℝ)^(-(14/15 : ℝ)) := by
         rw [add_mul, hpowadd, one_mul]
       rw [h']
       nlinarith [hnpow_le]
@@ -1729,7 +1729,7 @@ lemma exp_sum_fin_le_quarter_pow15 :
       rw [Real.exp_nat_mul]
     rw [hxr]
     have hle : Real.exp ((r : ℝ) * (n : ℝ) ^ (-(14/15 : ℝ))) ≤
-        Real.exp (2 * (n : ℝ) ^ (-(1/30 : ℝ))) :=
+        Real.exp (2 * (n : ℝ) ^ (-(1/210 : ℝ))) :=
       Real.exp_le_exp.mpr hr_npow
     exact le_trans hle hexp2
   have hfin_le : (∑ j : Fin r, (1 : ℝ) / ((j.val + 1 : ℕ) : ℝ)) ≤
@@ -1738,28 +1738,28 @@ lemma exp_sum_fin_le_quarter_pow15 :
       dsimp [r]
       exact Nat.succ_le_iff.mpr (Nat.ceil_pos.mpr (Real.rpow_pos_of_pos hnRpos _)))
     have hreidx := sum_fin_inv_add_one_eq r
-    have hlogr : Real.log (r : ℝ) ≤ Real.log 2 + (9/10 : ℝ) * Real.log (n : ℝ) := by
+    have hlogr : Real.log (r : ℝ) ≤ Real.log 2 + (13/14 : ℝ) * Real.log (n : ℝ) := by
       have hrpos : 0 < (r : ℝ) := by
         exact_mod_cast (Nat.ceil_pos.mpr (Real.rpow_pos_of_pos hnRpos _))
-      have h2 : Real.log (r : ℝ) ≤ Real.log (2 * (n : ℝ) ^ (9/10 : ℝ)) :=
+      have h2 : Real.log (r : ℝ) ≤ Real.log (2 * (n : ℝ) ^ (13/14 : ℝ)) :=
         Real.log_le_log hrpos (by
-          have h1 : (r : ℝ) ≤ (n : ℝ) ^ (9/10 : ℝ) + 1 := hr_le
+          have h1 : (r : ℝ) ≤ (n : ℝ) ^ (13/14 : ℝ) + 1 := hr_le
           nlinarith [h1, hpow910_ge1])
-      have h3 : Real.log (2 * (n : ℝ) ^ (9/10 : ℝ)) = Real.log 2 + (9/10 : ℝ) * Real.log (n : ℝ) := by
+      have h3 : Real.log (2 * (n : ℝ) ^ (13/14 : ℝ)) = Real.log 2 + (13/14 : ℝ) * Real.log (n : ℝ) := by
         rw [Real.log_mul (by norm_num : (2 : ℝ) ≠ 0) (by exact ne_of_gt (Real.rpow_pos_of_pos hnRpos _))]
-        rw [Real.log_rpow hnRpos (9/10 : ℝ)]
+        rw [Real.log_rpow hnRpos (13/14 : ℝ)]
       exact le_trans h2 (le_of_eq h3)
     have hsum_le : (∑ j : Fin r, (1 : ℝ) / ((j.val + 1 : ℕ) : ℝ)) ≤ 1 + Real.log (r : ℝ) := by
       rw [hreidx]
       exact hharm
     have hmain : 1 + Real.log (r : ℝ) ≤ (n : ℝ) ^ (1/15 : ℝ) / 8 := by
       have hlog_n : Real.log (n : ℝ) ≤ (1/100 : ℝ) * (n : ℝ) ^ (1/15 : ℝ) := hlog
-      have h910log : (9/10 : ℝ) * Real.log (n : ℝ) ≤ (n : ℝ) ^ (1/15 : ℝ) / 16 := by
-        have hcoef : (9/10 : ℝ) * (1/100 : ℝ) ≤ (1/16 : ℝ) := by norm_num
-        have h := mul_le_mul_of_nonneg_left hlog_n (by norm_num : 0 ≤ (9/10 : ℝ))
-        calc (9/10 : ℝ) * Real.log (n : ℝ)
-            ≤ (9/10 : ℝ) * ((1/100 : ℝ) * (n : ℝ) ^ (1/15 : ℝ)) := h
-          _ = ((9/10 : ℝ) * (1/100 : ℝ)) * (n : ℝ) ^ (1/15 : ℝ) := by ring
+      have h910log : (13/14 : ℝ) * Real.log (n : ℝ) ≤ (n : ℝ) ^ (1/15 : ℝ) / 16 := by
+        have hcoef : (13/14 : ℝ) * (1/100 : ℝ) ≤ (1/16 : ℝ) := by norm_num
+        have h := mul_le_mul_of_nonneg_left hlog_n (by norm_num : 0 ≤ (13/14 : ℝ))
+        calc (13/14 : ℝ) * Real.log (n : ℝ)
+            ≤ (13/14 : ℝ) * ((1/100 : ℝ) * (n : ℝ) ^ (1/15 : ℝ)) := h
+          _ = ((13/14 : ℝ) * (1/100 : ℝ)) * (n : ℝ) ^ (1/15 : ℝ) := by ring
           _ ≤ (1/16 : ℝ) * (n : ℝ) ^ (1/15 : ℝ) :=
                 mul_le_mul_of_nonneg_right hcoef (Real.rpow_nonneg hnR0 _)
           _ = (n : ℝ) ^ (1/15 : ℝ) / 16 := by ring
@@ -1804,12 +1804,12 @@ lemma exp_sum_fin_le_quarter_pow15 :
 
 lemma nuNoLong_le_const_div_cube_uniform :
     ∀ᶠ n : ℕ in atTop, ∀ m : ℕ, (n : ℝ) ≤ 2 * (m : ℝ) → m ≤ n →
-      nuNoLong m (⌈(n : ℝ)^(9/10 : ℝ)⌉₊) ≤ (4^45 : ℝ) / (n : ℝ)^3 := by
+      nuNoLong m (⌈(n : ℝ)^(13/14 : ℝ)⌉₊) ≤ (4^45 : ℝ) / (n : ℝ)^3 := by
   filter_upwards [exp_sum_fin_le_quarter_pow15, exp_neg_quarter_pow15_le,
       Filter.eventually_ge_atTop (1 : ℕ)] with n hsum hdecay hn1
   intro m hnm hmn
   let x : ℝ := Real.exp ((n : ℝ) ^ (-(14/15 : ℝ)))
-  let r : ℕ := ⌈(n : ℝ) ^ (9/10 : ℝ)⌉₊
+  let r : ℕ := ⌈(n : ℝ) ^ (13/14 : ℝ)⌉₊
   have hnR0 : 0 ≤ (n : ℝ) := by exact_mod_cast (Nat.zero_le n)
   have hnRpos : 0 < (n : ℝ) := by exact_mod_cast (by omega : 0 < n)
   have hx1 : 1 ≤ x := by
@@ -1921,41 +1921,41 @@ lemma one_add_log_two_le_pow15_div_thirtytwo :
 
 lemma exp_sum_fin_le_eighth_pow15 :
     ∀ᶠ n : ℕ in atTop,
-      (∑ j : Fin (⌈(n : ℝ)^(9/10 : ℝ)⌉₊),
+      (∑ j : Fin (⌈(n : ℝ)^(13/14 : ℝ)⌉₊),
         Real.exp ((n : ℝ) ^ (-(14/15 : ℝ))) ^ (j.val + 1) / ((j.val + 1 : ℕ) : ℝ)) ≤
       (n : ℝ) ^ (1/15 : ℝ) / 8 := by
   filter_upwards [Filter.eventually_ge_atTop (1 : ℕ), exp_two_pow_neg_le_two,
       log_le_c_mul_pow15, one_add_log_two_le_pow15_div_thirtytwo] with n hn1 hexp2 hlog hconst
   let x : ℝ := Real.exp ((n : ℝ) ^ (-(14/15 : ℝ)))
-  let r : ℕ := ⌈(n : ℝ) ^ (9/10 : ℝ)⌉₊
+  let r : ℕ := ⌈(n : ℝ) ^ (13/14 : ℝ)⌉₊
   have hnR0 : 0 ≤ (n : ℝ) := by exact_mod_cast (Nat.zero_le n)
   have hnR1 : 1 ≤ (n : ℝ) := by exact_mod_cast hn1
   have hnRpos : 0 < (n : ℝ) := by exact_mod_cast (by omega : 0 < n)
   have hx1 : 1 ≤ x := by
     dsimp [x]
     exact Real.one_le_exp (Real.rpow_nonneg hnR0 _)
-  have hr_le : (r : ℝ) ≤ (n : ℝ) ^ (9/10 : ℝ) + 1 := by
+  have hr_le : (r : ℝ) ≤ (n : ℝ) ^ (13/14 : ℝ) + 1 := by
     dsimp [r]
     exact le_of_lt (Nat.ceil_lt_add_one (Real.rpow_nonneg hnR0 _))
-  have hpow910_ge1 : 1 ≤ (n : ℝ) ^ (9/10 : ℝ) := by
-    have h := Real.rpow_le_rpow (by norm_num : 0 ≤ (1 : ℝ)) hnR1 (by norm_num : 0 ≤ (9/10 : ℝ))
+  have hpow910_ge1 : 1 ≤ (n : ℝ) ^ (13/14 : ℝ) := by
+    have h := Real.rpow_le_rpow (by norm_num : 0 ≤ (1 : ℝ)) hnR1 (by norm_num : 0 ≤ (13/14 : ℝ))
     simpa [Real.one_rpow] using h
   have hnpow_nonneg : 0 ≤ (n : ℝ) ^ (-(14/15 : ℝ)) := Real.rpow_nonneg hnR0 _
-  have hpowadd : (n : ℝ)^(9/10 : ℝ) * (n : ℝ)^(-(14/15 : ℝ)) = (n : ℝ)^(-(1/30 : ℝ)) := by
-    rw [← Real.rpow_add hnRpos (9/10 : ℝ) (-(14/15 : ℝ))]
+  have hpowadd : (n : ℝ)^(13/14 : ℝ) * (n : ℝ)^(-(14/15 : ℝ)) = (n : ℝ)^(-(1/210 : ℝ)) := by
+    rw [← Real.rpow_add hnRpos (13/14 : ℝ) (-(14/15 : ℝ))]
     congr 1
     norm_num
-  have hnpow_le : (n : ℝ)^(-(14/15 : ℝ)) ≤ (n : ℝ)^(-(1/30 : ℝ)) := by
+  have hnpow_le : (n : ℝ)^(-(14/15 : ℝ)) ≤ (n : ℝ)^(-(1/210 : ℝ)) := by
     refine Real.rpow_le_rpow_of_exponent_le hnR1 ?_
     norm_num
-  have hr_npow : (r : ℝ) * (n : ℝ) ^ (-(14/15 : ℝ)) ≤ 2 * (n : ℝ) ^ (-(1/30 : ℝ)) := by
+  have hr_npow : (r : ℝ) * (n : ℝ) ^ (-(14/15 : ℝ)) ≤ 2 * (n : ℝ) ^ (-(1/210 : ℝ)) := by
     have h1 : (r : ℝ) * (n : ℝ) ^ (-(14/15 : ℝ)) ≤
-        ((n : ℝ)^(9/10 : ℝ) + 1) * (n : ℝ)^(-(14/15 : ℝ)) :=
+        ((n : ℝ)^(13/14 : ℝ) + 1) * (n : ℝ)^(-(14/15 : ℝ)) :=
       mul_le_mul_of_nonneg_right hr_le hnpow_nonneg
-    have h2 : ((n : ℝ)^(9/10 : ℝ) + 1) * (n : ℝ)^(-(14/15 : ℝ)) ≤
-        2 * (n : ℝ)^(-(1/30 : ℝ)) := by
-      have h' : ((n : ℝ)^(9/10 : ℝ) + 1) * (n : ℝ)^(-(14/15 : ℝ)) =
-          (n : ℝ)^(-(1/30 : ℝ)) + (n : ℝ)^(-(14/15 : ℝ)) := by
+    have h2 : ((n : ℝ)^(13/14 : ℝ) + 1) * (n : ℝ)^(-(14/15 : ℝ)) ≤
+        2 * (n : ℝ)^(-(1/210 : ℝ)) := by
+      have h' : ((n : ℝ)^(13/14 : ℝ) + 1) * (n : ℝ)^(-(14/15 : ℝ)) =
+          (n : ℝ)^(-(1/210 : ℝ)) + (n : ℝ)^(-(14/15 : ℝ)) := by
         rw [add_mul, hpowadd, one_mul]
       rw [h']
       nlinarith [hnpow_le]
@@ -1966,7 +1966,7 @@ lemma exp_sum_fin_le_eighth_pow15 :
       rw [Real.exp_nat_mul]
     rw [hxr]
     have hle : Real.exp ((r : ℝ) * (n : ℝ) ^ (-(14/15 : ℝ))) ≤
-        Real.exp (2 * (n : ℝ) ^ (-(1/30 : ℝ))) :=
+        Real.exp (2 * (n : ℝ) ^ (-(1/210 : ℝ))) :=
       Real.exp_le_exp.mpr hr_npow
     exact le_trans hle hexp2
   have hfin_le : (∑ j : Fin r, (1 : ℝ) / ((j.val + 1 : ℕ) : ℝ)) ≤
@@ -1975,28 +1975,28 @@ lemma exp_sum_fin_le_eighth_pow15 :
       dsimp [r]
       exact Nat.succ_le_iff.mpr (Nat.ceil_pos.mpr (Real.rpow_pos_of_pos hnRpos _)))
     have hreidx := sum_fin_inv_add_one_eq r
-    have hlogr : Real.log (r : ℝ) ≤ Real.log 2 + (9/10 : ℝ) * Real.log (n : ℝ) := by
+    have hlogr : Real.log (r : ℝ) ≤ Real.log 2 + (13/14 : ℝ) * Real.log (n : ℝ) := by
       have hrpos : 0 < (r : ℝ) := by
         exact_mod_cast (Nat.ceil_pos.mpr (Real.rpow_pos_of_pos hnRpos _))
-      have h2 : Real.log (r : ℝ) ≤ Real.log (2 * (n : ℝ) ^ (9/10 : ℝ)) :=
+      have h2 : Real.log (r : ℝ) ≤ Real.log (2 * (n : ℝ) ^ (13/14 : ℝ)) :=
         Real.log_le_log hrpos (by
-          have h1 : (r : ℝ) ≤ (n : ℝ) ^ (9/10 : ℝ) + 1 := hr_le
+          have h1 : (r : ℝ) ≤ (n : ℝ) ^ (13/14 : ℝ) + 1 := hr_le
           nlinarith [h1, hpow910_ge1])
-      have h3 : Real.log (2 * (n : ℝ) ^ (9/10 : ℝ)) = Real.log 2 + (9/10 : ℝ) * Real.log (n : ℝ) := by
+      have h3 : Real.log (2 * (n : ℝ) ^ (13/14 : ℝ)) = Real.log 2 + (13/14 : ℝ) * Real.log (n : ℝ) := by
         rw [Real.log_mul (by norm_num : (2 : ℝ) ≠ 0) (by exact ne_of_gt (Real.rpow_pos_of_pos hnRpos _))]
-        rw [Real.log_rpow hnRpos (9/10 : ℝ)]
+        rw [Real.log_rpow hnRpos (13/14 : ℝ)]
       exact le_trans h2 (le_of_eq h3)
     have hsum_le : (∑ j : Fin r, (1 : ℝ) / ((j.val + 1 : ℕ) : ℝ)) ≤ 1 + Real.log (r : ℝ) := by
       rw [hreidx]
       exact hharm
     have hmain : 1 + Real.log (r : ℝ) ≤ (n : ℝ) ^ (1/15 : ℝ) / 16 := by
       have hlog_n : Real.log (n : ℝ) ≤ (1/100 : ℝ) * (n : ℝ) ^ (1/15 : ℝ) := hlog
-      have h910log : (9/10 : ℝ) * Real.log (n : ℝ) ≤ (n : ℝ) ^ (1/15 : ℝ) / 32 := by
-        have hcoef : (9/10 : ℝ) * (1/100 : ℝ) ≤ (1/32 : ℝ) := by norm_num
-        have h := mul_le_mul_of_nonneg_left hlog_n (by norm_num : 0 ≤ (9/10 : ℝ))
-        calc (9/10 : ℝ) * Real.log (n : ℝ)
-            ≤ (9/10 : ℝ) * ((1/100 : ℝ) * (n : ℝ) ^ (1/15 : ℝ)) := h
-          _ = ((9/10 : ℝ) * (1/100 : ℝ)) * (n : ℝ) ^ (1/15 : ℝ) := by ring
+      have h910log : (13/14 : ℝ) * Real.log (n : ℝ) ≤ (n : ℝ) ^ (1/15 : ℝ) / 32 := by
+        have hcoef : (13/14 : ℝ) * (1/100 : ℝ) ≤ (1/32 : ℝ) := by norm_num
+        have h := mul_le_mul_of_nonneg_left hlog_n (by norm_num : 0 ≤ (13/14 : ℝ))
+        calc (13/14 : ℝ) * Real.log (n : ℝ)
+            ≤ (13/14 : ℝ) * ((1/100 : ℝ) * (n : ℝ) ^ (1/15 : ℝ)) := h
+          _ = ((13/14 : ℝ) * (1/100 : ℝ)) * (n : ℝ) ^ (1/15 : ℝ) := by ring
           _ ≤ (1/32 : ℝ) * (n : ℝ) ^ (1/15 : ℝ) :=
                 mul_le_mul_of_nonneg_right hcoef (Real.rpow_nonneg hnR0 _)
           _ = (n : ℝ) ^ (1/15 : ℝ) / 32 := by ring
@@ -2041,12 +2041,12 @@ lemma exp_sum_fin_le_eighth_pow15 :
 
 lemma nuNoLong_le_const_div_cube_uniform_sixth :
     ∀ᶠ n : ℕ in atTop, ∀ m : ℕ, (n : ℝ) ≤ 6 * (m : ℝ) → m ≤ n →
-      nuNoLong m (⌈(n : ℝ)^(9/10 : ℝ)⌉₊) ≤ (24 : ℝ) ^ 45 / (n : ℝ)^3 := by
+      nuNoLong m (⌈(n : ℝ)^(13/14 : ℝ)⌉₊) ≤ (24 : ℝ) ^ 45 / (n : ℝ)^3 := by
   filter_upwards [exp_sum_fin_le_eighth_pow15, (exp_neg_div_pow15_le 24 (by norm_num)),
       Filter.eventually_ge_atTop (1 : ℕ)] with n hsum hdecay hn1
   intro m hnm hmn
   let x : ℝ := Real.exp ((n : ℝ) ^ (-(14/15 : ℝ)))
-  let r : ℕ := ⌈(n : ℝ) ^ (9/10 : ℝ)⌉₊
+  let r : ℕ := ⌈(n : ℝ) ^ (13/14 : ℝ)⌉₊
   have hnR0 : 0 ≤ (n : ℝ) := by exact_mod_cast (Nat.zero_le n)
   have hnRpos : 0 < (n : ℝ) := by exact_mod_cast (by omega : 0 < n)
   have hx1 : 1 ≤ x := by
@@ -2101,8 +2101,8 @@ lemma nuNoLong_le_const_div_cube_uniform_sixth :
     _ ≤ Real.exp (-((n : ℝ) ^ (1/15 : ℝ) / 24)) := hmul_le
     _ ≤ (24 : ℝ) ^ 45 / (n : ℝ) ^ 3 := hdecay'
 
-/-- A *large* cycle: length `d ≥ n^{9/10}` (the `δ = 1/10` threshold). -/
-def large (n d : ℕ) : Prop := (n : ℝ)^(9/10 : ℝ) ≤ (d : ℝ)
+/-- A *large* cycle: length `d ≥ n^{13/14}` (the `δ = 1/14` threshold). -/
+def large (n d : ℕ) : Prop := (n : ℝ)^(13/14 : ℝ) ≤ (d : ℝ)
 
 /-- Refined decoupling: summing the small part (disjoint, all cycles `≤ r`) out, the
 total weight of all cycle types with fixed large part `L` is at most
@@ -2195,12 +2195,12 @@ lemma mem_largeDivs_large {n k d : ℕ} (h : d ∈ largeDivs n k) : large n d :=
   exact (Finset.mem_filter.mp h).2.2
 
 lemma not_large_le_ceil (n d : ℕ) (h : ¬ large n d) :
-    d ≤ ⌈(n : ℝ)^(9/10 : ℝ)⌉₊ := by
+    d ≤ ⌈(n : ℝ)^(13/14 : ℝ)⌉₊ := by
   unfold large at h
-  have hlt : (d : ℝ) < (n : ℝ)^(9/10 : ℝ) := lt_of_not_ge h
-  have hceil : (n : ℝ)^(9/10 : ℝ) ≤ (⌈(n : ℝ)^(9/10 : ℝ)⌉₊ : ℝ) := Nat.le_ceil _
-  have hlt2 : (d : ℝ) < (⌈(n : ℝ)^(9/10 : ℝ)⌉₊ : ℝ) := lt_of_lt_of_le hlt hceil
-  have hd_lt : d < ⌈(n : ℝ)^(9/10 : ℝ)⌉₊ := by
+  have hlt : (d : ℝ) < (n : ℝ)^(13/14 : ℝ) := lt_of_not_ge h
+  have hceil : (n : ℝ)^(13/14 : ℝ) ≤ (⌈(n : ℝ)^(13/14 : ℝ)⌉₊ : ℝ) := Nat.le_ceil _
+  have hlt2 : (d : ℝ) < (⌈(n : ℝ)^(13/14 : ℝ)⌉₊ : ℝ) := lt_of_lt_of_le hlt hceil
+  have hd_lt : d < ⌈(n : ℝ)^(13/14 : ℝ)⌉₊ := by
     exact_mod_cast hlt2
   omega
 
@@ -2275,11 +2275,11 @@ lemma six_mul_add_le_five_mul {m d₁ d₂ : ℕ} (h₁ : d₁ ∣ m) (h₂ : d�
     have hkey : 6 * (m / 2 + m / 3) ≤ 5 * m := by omega
     exact le_trans (Nat.mul_le_mul_left 6 hsum_le) hkey
 
-/-- The T₀ term (no large cycle) is bounded by `ν(n, ⌈n^{9/10}⌉)`. -/
+/-- The T₀ term (no large cycle) is bounded by `ν(n, ⌈n^{13/14}⌉)`. -/
 lemma sum_cycleTypeWeight_no_large_le_nu (n : ℕ) :
     (∑ lam ∈ (cycleTypes n).filter (fun lam => (lam.filter (large n)).card = 0),
-      cycleTypeWeight n lam) ≤ nuNoLong n (⌈(n : ℝ)^(9/10 : ℝ)⌉₊) := by
-  let r : ℕ := ⌈(n : ℝ)^(9/10 : ℝ)⌉₊
+      cycleTypeWeight n lam) ≤ nuNoLong n (⌈(n : ℝ)^(13/14 : ℝ)⌉₊) := by
+  let r : ℕ := ⌈(n : ℝ)^(13/14 : ℝ)⌉₊
   have hsub : (cycleTypes n).filter (fun lam => (lam.filter (large n)).card = 0) ⊆
       (cycleTypes n).filter (fun lam => ∀ d ∈ lam, d ≤ r) := by
     intro lam hlam
@@ -2309,7 +2309,7 @@ lemma sum_cycleTypeWeight_no_large_le_nu (n : ℕ) :
   calc (∑ lam ∈ (cycleTypes n).filter (fun lam => (lam.filter (large n)).card = 0),
         cycleTypeWeight n lam)
       ≤ ∑ lam ∈ (cycleTypes n).filter (fun lam => ∀ d ∈ lam, d ≤ r), cycleTypeWeight n lam := hle1
-    _ = nuNoLong n (⌈(n : ℝ)^(9/10 : ℝ)⌉₊) := by
+    _ = nuNoLong n (⌈(n : ℝ)^(13/14 : ℝ)⌉₊) := by
         simp [nuNoLong, r]
 
 lemma cycleTypeWeight_cons_le (n d : ℕ) (S : Multiset ℕ) (hd2 : 2 ≤ d) (hS2 : ∀ x ∈ S, 2 ≤ x) (hsum : d + S.sum ≤ n) :
@@ -2399,8 +2399,8 @@ lemma uniqueLarge_large {n : ℕ} {lam : Multiset ℕ} (h : (lam.filter (large n
 lemma sum_cycleTypeWeight_one_large_le (n k : ℕ) (hn : 3 ≤ n) (hk : k < n) :
     (∑ lam ∈ (cycleTypes n).filter (fun lam => lam.lcm = n - k ∧ n - k ∉ lam ∧ (lam.filter (large n)).card = 1),
       cycleTypeWeight n lam) ≤
-    ∑ d ∈ largeDivs n k, (1 / (d : ℝ)) * nuNoLong (n - d) (⌈(n : ℝ)^(9/10 : ℝ)⌉₊) := by
-  let r : ℕ := ⌈(n : ℝ)^(9/10 : ℝ)⌉₊
+    ∑ d ∈ largeDivs n k, (1 / (d : ℝ)) * nuNoLong (n - d) (⌈(n : ℝ)^(13/14 : ℝ)⌉₊) := by
+  let r : ℕ := ⌈(n : ℝ)^(13/14 : ℝ)⌉₊
   let s : Finset (Multiset ℕ) := (cycleTypes n).filter (fun lam => lam.lcm = n - k ∧ n - k ∉ lam ∧ (lam.filter (large n)).card = 1)
   let t : Finset (Σ d : ℕ, Multiset ℕ) := (largeDivs n k).sigma (fun d => (cycleTypes (n - d)).filter (fun S => ∀ x ∈ S, x ≤ r))
   let f : Multiset ℕ → (Σ d : ℕ, Multiset ℕ) := fun lam => ⟨uniqueLarge n lam, lam.erase (uniqueLarge n lam)⟩
@@ -2502,13 +2502,13 @@ lemma sum_cycleTypeWeight_one_large_le (n k : ℕ) (hn : 3 ≤ n) (hk : k < n) :
       have hlarge : large n d := mem_largeDivs_large hd
       unfold large at hlarge
       have hnR : (3 : ℝ) ≤ (n : ℝ) := by exact_mod_cast hn
-      have h3pow_gt1 : (1 : ℝ) < (3 : ℝ)^(9/10 : ℝ) := by
+      have h3pow_gt1 : (1 : ℝ) < (3 : ℝ)^(13/14 : ℝ) := by
         have h := Real.rpow_lt_rpow (by norm_num : (0 : ℝ) ≤ 1) (by norm_num : (1 : ℝ) < (3 : ℝ))
-          (by norm_num : (0 : ℝ) < (9/10 : ℝ))
+          (by norm_num : (0 : ℝ) < (13/14 : ℝ))
         simpa [Real.one_rpow] using h
-      have hnpow_gt1 : (1 : ℝ) < (n : ℝ)^(9/10 : ℝ) := by
+      have hnpow_gt1 : (1 : ℝ) < (n : ℝ)^(13/14 : ℝ) := by
         exact lt_of_lt_of_le h3pow_gt1 (Real.rpow_le_rpow (by norm_num : 0 ≤ (3:ℝ)) hnR
-          (by norm_num : 0 ≤ (9/10:ℝ)))
+          (by norm_num : 0 ≤ (13/14:ℝ)))
       have hd_gt1 : (1 : ℝ) < (d : ℝ) := lt_of_lt_of_le hnpow_gt1 hlarge
       have hd_pos : 0 < d := by
         have : (0 : ℝ) < (d : ℝ) := lt_trans (by norm_num : (0:ℝ) < 1) hd_gt1
@@ -3303,14 +3303,14 @@ lemma erase_twoLarge_data {n : ℕ} {lam : Multiset ℕ} (hlam : lam ∈ cycleTy
 /-- The T₂ "rest" term: two large cycles but not the special pair. -/
 lemma sum_cycleTypeWeight_two_large_rest_le (n k : ℕ) (hk : k ∈ K n) (hn3 : 3 ≤ n)
     (hν : ∀ m : ℕ, (n : ℝ) ≤ 6 * (m : ℝ) → m ≤ n →
-      nuNoLong m (⌈(n : ℝ)^(9/10 : ℝ)⌉₊) ≤ (24 : ℝ)^45 / (n : ℝ)^3) :
+      nuNoLong m (⌈(n : ℝ)^(13/14 : ℝ)⌉₊) ≤ (24 : ℝ)^45 / (n : ℝ)^3) :
     (∑ lam ∈ (cycleTypes n).filter (fun lam => lam.lcm = n - k ∧ n - k ∉ lam ∧
         (lam.filter (large n)).card = 2 ∧ ¬ specialPair n k lam),
       cycleTypeWeight n lam) ≤
     ∑ d₁ ∈ largeDivs n k, ∑ d₂ ∈ largeDivs n k,
       (1 / ((d₁ * d₂ : ℕ) : ℝ)) * ((24 : ℝ)^45 / (n : ℝ)^3) := by
   classical
-  let r : ℕ := ⌈(n : ℝ)^(9/10 : ℝ)⌉₊
+  let r : ℕ := ⌈(n : ℝ)^(13/14 : ℝ)⌉₊
   let s' : Finset (Multiset ℕ) := (cycleTypes n).filter (fun lam => lam.lcm = n - k ∧ n - k ∉ lam ∧
       (lam.filter (large n)).card = 2 ∧ ¬ specialPair n k lam)
   let t : Finset (Σ d₁ : ℕ, Σ d₂ : ℕ, Multiset ℕ) := (largeDivs n k).sigma (fun d₁ =>
@@ -3472,14 +3472,14 @@ lemma sum_cycleTypeWeight_two_large_rest_le (n k : ℕ) (hk : k ∈ K n) (hn3 : 
     have hd₁_2 : 2 ≤ d₁ := by
       have hlarge : large n d₁ := mem_largeDivs_large hd₁
       unfold large at hlarge
-      have hnR : (1 : ℝ) < (n : ℝ)^(9/10 : ℝ) := by
+      have hnR : (1 : ℝ) < (n : ℝ)^(13/14 : ℝ) := by
         have hn2 : 2 ≤ n := by omega
-        have h1 : (1 : ℝ) < (2 : ℝ)^(9/10 : ℝ) := by
+        have h1 : (1 : ℝ) < (2 : ℝ)^(13/14 : ℝ) := by
           have h := Real.rpow_lt_rpow (by norm_num : (0 : ℝ) ≤ 1) (by norm_num : (1 : ℝ) < (2 : ℝ))
-            (by norm_num : (0 : ℝ) < (9/10 : ℝ))
+            (by norm_num : (0 : ℝ) < (13/14 : ℝ))
           simpa [Real.one_rpow] using h
-        have h2 : (2 : ℝ)^(9/10 : ℝ) ≤ (n : ℝ)^(9/10 : ℝ) := by
-          exact Real.rpow_le_rpow (by norm_num : 0 ≤ (2:ℝ)) (by exact_mod_cast hn2) (by norm_num : 0 ≤ (9/10:ℝ))
+        have h2 : (2 : ℝ)^(13/14 : ℝ) ≤ (n : ℝ)^(13/14 : ℝ) := by
+          exact Real.rpow_le_rpow (by norm_num : 0 ≤ (2:ℝ)) (by exact_mod_cast hn2) (by norm_num : 0 ≤ (13/14:ℝ))
         exact lt_of_lt_of_le h1 h2
       have hd_gt1 : (1 : ℝ) < (d₁ : ℝ) := lt_of_lt_of_le hnR hlarge
       have hd_pos : 0 < d₁ := by
@@ -3493,14 +3493,14 @@ lemma sum_cycleTypeWeight_two_large_rest_le (n k : ℕ) (hk : k ∈ K n) (hn3 : 
     have hd₂_2 : 2 ≤ d₂ := by
       have hlarge : large n d₂ := mem_largeDivs_large hd₂
       unfold large at hlarge
-      have hnR : (1 : ℝ) < (n : ℝ)^(9/10 : ℝ) := by
+      have hnR : (1 : ℝ) < (n : ℝ)^(13/14 : ℝ) := by
         have hn2 : 2 ≤ n := by omega
-        have h1 : (1 : ℝ) < (2 : ℝ)^(9/10 : ℝ) := by
+        have h1 : (1 : ℝ) < (2 : ℝ)^(13/14 : ℝ) := by
           have h := Real.rpow_lt_rpow (by norm_num : (0 : ℝ) ≤ 1) (by norm_num : (1 : ℝ) < (2 : ℝ))
-            (by norm_num : (0 : ℝ) < (9/10 : ℝ))
+            (by norm_num : (0 : ℝ) < (13/14 : ℝ))
           simpa [Real.one_rpow] using h
-        have h2 : (2 : ℝ)^(9/10 : ℝ) ≤ (n : ℝ)^(9/10 : ℝ) := by
-          exact Real.rpow_le_rpow (by norm_num : 0 ≤ (2:ℝ)) (by exact_mod_cast hn2) (by norm_num : 0 ≤ (9/10:ℝ))
+        have h2 : (2 : ℝ)^(13/14 : ℝ) ≤ (n : ℝ)^(13/14 : ℝ) := by
+          exact Real.rpow_le_rpow (by norm_num : 0 ≤ (2:ℝ)) (by exact_mod_cast hn2) (by norm_num : 0 ≤ (13/14:ℝ))
         exact lt_of_lt_of_le h1 h2
       have hd_gt1 : (1 : ℝ) < (d₂ : ℝ) := lt_of_lt_of_le hnR hlarge
       have hd_pos : 0 < d₂ := by
@@ -4081,14 +4081,14 @@ lemma sum_cycleTypeWeight_ge_three_large_le (n k : ℕ) (hk : k ∈ K n) (hn3 : 
     have hx2 : 2 ≤ x := by
       have hlarge : large n x := mem_largeDivs_large hx
       unfold large at hlarge
-      have hnR : (1 : ℝ) < (n : ℝ)^(9/10 : ℝ) := by
+      have hnR : (1 : ℝ) < (n : ℝ)^(13/14 : ℝ) := by
         have hn2 : 2 ≤ n := by omega
-        have h1 : (1 : ℝ) < (2 : ℝ)^(9/10 : ℝ) := by
+        have h1 : (1 : ℝ) < (2 : ℝ)^(13/14 : ℝ) := by
           have h := Real.rpow_lt_rpow (by norm_num : (0 : ℝ) ≤ 1) (by norm_num : (1 : ℝ) < (2 : ℝ))
-            (by norm_num : (0 : ℝ) < (9/10 : ℝ))
+            (by norm_num : (0 : ℝ) < (13/14 : ℝ))
           simpa [Real.one_rpow] using h
-        have h2 : (2 : ℝ)^(9/10 : ℝ) ≤ (n : ℝ)^(9/10 : ℝ) := by
-          exact Real.rpow_le_rpow (by norm_num : 0 ≤ (2:ℝ)) (by exact_mod_cast hn2) (by norm_num : 0 ≤ (9/10:ℝ))
+        have h2 : (2 : ℝ)^(13/14 : ℝ) ≤ (n : ℝ)^(13/14 : ℝ) := by
+          exact Real.rpow_le_rpow (by norm_num : 0 ≤ (2:ℝ)) (by exact_mod_cast hn2) (by norm_num : 0 ≤ (13/14:ℝ))
         exact lt_of_lt_of_le h1 h2
       have hd_gt1 : (1 : ℝ) < (x : ℝ) := lt_of_lt_of_le hnR hlarge
       have hd_pos : 0 < x := by
@@ -4102,14 +4102,14 @@ lemma sum_cycleTypeWeight_ge_three_large_le (n k : ℕ) (hk : k ∈ K n) (hn3 : 
     have hy2 : 2 ≤ y := by
       have hlarge : large n y := mem_largeDivs_large hy
       unfold large at hlarge
-      have hnR : (1 : ℝ) < (n : ℝ)^(9/10 : ℝ) := by
+      have hnR : (1 : ℝ) < (n : ℝ)^(13/14 : ℝ) := by
         have hn2 : 2 ≤ n := by omega
-        have h1 : (1 : ℝ) < (2 : ℝ)^(9/10 : ℝ) := by
+        have h1 : (1 : ℝ) < (2 : ℝ)^(13/14 : ℝ) := by
           have h := Real.rpow_lt_rpow (by norm_num : (0 : ℝ) ≤ 1) (by norm_num : (1 : ℝ) < (2 : ℝ))
-            (by norm_num : (0 : ℝ) < (9/10 : ℝ))
+            (by norm_num : (0 : ℝ) < (13/14 : ℝ))
           simpa [Real.one_rpow] using h
-        have h2 : (2 : ℝ)^(9/10 : ℝ) ≤ (n : ℝ)^(9/10 : ℝ) := by
-          exact Real.rpow_le_rpow (by norm_num : 0 ≤ (2:ℝ)) (by exact_mod_cast hn2) (by norm_num : 0 ≤ (9/10:ℝ))
+        have h2 : (2 : ℝ)^(13/14 : ℝ) ≤ (n : ℝ)^(13/14 : ℝ) := by
+          exact Real.rpow_le_rpow (by norm_num : 0 ≤ (2:ℝ)) (by exact_mod_cast hn2) (by norm_num : 0 ≤ (13/14:ℝ))
         exact lt_of_lt_of_le h1 h2
       have hd_gt1 : (1 : ℝ) < (y : ℝ) := lt_of_lt_of_le hnR hlarge
       have hd_pos : 0 < y := by
@@ -4123,14 +4123,14 @@ lemma sum_cycleTypeWeight_ge_three_large_le (n k : ℕ) (hk : k ∈ K n) (hn3 : 
     have hz2 : 2 ≤ z := by
       have hlarge : large n z := mem_largeDivs_large hz
       unfold large at hlarge
-      have hnR : (1 : ℝ) < (n : ℝ)^(9/10 : ℝ) := by
+      have hnR : (1 : ℝ) < (n : ℝ)^(13/14 : ℝ) := by
         have hn2 : 2 ≤ n := by omega
-        have h1 : (1 : ℝ) < (2 : ℝ)^(9/10 : ℝ) := by
+        have h1 : (1 : ℝ) < (2 : ℝ)^(13/14 : ℝ) := by
           have h := Real.rpow_lt_rpow (by norm_num : (0 : ℝ) ≤ 1) (by norm_num : (1 : ℝ) < (2 : ℝ))
-            (by norm_num : (0 : ℝ) < (9/10 : ℝ))
+            (by norm_num : (0 : ℝ) < (13/14 : ℝ))
           simpa [Real.one_rpow] using h
-        have h2 : (2 : ℝ)^(9/10 : ℝ) ≤ (n : ℝ)^(9/10 : ℝ) := by
-          exact Real.rpow_le_rpow (by norm_num : 0 ≤ (2:ℝ)) (by exact_mod_cast hn2) (by norm_num : 0 ≤ (9/10:ℝ))
+        have h2 : (2 : ℝ)^(13/14 : ℝ) ≤ (n : ℝ)^(13/14 : ℝ) := by
+          exact Real.rpow_le_rpow (by norm_num : 0 ≤ (2:ℝ)) (by exact_mod_cast hn2) (by norm_num : 0 ≤ (13/14:ℝ))
         exact lt_of_lt_of_le h1 h2
       have hd_gt1 : (1 : ℝ) < (z : ℝ) := lt_of_lt_of_le hnR hlarge
       have hd_pos : 0 < z := by
@@ -4291,16 +4291,16 @@ lemma sum_eq_filter_card_parts (n : ℕ) {s : Finset (Multiset ℕ)} (w : Multis
             rw [hf1, hf2, hf3]
             simp [add_assoc]
 
-/-- `∑_{d ∈ largeDivs n k} 1/d ≤ τ(n-k) · n^(-9/10)`. -/
+/-- `∑_{d ∈ largeDivs n k} 1/d ≤ τ(n-k) · n^(-13/14)`. -/
 lemma sum_inv_largeDivs_le (n k : ℕ) (hn : 0 < n) :
     (∑ d ∈ largeDivs n k, (1 : ℝ) / (d : ℝ)) ≤
-      (tau (n - k) : ℝ) * (n : ℝ)^(-(9/10 : ℝ)) := by
-  have hpoint : ∀ d ∈ largeDivs n k, (1 : ℝ) / (d : ℝ) ≤ (n : ℝ)^(-(9/10 : ℝ)) := by
+      (tau (n - k) : ℝ) * (n : ℝ)^(-(13/14 : ℝ)) := by
+  have hpoint : ∀ d ∈ largeDivs n k, (1 : ℝ) / (d : ℝ) ≤ (n : ℝ)^(-(13/14 : ℝ)) := by
     intro d hd
     have hlarge : large n d := mem_largeDivs_large hd
     unfold large at hlarge
     have hnR : 0 < (n : ℝ) := by exact_mod_cast hn
-    have hnpow_pos : 0 < (n : ℝ)^(9/10 : ℝ) := Real.rpow_pos_of_pos hnR _
+    have hnpow_pos : 0 < (n : ℝ)^(13/14 : ℝ) := Real.rpow_pos_of_pos hnR _
     have hdpos : 0 < (d : ℝ) := by
       have hdlt : d < n - k := mem_largeDivs_lt hd
       have hd_dvd : d ∣ n - k := mem_largeDivs_dvd hd
@@ -4316,20 +4316,20 @@ lemma sum_inv_largeDivs_le (n k : ℕ) (hn : 0 < n) :
           omega
         exact this hmem
       exact_mod_cast (by omega : 0 < d)
-    have hle : 1 / (d : ℝ) ≤ 1 / (n : ℝ)^(9/10 : ℝ) := by
+    have hle : 1 / (d : ℝ) ≤ 1 / (n : ℝ)^(13/14 : ℝ) := by
       exact one_div_le_one_div_of_le hnpow_pos hlarge
     rw [one_div]
-    have hrpow : 1 / (n : ℝ)^(9/10 : ℝ) = (n : ℝ)^(-(9/10 : ℝ)) := by
-      rw [one_div, Real.rpow_neg (by exact_mod_cast (Nat.zero_le n)) (9/10 : ℝ)]
+    have hrpow : 1 / (n : ℝ)^(13/14 : ℝ) = (n : ℝ)^(-(13/14 : ℝ)) := by
+      rw [one_div, Real.rpow_neg (by exact_mod_cast (Nat.zero_le n)) (13/14 : ℝ)]
     simpa [hrpow] using hle
   have hsum : (∑ d ∈ largeDivs n k, (1 : ℝ) / (d : ℝ)) ≤
-      ∑ d ∈ largeDivs n k, (n : ℝ)^(-(9/10 : ℝ)) :=
+      ∑ d ∈ largeDivs n k, (n : ℝ)^(-(13/14 : ℝ)) :=
     Finset.sum_le_sum (fun d hd => hpoint d hd)
   calc (∑ d ∈ largeDivs n k, (1 : ℝ) / (d : ℝ))
-      ≤ ∑ d ∈ largeDivs n k, (n : ℝ)^(-(9/10 : ℝ)) := hsum
-    _ = (largeDivs n k).card * (n : ℝ)^(-(9/10 : ℝ)) := by
+      ≤ ∑ d ∈ largeDivs n k, (n : ℝ)^(-(13/14 : ℝ)) := hsum
+    _ = (largeDivs n k).card * (n : ℝ)^(-(13/14 : ℝ)) := by
           rw [Finset.sum_const, nsmul_eq_mul]
-    _ ≤ (tau (n - k) : ℝ) * (n : ℝ)^(-(9/10 : ℝ)) := by
+    _ ≤ (tau (n - k) : ℝ) * (n : ℝ)^(-(13/14 : ℝ)) := by
           exact mul_le_mul_of_nonneg_right (by exact_mod_cast (largeDivs_card_le_tau n k))
             (Real.rpow_nonneg (by exact_mod_cast (Nat.zero_le n)) _)
 
@@ -4408,39 +4408,39 @@ lemma lcm_eq_two_mul_of_mem_two_pow_log2 (n k : ℕ) (hk : k ∈ K n) (hk2 : 2 �
       simpa [h2sm] using hnk_dvd_lcm
     exact h)
 
-/-- `n^(9/10) ≤ n/4` for `n ≥ 2^20` (so `a = (n-k)/2` is large when `k ≤ n/2`). -/
-lemma rpow_nine_tenth_le_div_four {n : ℕ} (hn : 2^20 ≤ n) : (n : ℝ)^(9/10 : ℝ) ≤ (n : ℝ) / 4 := by
+/-- `n^(13/14) ≤ n/4` for `n ≥ 2^28` (so `a = (n-k)/2` is large when `k ≤ n/2`). -/
+lemma rpow_nine_tenth_le_div_four {n : ℕ} (hn : 2^28 ≤ n) : (n : ℝ)^(13/14 : ℝ) ≤ (n : ℝ) / 4 := by
   have hn0 : 0 ≤ (n : ℝ) := by exact_mod_cast (Nat.zero_le n)
   have hnpos : 0 < (n : ℝ) := by exact_mod_cast (by omega : 0 < n)
   rw [le_div_iff₀ (by norm_num : 0 < (4 : ℝ))]
-  have h4 : (4 : ℝ) ≤ (n : ℝ)^(1/10 : ℝ) := by
+  have h4 : (4 : ℝ) ≤ (n : ℝ)^(1/14 : ℝ) := by
     by_contra h
-    have hlt : (n : ℝ)^(1/10 : ℝ) < 4 := lt_of_not_ge h
-    have hpow10 : ((n : ℝ)^(1/10 : ℝ))^10 < (4 : ℝ)^10 := by
-      exact pow_lt_pow_left₀ hlt (Real.rpow_nonneg hn0 _) (by norm_num : (10 : ℕ) ≠ 0)
-    have h10 : ((n : ℝ)^(1/10 : ℝ))^10 = (n : ℝ) := by
-      rw [show ((n : ℝ)^(1/10 : ℝ))^10 = ((n : ℝ)^(1/10 : ℝ))^(10 : ℝ) by
-        exact (Real.rpow_natCast ((n : ℝ)^(1/10 : ℝ)) 10).symm]
-      rw [show ((n : ℝ)^(1/10 : ℝ))^(10 : ℝ) = (n : ℝ)^((1/10 : ℝ) * 10) by
-        exact (Real.rpow_mul hn0 (1/10 : ℝ) 10).symm]
+    have hlt : (n : ℝ)^(1/14 : ℝ) < 4 := lt_of_not_ge h
+    have hpow10 : ((n : ℝ)^(1/14 : ℝ))^14 < (4 : ℝ)^14 := by
+      exact pow_lt_pow_left₀ hlt (Real.rpow_nonneg hn0 _) (by norm_num : (14 : ℕ) ≠ 0)
+    have h10 : ((n : ℝ)^(1/14 : ℝ))^14 = (n : ℝ) := by
+      rw [show ((n : ℝ)^(1/14 : ℝ))^14 = ((n : ℝ)^(1/14 : ℝ))^(14 : ℝ) by
+        exact (Real.rpow_natCast ((n : ℝ)^(1/14 : ℝ)) 14).symm]
+      rw [show ((n : ℝ)^(1/14 : ℝ))^(14 : ℝ) = (n : ℝ)^((1/14 : ℝ) * 14) by
+        exact (Real.rpow_mul hn0 (1/14 : ℝ) 14).symm]
       norm_num
     rw [h10] at hpow10
     norm_num at hpow10
-    have hn20' : (2 : ℝ)^20 ≤ (n : ℝ) := by exact_mod_cast hn
+    have hn20' : (2 : ℝ)^28 ≤ (n : ℝ) := by exact_mod_cast hn
     norm_num at hn20'
     linarith
-  have hmain : 4 * (n : ℝ)^(9/10 : ℝ) ≤ (n : ℝ)^(1/10 : ℝ) * (n : ℝ)^(9/10 : ℝ) := by
+  have hmain : 4 * (n : ℝ)^(13/14 : ℝ) ≤ (n : ℝ)^(1/14 : ℝ) * (n : ℝ)^(13/14 : ℝ) := by
     exact mul_le_mul_of_nonneg_right h4 (Real.rpow_nonneg hn0 _)
-  have hprod : (n : ℝ)^(1/10 : ℝ) * (n : ℝ)^(9/10 : ℝ) = (n : ℝ) := by
-    rw [← Real.rpow_add hnpos (1/10 : ℝ) (9/10 : ℝ)]
+  have hprod : (n : ℝ)^(1/14 : ℝ) * (n : ℝ)^(13/14 : ℝ) = (n : ℝ) := by
+    rw [← Real.rpow_add hnpos (1/14 : ℝ) (13/14 : ℝ)]
     norm_num
-  calc (n : ℝ)^(9/10 : ℝ) * 4 ≤ (n : ℝ)^(1/10 : ℝ) * (n : ℝ)^(9/10 : ℝ) := by
+  calc (n : ℝ)^(13/14 : ℝ) * 4 ≤ (n : ℝ)^(1/14 : ℝ) * (n : ℝ)^(13/14 : ℝ) := by
         simpa [mul_comm, mul_left_comm, mul_assoc] using hmain
     _ = (n : ℝ) := hprod
 
 /-- `η ≤ T₂s + T₃`: each `2^⌊log₂ k⌋`-cycle contribution lands either in the special pair
 (`2^⌊log₂ k⌋` not large) or in the `≥ 3` large-cycles term (otherwise). -/
-lemma eta_le_special_add_ge_three (n k : ℕ) (hk : k ∈ K n) (hn20 : 2^20 ≤ n) :
+lemma eta_le_special_add_ge_three (n k : ℕ) (hk : k ∈ K n) (hn20 : 2^28 ≤ n) :
     eta n k ≤
       (∑ lam ∈ (cycleTypes n).filter (fun lam => lam.lcm = n - k ∧ n - k ∉ lam ∧ specialPair n k lam),
         cycleTypeWeight n lam) +
@@ -4471,7 +4471,7 @@ lemma eta_le_special_add_ge_three (n k : ℕ) (hk : k ∈ K n) (hn20 : 2^20 ≤ 
         have hη := special_cycleTypeWeight_sum_eq_eta n k hk2 hdiv ha2 hgt hdvd
         have halarge : large n a := by
           dsimp [a, large]
-          have h1 : (n : ℝ)^(9/10 : ℝ) ≤ (n : ℝ) / 4 := rpow_nine_tenth_le_div_four hn20
+          have h1 : (n : ℝ)^(13/14 : ℝ) ≤ (n : ℝ) / 4 := rpow_nine_tenth_le_div_four hn20
           have h2 : (n : ℝ) / 4 ≤ (a : ℝ) := by
             have hnk : (n : ℝ) ≤ 2 * ((n - k : ℕ) : ℝ) := by
               have hk_lt_sub : k < n - k := k_lt_sub_of_mem_K hk (by omega : 5 ≤ n)
@@ -4740,42 +4740,42 @@ lemma restProb_le_T_parts (n k : ℕ) :
   nlinarith [h0, h1, h2s, h2r, h3]
 
 /-- **Proposition 4.1** (`prop:exact_order`): for `k ∈ Kₙ`,
-`pₙ(n-k) = 1/(n-k) + η(n,k) + O(n^{-5/2})`. -/
+`pₙ(n-k) = 1/(n-k) + η(n,k) + O(n^{-149/56})`. -/
 theorem prop_exact_order :
     ∃ C : ℝ, 0 < C ∧ ∃ N : ℕ, ∀ n : ℕ, N ≤ n → ∀ k : ℕ, k ∈ K n →
-      |p n (n - k) - ((1 : ℝ) / ((n - k : ℕ) : ℝ) + eta n k)| ≤ C / (n : ℝ) ^ (5 / 2 : ℝ) := by
-  rcases tau_pow_twenty_le with ⟨Cτ, hCτ⟩
+      |p n (n - k) - ((1 : ℝ) / ((n - k : ℕ) : ℝ) + eta n k)| ≤ C / (n : ℝ) ^ (149 / 56 : ℝ) := by
+  rcases tau_pow_twentyfour_le with ⟨Cτ, hCτ⟩
   have huniform2 := nuNoLong_le_const_div_cube_uniform
   have huniform6 := nuNoLong_le_const_div_cube_uniform_sixth
   have hnunl := nuNoLong_bound
   rcases Filter.eventually_atTop.mp huniform2 with ⟨N₁, hN₁⟩
   rcases Filter.eventually_atTop.mp huniform6 with ⟨N₂, hN₂⟩
   rcases Filter.eventually_atTop.mp hnunl with ⟨N₃, hN₃⟩
-  let N₀ : ℕ := max (max (max 10 (2^20)) (max N₁ N₂)) N₃
-  let C₀ : ℝ := (4 : ℝ)^45 + (Cτ : ℝ)^(1/20 : ℝ) * (4 : ℝ)^45 +
-    (Cτ : ℝ)^(1/10 : ℝ) * (24 : ℝ)^45 + 2 * (Cτ : ℝ)^(3/20 : ℝ)
+  let N₀ : ℕ := max (max (max 10 (2^28)) (max N₁ N₂)) N₃
+  let C₀ : ℝ := (4 : ℝ)^45 + (Cτ : ℝ)^(1/24 : ℝ) * (4 : ℝ)^45 +
+    (Cτ : ℝ)^(1/12 : ℝ) * (24 : ℝ)^45 + 2 * (Cτ : ℝ)^(1/8 : ℝ)
   refine ⟨C₀, ?hC₀, N₀, ?_⟩
   · dsimp [C₀]
     have hpos : 0 < (4 : ℝ)^45 := by norm_num
-    have h2 : 0 ≤ (Cτ : ℝ)^(1/20 : ℝ) * (4 : ℝ)^45 :=
-      mul_nonneg (Real.rpow_nonneg (Nat.cast_nonneg Cτ) (1/20 : ℝ)) (by norm_num : 0 ≤ (4 : ℝ)^45)
-    have h3 : 0 ≤ (Cτ : ℝ)^(1/10 : ℝ) * (24 : ℝ)^45 :=
-      mul_nonneg (Real.rpow_nonneg (Nat.cast_nonneg Cτ) (1/10 : ℝ)) (by norm_num : 0 ≤ (24 : ℝ)^45)
-    have h4 : 0 ≤ 2 * (Cτ : ℝ)^(3/20 : ℝ) :=
-      mul_nonneg (by norm_num : 0 ≤ (2 : ℝ)) (Real.rpow_nonneg (Nat.cast_nonneg Cτ) (3/20 : ℝ))
+    have h2 : 0 ≤ (Cτ : ℝ)^(1/24 : ℝ) * (4 : ℝ)^45 :=
+      mul_nonneg (Real.rpow_nonneg (Nat.cast_nonneg Cτ) (1/24 : ℝ)) (by norm_num : 0 ≤ (4 : ℝ)^45)
+    have h3 : 0 ≤ (Cτ : ℝ)^(1/12 : ℝ) * (24 : ℝ)^45 :=
+      mul_nonneg (Real.rpow_nonneg (Nat.cast_nonneg Cτ) (1/12 : ℝ)) (by norm_num : 0 ≤ (24 : ℝ)^45)
+    have h4 : 0 ≤ 2 * (Cτ : ℝ)^(1/8 : ℝ) :=
+      mul_nonneg (by norm_num : 0 ≤ (2 : ℝ)) (Real.rpow_nonneg (Nat.cast_nonneg Cτ) (1/8 : ℝ))
     nlinarith
   · intro n hn k hk
     have hn10 : 10 ≤ n := by
       have hN₀ : N₀ ≤ n := hn
       dsimp [N₀] at hN₀
-      have h1 : max (max 10 (2^20)) (max N₁ N₂) ≤ n := le_trans (le_max_left _ _) hN₀
-      have h2 : max 10 (2^20) ≤ n := le_trans (le_max_left _ _) h1
+      have h1 : max (max 10 (2^28)) (max N₁ N₂) ≤ n := le_trans (le_max_left _ _) hN₀
+      have h2 : max 10 (2^28) ≤ n := le_trans (le_max_left _ _) h1
       exact le_trans (le_max_left _ _) h2
-    have hn20 : 2^20 ≤ n := by
+    have hn20 : 2^28 ≤ n := by
       have hN₀ : N₀ ≤ n := hn
       dsimp [N₀] at hN₀
-      have h1 : max (max 10 (2^20)) (max N₁ N₂) ≤ n := le_trans (le_max_left _ _) hN₀
-      have h2 : max 10 (2^20) ≤ n := le_trans (le_max_left _ _) h1
+      have h1 : max (max 10 (2^28)) (max N₁ N₂) ≤ n := le_trans (le_max_left _ _) hN₀
+      have h2 : max 10 (2^28) ≤ n := le_trans (le_max_left _ _) h1
       exact le_trans (le_max_right _ _) h2
     have hn3 : 3 ≤ n := by omega
     have hn5 : 5 ≤ n := by omega
@@ -4783,34 +4783,34 @@ theorem prop_exact_order :
     have hk_lt : k < n := Finset.mem_range.mp (Finset.mem_filter.mp hk).1
     have hnRnn : 0 ≤ (n : ℝ) := by exact_mod_cast (Nat.zero_le n)
     have hnRpos : 0 < (n : ℝ) := by exact_mod_cast (by omega : 0 < n)
-    have hτ : (tau (n - k) : ℝ) ≤ (Cτ : ℝ)^(1/20 : ℝ) * (n : ℝ)^(1/20 : ℝ) :=
-      tau_sub_le_twentieth n k Cτ (hCτ (n - k))
+    have hτ : (tau (n - k) : ℝ) ≤ (Cτ : ℝ)^(1/24 : ℝ) * (n : ℝ)^(1/24 : ℝ) :=
+      tau_sub_le_twentyfourth n k Cτ (hCτ (n - k))
     have hsum_inv : (∑ d ∈ largeDivs n k, (1 / (d : ℝ))) ≤
-        (Cτ : ℝ)^(1/20 : ℝ) * (n : ℝ)^(1/20 : ℝ) * (n : ℝ)^(-(9/10 : ℝ)) := by
-      have hnpow : 0 ≤ (n : ℝ)^(-(9/10 : ℝ)) := Real.rpow_nonneg hnRnn _
+        (Cτ : ℝ)^(1/24 : ℝ) * (n : ℝ)^(1/24 : ℝ) * (n : ℝ)^(-(13/14 : ℝ)) := by
+      have hnpow : 0 ≤ (n : ℝ)^(-(13/14 : ℝ)) := Real.rpow_nonneg hnRnn _
       exact le_trans (sum_inv_largeDivs_le n k hnpos)
         (mul_le_mul_of_nonneg_right hτ hnpow)
     have hν2 : ∀ m : ℕ, (n : ℝ) ≤ 2 * (m : ℝ) → m ≤ n →
-        nuNoLong m (⌈(n : ℝ)^(9/10 : ℝ)⌉₊) ≤ (4 : ℝ)^45 / (n : ℝ)^3 := by
+        nuNoLong m (⌈(n : ℝ)^(13/14 : ℝ)⌉₊) ≤ (4 : ℝ)^45 / (n : ℝ)^3 := by
       intro m hm hmle
       have hN₁n : N₁ ≤ n := by
         have hN₀ : N₀ ≤ n := hn
         dsimp [N₀] at hN₀
-        have h1 : max (max 10 (2^20)) (max N₁ N₂) ≤ n := le_trans (le_max_left _ _) hN₀
+        have h1 : max (max 10 (2^28)) (max N₁ N₂) ≤ n := le_trans (le_max_left _ _) hN₀
         have h2 : max N₁ N₂ ≤ n := le_trans (le_max_right _ _) h1
         exact le_trans (le_max_left _ _) h2
       exact hN₁ n hN₁n m hm hmle
     have hν6 : ∀ m : ℕ, (n : ℝ) ≤ 6 * (m : ℝ) → m ≤ n →
-        nuNoLong m (⌈(n : ℝ)^(9/10 : ℝ)⌉₊) ≤ (24 : ℝ)^45 / (n : ℝ)^3 := by
+        nuNoLong m (⌈(n : ℝ)^(13/14 : ℝ)⌉₊) ≤ (24 : ℝ)^45 / (n : ℝ)^3 := by
       intro m hm hmle
       have hN₂n : N₂ ≤ n := by
         have hN₀ : N₀ ≤ n := hn
         dsimp [N₀] at hN₀
-        have h1 : max (max 10 (2^20)) (max N₁ N₂) ≤ n := le_trans (le_max_left _ _) hN₀
+        have h1 : max (max 10 (2^28)) (max N₁ N₂) ≤ n := le_trans (le_max_left _ _) hN₀
         have h2 : max N₁ N₂ ≤ n := le_trans (le_max_right _ _) h1
         exact le_trans (le_max_right _ _) h2
       exact hN₂ n hN₂n m hm hmle
-    have hν₀ : nuNoLong n (⌈(n : ℝ)^(9/10 : ℝ)⌉₊) ≤ (2^45 : ℝ) / (n : ℝ)^3 := by
+    have hν₀ : nuNoLong n (⌈(n : ℝ)^(13/14 : ℝ)⌉₊) ≤ (2^45 : ℝ) / (n : ℝ)^3 := by
       have hN₃n : N₃ ≤ n := by
         have hN₀ : N₀ ≤ n := hn
         dsimp [N₀] at hN₀
@@ -4830,9 +4830,9 @@ theorem prop_exact_order :
       exact le_trans (sum_cycleTypeWeight_no_large_le_nu n) hν₀
     -- T1
     have hT1 : (∑ lam ∈ (cycleTypes n).filter (fun lam => lam.lcm = n - k ∧ n - k ∉ lam ∧ (lam.filter (large n)).card = 1), cycleTypeWeight n lam) ≤
-        (Cτ : ℝ)^(1/20 : ℝ) * (4 : ℝ)^45 / (n : ℝ)^(5/2 : ℝ) := by
+        (Cτ : ℝ)^(1/24 : ℝ) * (4 : ℝ)^45 / (n : ℝ)^(149/56 : ℝ) := by
       have h1 := sum_cycleTypeWeight_one_large_le n k hn3 hk_lt
-      have hν_d : ∀ d ∈ largeDivs n k, nuNoLong (n - d) (⌈(n : ℝ)^(9/10 : ℝ)⌉₊) ≤ (4 : ℝ)^45 / (n : ℝ)^3 := by
+      have hν_d : ∀ d ∈ largeDivs n k, nuNoLong (n - d) (⌈(n : ℝ)^(13/14 : ℝ)⌉₊) ≤ (4 : ℝ)^45 / (n : ℝ)^3 := by
         intro d hd
         apply hν2 (n - d)
         · have hd_le_half : d ≤ (n - k) / 2 := proper_divisor_le_half (mem_largeDivs_dvd hd) (mem_largeDivs_lt hd)
@@ -4843,49 +4843,49 @@ theorem prop_exact_order :
             omega
           exact_mod_cast (by omega : n ≤ 2 * (n - d))
         · omega
-      have hsum_le : (∑ d ∈ largeDivs n k, (1 / (d : ℝ)) * nuNoLong (n - d) (⌈(n : ℝ)^(9/10 : ℝ)⌉₊)) ≤
+      have hsum_le : (∑ d ∈ largeDivs n k, (1 / (d : ℝ)) * nuNoLong (n - d) (⌈(n : ℝ)^(13/14 : ℝ)⌉₊)) ≤
           (∑ d ∈ largeDivs n k, (1 / (d : ℝ))) * ((4 : ℝ)^45 / (n : ℝ)^3) := by
-        calc (∑ d ∈ largeDivs n k, (1 / (d : ℝ)) * nuNoLong (n - d) (⌈(n : ℝ)^(9/10 : ℝ)⌉₊))
+        calc (∑ d ∈ largeDivs n k, (1 / (d : ℝ)) * nuNoLong (n - d) (⌈(n : ℝ)^(13/14 : ℝ)⌉₊))
             ≤ ∑ d ∈ largeDivs n k, (1 / (d : ℝ)) * ((4 : ℝ)^45 / (n : ℝ)^3) := by
                 exact Finset.sum_le_sum (fun d hd => mul_le_mul_of_nonneg_left (hν_d d hd) (by positivity))
           _ = (∑ d ∈ largeDivs n k, (1 / (d : ℝ))) * ((4 : ℝ)^45 / (n : ℝ)^3) := by
                 rw [Finset.sum_mul]
       calc (∑ lam ∈ (cycleTypes n).filter (fun lam => lam.lcm = n - k ∧ n - k ∉ lam ∧ (lam.filter (large n)).card = 1), cycleTypeWeight n lam)
-          ≤ ∑ d ∈ largeDivs n k, (1 / (d : ℝ)) * nuNoLong (n - d) (⌈(n : ℝ)^(9/10 : ℝ)⌉₊) := h1
+          ≤ ∑ d ∈ largeDivs n k, (1 / (d : ℝ)) * nuNoLong (n - d) (⌈(n : ℝ)^(13/14 : ℝ)⌉₊) := h1
         _ ≤ (∑ d ∈ largeDivs n k, (1 / (d : ℝ))) * ((4 : ℝ)^45 / (n : ℝ)^3) := hsum_le
-        _ ≤ ((Cτ : ℝ)^(1/20 : ℝ) * (n : ℝ)^(1/20 : ℝ) * (n : ℝ)^(-(9/10 : ℝ))) * ((4 : ℝ)^45 / (n : ℝ)^3) := by
+        _ ≤ ((Cτ : ℝ)^(1/24 : ℝ) * (n : ℝ)^(1/24 : ℝ) * (n : ℝ)^(-(13/14 : ℝ))) * ((4 : ℝ)^45 / (n : ℝ)^3) := by
               exact mul_le_mul_of_nonneg_right hsum_inv (by positivity)
-        _ = (Cτ : ℝ)^(1/20 : ℝ) * (4 : ℝ)^45 * ((n : ℝ)^(1/20 : ℝ) * (n : ℝ)^(-(9/10 : ℝ)) / (n : ℝ)^3) := by
+        _ = (Cτ : ℝ)^(1/24 : ℝ) * (4 : ℝ)^45 * ((n : ℝ)^(1/24 : ℝ) * (n : ℝ)^(-(13/14 : ℝ)) / (n : ℝ)^3) := by
               ring
-        _ ≤ (Cτ : ℝ)^(1/20 : ℝ) * (4 : ℝ)^45 / (n : ℝ)^(5/2 : ℝ) := by
-              have hpow : (n : ℝ)^(1/20 : ℝ) * (n : ℝ)^(-(9/10 : ℝ)) / (n : ℝ)^3 =
-                  (n : ℝ)^(-(77/20 : ℝ)) := by
-                have h1' : (n : ℝ)^(1/20 : ℝ) * (n : ℝ)^(-(9/10 : ℝ)) = (n : ℝ)^(-(17/20 : ℝ)) := by
-                  rw [← Real.rpow_add hnRpos (1/20 : ℝ) (-(9/10 : ℝ))]
+        _ ≤ (Cτ : ℝ)^(1/24 : ℝ) * (4 : ℝ)^45 / (n : ℝ)^(149/56 : ℝ) := by
+              have hpow : (n : ℝ)^(1/24 : ℝ) * (n : ℝ)^(-(13/14 : ℝ)) / (n : ℝ)^3 =
+                  (n : ℝ)^(-(653/168 : ℝ)) := by
+                have h1' : (n : ℝ)^(1/24 : ℝ) * (n : ℝ)^(-(13/14 : ℝ)) = (n : ℝ)^(-(149/168 : ℝ)) := by
+                  rw [← Real.rpow_add hnRpos (1/24 : ℝ) (-(13/14 : ℝ))]
                   congr 1
                   norm_num
                 rw [h1']
-                rw [div_eq_mul_inv (a := (n : ℝ)^(-(17/20 : ℝ))) (b := (n : ℝ)^3)]
+                rw [div_eq_mul_inv (a := (n : ℝ)^(-(149/168 : ℝ))) (b := (n : ℝ)^3)]
                 have h3r : (n : ℝ)^3 = (n : ℝ)^(3 : ℝ) := (Real.rpow_natCast (n : ℝ) 3).symm
                 rw [h3r]
                 have hinv : ((n : ℝ)^(3 : ℝ))⁻¹ = (n : ℝ)^(-(3 : ℝ)) := by
                   rw [Real.rpow_neg (le_of_lt hnRpos) 3]
                 rw [hinv]
-                rw [← Real.rpow_add hnRpos (-(17/20 : ℝ)) (-(3 : ℝ))]
+                rw [← Real.rpow_add hnRpos (-(149/168 : ℝ)) (-(3 : ℝ))]
                 congr 1
                 norm_num
               rw [hpow]
-              have hle : (n : ℝ)^(-(77/20 : ℝ)) ≤ (n : ℝ)^(-(5/2 : ℝ)) := by
+              have hle : (n : ℝ)^(-(653/168 : ℝ)) ≤ (n : ℝ)^(-(149/56 : ℝ)) := by
                 refine Real.rpow_le_rpow_of_exponent_le ?_ ?_
                 · exact by exact_mod_cast (by omega : 1 ≤ n)
                 · norm_num
-              have hnonneg : 0 ≤ (Cτ : ℝ)^(1/20 : ℝ) * (4 : ℝ)^45 :=
-                mul_nonneg (Real.rpow_nonneg (Nat.cast_nonneg Cτ) (1/20 : ℝ)) (by norm_num : 0 ≤ (4 : ℝ)^45)
-              have h3' : (Cτ : ℝ)^(1/20 : ℝ) * (4 : ℝ)^45 * (n : ℝ)^(-(77/20 : ℝ)) ≤
-                  (Cτ : ℝ)^(1/20 : ℝ) * (4 : ℝ)^45 * (n : ℝ)^(-(5/2 : ℝ)) :=
+              have hnonneg : 0 ≤ (Cτ : ℝ)^(1/24 : ℝ) * (4 : ℝ)^45 :=
+                mul_nonneg (Real.rpow_nonneg (Nat.cast_nonneg Cτ) (1/24 : ℝ)) (by norm_num : 0 ≤ (4 : ℝ)^45)
+              have h3' : (Cτ : ℝ)^(1/24 : ℝ) * (4 : ℝ)^45 * (n : ℝ)^(-(653/168 : ℝ)) ≤
+                  (Cτ : ℝ)^(1/24 : ℝ) * (4 : ℝ)^45 * (n : ℝ)^(-(149/56 : ℝ)) :=
                 mul_le_mul_of_nonneg_left hle hnonneg
-              rw [div_eq_mul_inv (a := (Cτ : ℝ)^(1/20 : ℝ) * (4 : ℝ)^45) (b := (n : ℝ)^(5/2 : ℝ))]
-              rw [← Real.rpow_neg hnRnn (5/2 : ℝ)]
+              rw [div_eq_mul_inv (a := (Cτ : ℝ)^(1/24 : ℝ) * (4 : ℝ)^45) (b := (n : ℝ)^(149/56 : ℝ))]
+              rw [← Real.rpow_neg hnRnn (149/56 : ℝ)]
               exact h3'
     -- T2 special
     have hT2s : (∑ lam ∈ (cycleTypes n).filter (fun lam => lam.lcm = n - k ∧ n - k ∉ lam ∧ specialPair n k lam), cycleTypeWeight n lam) ≤
@@ -4897,19 +4897,19 @@ theorem prop_exact_order :
       exact eta_le_special_add_ge_three n k hk hn20
     -- T2 rest
     have hT2r : (∑ lam ∈ (cycleTypes n).filter (fun lam => lam.lcm = n - k ∧ n - k ∉ lam ∧ (lam.filter (large n)).card = 2 ∧ ¬ specialPair n k lam), cycleTypeWeight n lam) ≤
-        (Cτ : ℝ)^(1/10 : ℝ) * (24 : ℝ)^45 / (n : ℝ)^(5/2 : ℝ) := by
+        (Cτ : ℝ)^(1/12 : ℝ) * (24 : ℝ)^45 / (n : ℝ)^(149/56 : ℝ) := by
       have h1 := sum_cycleTypeWeight_two_large_rest_le n k hk hn3 hν6
       have hsum_inv2 : (∑ d₁ ∈ largeDivs n k, ∑ d₂ ∈ largeDivs n k, (1 / ((d₁ * d₂ : ℕ) : ℝ))) ≤
-          ((Cτ : ℝ)^(1/20 : ℝ) * (n : ℝ)^(1/20 : ℝ) * (n : ℝ)^(-(9/10 : ℝ)))^2 := by
+          ((Cτ : ℝ)^(1/24 : ℝ) * (n : ℝ)^(1/24 : ℝ) * (n : ℝ)^(-(13/14 : ℝ)))^2 := by
         have hsum₁_nn : 0 ≤ (∑ d₁ ∈ largeDivs n k, (1 / (d₁ : ℝ))) := by
           refine Finset.sum_nonneg (fun d hd => ?_)
           positivity
         have hsum₂_nn : 0 ≤ (∑ d₂ ∈ largeDivs n k, (1 / (d₂ : ℝ))) := by
           refine Finset.sum_nonneg (fun d hd => ?_)
           positivity
-        have hX : 0 ≤ (Cτ : ℝ)^(1/20 : ℝ) * (n : ℝ)^(1/20 : ℝ) * (n : ℝ)^(-(9/10 : ℝ)) := by
-          exact mul_nonneg (mul_nonneg (Real.rpow_nonneg (Nat.cast_nonneg Cτ) (1/20 : ℝ))
-            (Real.rpow_nonneg hnRnn (1/20 : ℝ))) (Real.rpow_nonneg hnRnn (-(9/10 : ℝ)))
+        have hX : 0 ≤ (Cτ : ℝ)^(1/24 : ℝ) * (n : ℝ)^(1/24 : ℝ) * (n : ℝ)^(-(13/14 : ℝ)) := by
+          exact mul_nonneg (mul_nonneg (Real.rpow_nonneg (Nat.cast_nonneg Cτ) (1/24 : ℝ))
+            (Real.rpow_nonneg hnRnn (1/24 : ℝ))) (Real.rpow_nonneg hnRnn (-(13/14 : ℝ)))
         calc (∑ d₁ ∈ largeDivs n k, ∑ d₂ ∈ largeDivs n k, (1 / ((d₁ * d₂ : ℕ) : ℝ)))
             = (∑ d₁ ∈ largeDivs n k, (1 / (d₁ : ℝ))) * (∑ d₂ ∈ largeDivs n k, (1 / (d₂ : ℝ))) := by
                 rw [Finset.sum_mul_sum]
@@ -4919,7 +4919,7 @@ theorem prop_exact_order :
                 intro d₂ hd₂
                 rw [Nat.cast_mul]
                 rw [one_div_mul_one_div]
-          _ ≤ ((Cτ : ℝ)^(1/20 : ℝ) * (n : ℝ)^(1/20 : ℝ) * (n : ℝ)^(-(9/10 : ℝ)))^2 := by
+          _ ≤ ((Cτ : ℝ)^(1/24 : ℝ) * (n : ℝ)^(1/24 : ℝ) * (n : ℝ)^(-(13/14 : ℝ)))^2 := by
                 simpa only [pow_two] using (mul_le_mul hsum_inv hsum_inv hsum₂_nn hX)
       calc (∑ lam ∈ (cycleTypes n).filter (fun lam => lam.lcm = n - k ∧ n - k ∉ lam ∧ (lam.filter (large n)).card = 2 ∧ ¬ specialPair n k lam), cycleTypeWeight n lam)
           ≤ ∑ d₁ ∈ largeDivs n k, ∑ d₂ ∈ largeDivs n k, (1 / ((d₁ * d₂ : ℕ) : ℝ)) * ((24 : ℝ)^45 / (n : ℝ)^3) := h1
@@ -4928,68 +4928,68 @@ theorem prop_exact_order :
               apply Finset.sum_congr rfl
               intro d₁ hd₁
               exact (Finset.sum_mul (largeDivs n k) (fun d₂ => (1 / ((d₁ * d₂ : ℕ) : ℝ))) ((24 : ℝ)^45 / (n : ℝ)^3)).symm
-        _ ≤ ((Cτ : ℝ)^(1/20 : ℝ) * (n : ℝ)^(1/20 : ℝ) * (n : ℝ)^(-(9/10 : ℝ)))^2 * ((24 : ℝ)^45 / (n : ℝ)^3) := by
+        _ ≤ ((Cτ : ℝ)^(1/24 : ℝ) * (n : ℝ)^(1/24 : ℝ) * (n : ℝ)^(-(13/14 : ℝ)))^2 * ((24 : ℝ)^45 / (n : ℝ)^3) := by
               exact mul_le_mul_of_nonneg_right hsum_inv2 (by positivity)
-        _ ≤ (Cτ : ℝ)^(1/10 : ℝ) * (24 : ℝ)^45 / (n : ℝ)^(5/2 : ℝ) := by
-              have hnonneg : 0 ≤ (Cτ : ℝ)^(1/10 : ℝ) * (24 : ℝ)^45 :=
-                mul_nonneg (Real.rpow_nonneg (Nat.cast_nonneg Cτ) (1/10 : ℝ)) (by norm_num : 0 ≤ (24 : ℝ)^45)
-              have hpow : ((Cτ : ℝ)^(1/20 : ℝ) * (n : ℝ)^(1/20 : ℝ) * (n : ℝ)^(-(9/10 : ℝ)))^2 *
+        _ ≤ (Cτ : ℝ)^(1/12 : ℝ) * (24 : ℝ)^45 / (n : ℝ)^(149/56 : ℝ) := by
+              have hnonneg : 0 ≤ (Cτ : ℝ)^(1/12 : ℝ) * (24 : ℝ)^45 :=
+                mul_nonneg (Real.rpow_nonneg (Nat.cast_nonneg Cτ) (1/12 : ℝ)) (by norm_num : 0 ≤ (24 : ℝ)^45)
+              have hpow : ((Cτ : ℝ)^(1/24 : ℝ) * (n : ℝ)^(1/24 : ℝ) * (n : ℝ)^(-(13/14 : ℝ)))^2 *
                   ((24 : ℝ)^45 / (n : ℝ)^3) =
-                  (Cτ : ℝ)^(1/10 : ℝ) * (24 : ℝ)^45 * (((n : ℝ)^(-(17/20 : ℝ)))^2 / (n : ℝ)^3) := by
-                have h1' : ((Cτ : ℝ)^(1/20 : ℝ) * (n : ℝ)^(1/20 : ℝ) * (n : ℝ)^(-(9/10 : ℝ)))^2 =
-                    (Cτ : ℝ)^(1/10 : ℝ) * ((n : ℝ)^(-(17/20 : ℝ)))^2 := by
-                  have h2' : (n : ℝ)^(1/20 : ℝ) * (n : ℝ)^(-(9/10 : ℝ)) = (n : ℝ)^(-(17/20 : ℝ)) := by
-                    rw [← Real.rpow_add hnRpos (1/20 : ℝ) (-(9/10 : ℝ))]
+                  (Cτ : ℝ)^(1/12 : ℝ) * (24 : ℝ)^45 * (((n : ℝ)^(-(149/168 : ℝ)))^2 / (n : ℝ)^3) := by
+                have h1' : ((Cτ : ℝ)^(1/24 : ℝ) * (n : ℝ)^(1/24 : ℝ) * (n : ℝ)^(-(13/14 : ℝ)))^2 =
+                    (Cτ : ℝ)^(1/12 : ℝ) * ((n : ℝ)^(-(149/168 : ℝ)))^2 := by
+                  have h2' : (n : ℝ)^(1/24 : ℝ) * (n : ℝ)^(-(13/14 : ℝ)) = (n : ℝ)^(-(149/168 : ℝ)) := by
+                    rw [← Real.rpow_add hnRpos (1/24 : ℝ) (-(13/14 : ℝ))]
                     congr 1
                     norm_num
-                  rw [show ((Cτ : ℝ)^(1/20 : ℝ) * (n : ℝ)^(1/20 : ℝ) * (n : ℝ)^(-(9/10 : ℝ)))^2 =
-                      ((Cτ : ℝ)^(1/20 : ℝ) * ((n : ℝ)^(1/20 : ℝ) * (n : ℝ)^(-(9/10 : ℝ))))^2 by ring]
+                  rw [show ((Cτ : ℝ)^(1/24 : ℝ) * (n : ℝ)^(1/24 : ℝ) * (n : ℝ)^(-(13/14 : ℝ)))^2 =
+                      ((Cτ : ℝ)^(1/24 : ℝ) * ((n : ℝ)^(1/24 : ℝ) * (n : ℝ)^(-(13/14 : ℝ))))^2 by ring]
                   rw [mul_pow]
                   rw [h2']
-                  have h3' : ((Cτ : ℝ)^(1/20 : ℝ))^2 = (Cτ : ℝ)^(1/10 : ℝ) := by
-                    rw [← Real.rpow_natCast ((Cτ : ℝ)^(1/20 : ℝ)) 2]
-                    rw [← Real.rpow_mul (Nat.cast_nonneg Cτ) (1/20 : ℝ) ((2 : ℕ) : ℝ)]
+                  have h3' : ((Cτ : ℝ)^(1/24 : ℝ))^2 = (Cτ : ℝ)^(1/12 : ℝ) := by
+                    rw [← Real.rpow_natCast ((Cτ : ℝ)^(1/24 : ℝ)) 2]
+                    rw [← Real.rpow_mul (Nat.cast_nonneg Cτ) (1/24 : ℝ) ((2 : ℕ) : ℝ)]
                     congr 1
                     norm_num
                   rw [h3']
                 rw [h1']
                 rw [div_eq_mul_inv (a := (24 : ℝ)^45) (b := (n : ℝ)^3)]
-                rw [div_eq_mul_inv (a := ((n : ℝ)^(-(17/20 : ℝ)))^2) (b := (n : ℝ)^3)]
+                rw [div_eq_mul_inv (a := ((n : ℝ)^(-(149/168 : ℝ)))^2) (b := (n : ℝ)^3)]
                 ring
               rw [hpow]
-              have hpow2 : ((n : ℝ)^(-(17/20 : ℝ)))^2 = (n : ℝ)^(-(17/10 : ℝ)) := by
-                rw [← Real.rpow_natCast ((n : ℝ)^(-(17/20 : ℝ))) 2]
-                rw [← Real.rpow_mul hnRnn (-(17/20 : ℝ)) ((2 : ℕ) : ℝ)]
+              have hpow2 : ((n : ℝ)^(-(149/168 : ℝ)))^2 = (n : ℝ)^(-(149/84 : ℝ)) := by
+                rw [← Real.rpow_natCast ((n : ℝ)^(-(149/168 : ℝ))) 2]
+                rw [← Real.rpow_mul hnRnn (-(149/168 : ℝ)) ((2 : ℕ) : ℝ)]
                 congr 1
                 norm_num
               rw [hpow2]
-              have hfrac : (n : ℝ)^(-(17/10 : ℝ)) / (n : ℝ)^3 = (n : ℝ)^(-(47/10 : ℝ)) := by
-                rw [div_eq_mul_inv (a := (n : ℝ)^(-(17/10 : ℝ))) (b := (n : ℝ)^3)]
+              have hfrac : (n : ℝ)^(-(149/84 : ℝ)) / (n : ℝ)^3 = (n : ℝ)^(-(401/84 : ℝ)) := by
+                rw [div_eq_mul_inv (a := (n : ℝ)^(-(149/84 : ℝ))) (b := (n : ℝ)^3)]
                 have h3r : (n : ℝ)^3 = (n : ℝ)^(3 : ℝ) := (Real.rpow_natCast (n : ℝ) 3).symm
                 rw [h3r]
                 have hinv : ((n : ℝ)^(3 : ℝ))⁻¹ = (n : ℝ)^(-(3 : ℝ)) := by
                   rw [Real.rpow_neg (le_of_lt hnRpos) 3]
                 rw [hinv]
-                rw [← Real.rpow_add hnRpos (-(17/10 : ℝ)) (-(3 : ℝ))]
+                rw [← Real.rpow_add hnRpos (-(149/84 : ℝ)) (-(3 : ℝ))]
                 congr 1
                 norm_num
               rw [hfrac]
-              have hle2 : (n : ℝ)^(-(47/10 : ℝ)) ≤ (n : ℝ)^(-(5/2 : ℝ)) := by
+              have hle2 : (n : ℝ)^(-(401/84 : ℝ)) ≤ (n : ℝ)^(-(149/56 : ℝ)) := by
                 refine Real.rpow_le_rpow_of_exponent_le ?_ ?_
                 · exact by exact_mod_cast (by omega : 1 ≤ n)
                 · norm_num
-              have h3' : (Cτ : ℝ)^(1/10 : ℝ) * (24 : ℝ)^45 * (n : ℝ)^(-(47/10 : ℝ)) ≤
-                  (Cτ : ℝ)^(1/10 : ℝ) * (24 : ℝ)^45 * (n : ℝ)^(-(5/2 : ℝ)) :=
+              have h3' : (Cτ : ℝ)^(1/12 : ℝ) * (24 : ℝ)^45 * (n : ℝ)^(-(401/84 : ℝ)) ≤
+                  (Cτ : ℝ)^(1/12 : ℝ) * (24 : ℝ)^45 * (n : ℝ)^(-(149/56 : ℝ)) :=
                 mul_le_mul_of_nonneg_left hle2 hnonneg
-              rw [div_eq_mul_inv (a := (Cτ : ℝ)^(1/10 : ℝ) * (24 : ℝ)^45) (b := (n : ℝ)^(5/2 : ℝ))]
-              rw [← Real.rpow_neg hnRnn (5/2 : ℝ)]
+              rw [div_eq_mul_inv (a := (Cτ : ℝ)^(1/12 : ℝ) * (24 : ℝ)^45) (b := (n : ℝ)^(149/56 : ℝ))]
+              rw [← Real.rpow_neg hnRnn (149/56 : ℝ)]
               exact h3'
     -- T3
     have hT3 : (∑ lam ∈ (cycleTypes n).filter (fun lam => lam.lcm = n - k ∧ n - k ∉ lam ∧ 3 ≤ (lam.filter (large n)).card), cycleTypeWeight n lam) ≤
-        (Cτ : ℝ)^(3/20 : ℝ) / (n : ℝ)^(5/2 : ℝ) := by
+        (Cτ : ℝ)^(1/8 : ℝ) / (n : ℝ)^(149/56 : ℝ) := by
       have h1 := sum_cycleTypeWeight_ge_three_large_le n k hk hn3
       have hsum_inv3 : (∑ x ∈ largeDivs n k, ∑ y ∈ largeDivs n k, ∑ z ∈ largeDivs n k, (1 / ((x * y * z : ℕ) : ℝ))) ≤
-          ((Cτ : ℝ)^(1/20 : ℝ) * (n : ℝ)^(1/20 : ℝ) * (n : ℝ)^(-(9/10 : ℝ)))^3 := by
+          ((Cτ : ℝ)^(1/24 : ℝ) * (n : ℝ)^(1/24 : ℝ) * (n : ℝ)^(-(13/14 : ℝ)))^3 := by
         have hsum₁_nn : 0 ≤ (∑ x ∈ largeDivs n k, (1 / (x : ℝ))) := by
           refine Finset.sum_nonneg (fun d hd => ?_)
           positivity
@@ -4999,9 +4999,9 @@ theorem prop_exact_order :
         have hsum₃_nn : 0 ≤ (∑ z ∈ largeDivs n k, (1 / (z : ℝ))) := by
           refine Finset.sum_nonneg (fun d hd => ?_)
           positivity
-        have hX : 0 ≤ (Cτ : ℝ)^(1/20 : ℝ) * (n : ℝ)^(1/20 : ℝ) * (n : ℝ)^(-(9/10 : ℝ)) := by
-          exact mul_nonneg (mul_nonneg (Real.rpow_nonneg (Nat.cast_nonneg Cτ) (1/20 : ℝ))
-            (Real.rpow_nonneg hnRnn (1/20 : ℝ))) (Real.rpow_nonneg hnRnn (-(9/10 : ℝ)))
+        have hX : 0 ≤ (Cτ : ℝ)^(1/24 : ℝ) * (n : ℝ)^(1/24 : ℝ) * (n : ℝ)^(-(13/14 : ℝ)) := by
+          exact mul_nonneg (mul_nonneg (Real.rpow_nonneg (Nat.cast_nonneg Cτ) (1/24 : ℝ))
+            (Real.rpow_nonneg hnRnn (1/24 : ℝ))) (Real.rpow_nonneg hnRnn (-(13/14 : ℝ)))
         have htriple : (∑ x ∈ largeDivs n k, ∑ y ∈ largeDivs n k, ∑ z ∈ largeDivs n k, (1 / ((x * y * z : ℕ) : ℝ))) =
             (∑ x ∈ largeDivs n k, (1 / (x : ℝ))) * (∑ y ∈ largeDivs n k, (1 / (y : ℝ))) *
               (∑ z ∈ largeDivs n k, (1 / (z : ℝ))) := by
@@ -5032,70 +5032,62 @@ theorem prop_exact_order :
                     rw [one_div_mul_one_div]
                   exact congrArg (fun t => t * (∑ z ∈ largeDivs n k, (1 / (z : ℝ)))) htwo
         rw [htriple]
-        have hXX : 0 ≤ ((Cτ : ℝ)^(1/20 : ℝ) * (n : ℝ)^(1/20 : ℝ) * (n : ℝ)^(-(9/10 : ℝ)))^2 := by
+        have hXX : 0 ≤ ((Cτ : ℝ)^(1/24 : ℝ) * (n : ℝ)^(1/24 : ℝ) * (n : ℝ)^(-(13/14 : ℝ)))^2 := by
           simpa only [pow_two] using (mul_nonneg hX hX)
         have h₁₂ : (∑ x ∈ largeDivs n k, (1 / (x : ℝ))) * (∑ y ∈ largeDivs n k, (1 / (y : ℝ))) ≤
-            ((Cτ : ℝ)^(1/20 : ℝ) * (n : ℝ)^(1/20 : ℝ) * (n : ℝ)^(-(9/10 : ℝ)))^2 := by
+            ((Cτ : ℝ)^(1/24 : ℝ) * (n : ℝ)^(1/24 : ℝ) * (n : ℝ)^(-(13/14 : ℝ)))^2 := by
           simpa only [pow_two] using (mul_le_mul hsum_inv hsum_inv hsum₂_nn hX)
         have h123 : ((∑ x ∈ largeDivs n k, (1 / (x : ℝ))) * (∑ y ∈ largeDivs n k, (1 / (y : ℝ)))) *
             (∑ z ∈ largeDivs n k, (1 / (z : ℝ))) ≤
-            ((Cτ : ℝ)^(1/20 : ℝ) * (n : ℝ)^(1/20 : ℝ) * (n : ℝ)^(-(9/10 : ℝ)))^3 := by
+            ((Cτ : ℝ)^(1/24 : ℝ) * (n : ℝ)^(1/24 : ℝ) * (n : ℝ)^(-(13/14 : ℝ)))^3 := by
           exact mul_le_mul h₁₂ hsum_inv hsum₃_nn hXX
         exact h123
       calc (∑ lam ∈ (cycleTypes n).filter (fun lam => lam.lcm = n - k ∧ n - k ∉ lam ∧ 3 ≤ (lam.filter (large n)).card), cycleTypeWeight n lam)
           ≤ ∑ x ∈ largeDivs n k, ∑ y ∈ largeDivs n k, ∑ z ∈ largeDivs n k, (1 / ((x * y * z : ℕ) : ℝ)) := h1
-        _ ≤ ((Cτ : ℝ)^(1/20 : ℝ) * (n : ℝ)^(1/20 : ℝ) * (n : ℝ)^(-(9/10 : ℝ)))^3 := hsum_inv3
-        _ ≤ (Cτ : ℝ)^(3/20 : ℝ) / (n : ℝ)^(5/2 : ℝ) := by
-              have hnonneg : 0 ≤ (Cτ : ℝ)^(3/20 : ℝ) := Real.rpow_nonneg (Nat.cast_nonneg Cτ) (3/20 : ℝ)
-              have hpow : ((Cτ : ℝ)^(1/20 : ℝ) * (n : ℝ)^(1/20 : ℝ) * (n : ℝ)^(-(9/10 : ℝ)))^3 =
-                  (Cτ : ℝ)^(3/20 : ℝ) * ((n : ℝ)^(-(17/20 : ℝ)))^3 := by
-                have h2' : (n : ℝ)^(1/20 : ℝ) * (n : ℝ)^(-(9/10 : ℝ)) = (n : ℝ)^(-(17/20 : ℝ)) := by
-                  rw [← Real.rpow_add hnRpos (1/20 : ℝ) (-(9/10 : ℝ))]
+        _ ≤ ((Cτ : ℝ)^(1/24 : ℝ) * (n : ℝ)^(1/24 : ℝ) * (n : ℝ)^(-(13/14 : ℝ)))^3 := hsum_inv3
+        _ ≤ (Cτ : ℝ)^(1/8 : ℝ) / (n : ℝ)^(149/56 : ℝ) := by
+              have hnonneg : 0 ≤ (Cτ : ℝ)^(1/8 : ℝ) := Real.rpow_nonneg (Nat.cast_nonneg Cτ) (1/8 : ℝ)
+              have hpow : ((Cτ : ℝ)^(1/24 : ℝ) * (n : ℝ)^(1/24 : ℝ) * (n : ℝ)^(-(13/14 : ℝ)))^3 =
+                  (Cτ : ℝ)^(1/8 : ℝ) * ((n : ℝ)^(-(149/168 : ℝ)))^3 := by
+                have h2' : (n : ℝ)^(1/24 : ℝ) * (n : ℝ)^(-(13/14 : ℝ)) = (n : ℝ)^(-(149/168 : ℝ)) := by
+                  rw [← Real.rpow_add hnRpos (1/24 : ℝ) (-(13/14 : ℝ))]
                   congr 1
                   norm_num
-                rw [show ((Cτ : ℝ)^(1/20 : ℝ) * (n : ℝ)^(1/20 : ℝ) * (n : ℝ)^(-(9/10 : ℝ)))^3 =
-                    ((Cτ : ℝ)^(1/20 : ℝ) * ((n : ℝ)^(1/20 : ℝ) * (n : ℝ)^(-(9/10 : ℝ))))^3 by ring]
+                rw [show ((Cτ : ℝ)^(1/24 : ℝ) * (n : ℝ)^(1/24 : ℝ) * (n : ℝ)^(-(13/14 : ℝ)))^3 =
+                    ((Cτ : ℝ)^(1/24 : ℝ) * ((n : ℝ)^(1/24 : ℝ) * (n : ℝ)^(-(13/14 : ℝ))))^3 by ring]
                 rw [mul_pow]
                 rw [h2']
-                have h1' : ((Cτ : ℝ)^(1/20 : ℝ))^3 = (Cτ : ℝ)^(3/20 : ℝ) := by
-                  rw [← Real.rpow_natCast ((Cτ : ℝ)^(1/20 : ℝ)) 3]
-                  rw [← Real.rpow_mul (Nat.cast_nonneg Cτ) (1/20 : ℝ) ((3 : ℕ) : ℝ)]
+                have h1' : ((Cτ : ℝ)^(1/24 : ℝ))^3 = (Cτ : ℝ)^(1/8 : ℝ) := by
+                  rw [← Real.rpow_natCast ((Cτ : ℝ)^(1/24 : ℝ)) 3]
+                  rw [← Real.rpow_mul (Nat.cast_nonneg Cτ) (1/24 : ℝ) ((3 : ℕ) : ℝ)]
                   congr 1
                   norm_num
                 rw [h1']
               rw [hpow]
-              have hpow3 : ((n : ℝ)^(-(17/20 : ℝ)))^3 = (n : ℝ)^(-(51/20 : ℝ)) := by
-                rw [← Real.rpow_natCast ((n : ℝ)^(-(17/20 : ℝ))) 3]
-                rw [← Real.rpow_mul hnRnn (-(17/20 : ℝ)) ((3 : ℕ) : ℝ)]
+              have hpow3 : ((n : ℝ)^(-(149/168 : ℝ)))^3 = (n : ℝ)^(-(149/56 : ℝ)) := by
+                rw [← Real.rpow_natCast ((n : ℝ)^(-(149/168 : ℝ))) 3]
+                rw [← Real.rpow_mul hnRnn (-(149/168 : ℝ)) ((3 : ℕ) : ℝ)]
                 congr 1
                 norm_num
               rw [hpow3]
-              have hle2 : (n : ℝ)^(-(51/20 : ℝ)) ≤ (n : ℝ)^(-(5/2 : ℝ)) := by
-                refine Real.rpow_le_rpow_of_exponent_le ?_ ?_
-                · exact by exact_mod_cast (by omega : 1 ≤ n)
-                · norm_num
-              have h3' : (Cτ : ℝ)^(3/20 : ℝ) * (n : ℝ)^(-(51/20 : ℝ)) ≤
-                  (Cτ : ℝ)^(3/20 : ℝ) * (n : ℝ)^(-(5/2 : ℝ)) :=
-                mul_le_mul_of_nonneg_left hle2 hnonneg
-              rw [div_eq_mul_inv (a := (Cτ : ℝ)^(3/20 : ℝ)) (b := (n : ℝ)^(5/2 : ℝ))]
-              rw [← Real.rpow_neg hnRnn (5/2 : ℝ)]
-              exact h3'
+              rw [div_eq_mul_inv (a := (Cτ : ℝ)^(1/8 : ℝ)) (b := (n : ℝ)^(149/56 : ℝ))]
+              rw [← Real.rpow_neg hnRnn (149/56 : ℝ)]
     -- assemble |restProb - η|
     have hpos3 : 0 < (n : ℝ)^3 := pow_pos hnRpos 3
-    have hpos5 : 0 < (n : ℝ)^(5/2 : ℝ) := Real.rpow_pos_of_pos hnRpos _
+    have hpos5 : 0 < (n : ℝ)^(149/56 : ℝ) := Real.rpow_pos_of_pos hnRpos _
     have hX0 : 0 ≤ (2^45 : ℝ) / (n : ℝ)^3 := div_nonneg (by norm_num : 0 ≤ (2^45 : ℝ)) (le_of_lt hpos3)
-    have hX1 : 0 ≤ (Cτ : ℝ)^(1/20 : ℝ) * (4 : ℝ)^45 / (n : ℝ)^(5/2 : ℝ) := by
+    have hX1 : 0 ≤ (Cτ : ℝ)^(1/24 : ℝ) * (4 : ℝ)^45 / (n : ℝ)^(149/56 : ℝ) := by
       refine div_nonneg ?_ (le_of_lt hpos5)
-      exact mul_nonneg (Real.rpow_nonneg (Nat.cast_nonneg Cτ) (1/20 : ℝ)) (by norm_num : 0 ≤ (4 : ℝ)^45)
-    have hX2 : 0 ≤ (Cτ : ℝ)^(1/10 : ℝ) * (24 : ℝ)^45 / (n : ℝ)^(5/2 : ℝ) := by
+      exact mul_nonneg (Real.rpow_nonneg (Nat.cast_nonneg Cτ) (1/24 : ℝ)) (by norm_num : 0 ≤ (4 : ℝ)^45)
+    have hX2 : 0 ≤ (Cτ : ℝ)^(1/12 : ℝ) * (24 : ℝ)^45 / (n : ℝ)^(149/56 : ℝ) := by
       refine div_nonneg ?_ (le_of_lt hpos5)
-      exact mul_nonneg (Real.rpow_nonneg (Nat.cast_nonneg Cτ) (1/10 : ℝ)) (by norm_num : 0 ≤ (24 : ℝ)^45)
-    have hX3 : 0 ≤ (Cτ : ℝ)^(3/20 : ℝ) / (n : ℝ)^(5/2 : ℝ) := by
+      exact mul_nonneg (Real.rpow_nonneg (Nat.cast_nonneg Cτ) (1/12 : ℝ)) (by norm_num : 0 ≤ (24 : ℝ)^45)
+    have hX3 : 0 ≤ (Cτ : ℝ)^(1/8 : ℝ) / (n : ℝ)^(149/56 : ℝ) := by
       refine div_nonneg ?_ (le_of_lt hpos5)
-      exact Real.rpow_nonneg (Nat.cast_nonneg Cτ) (3/20 : ℝ)
+      exact Real.rpow_nonneg (Nat.cast_nonneg Cτ) (1/8 : ℝ)
     have hrest : restProb n k ≤
-        (2^45 : ℝ) / (n : ℝ)^3 + (Cτ : ℝ)^(1/20 : ℝ) * (4 : ℝ)^45 / (n : ℝ)^(5/2 : ℝ) + eta n k +
-        (Cτ : ℝ)^(1/10 : ℝ) * (24 : ℝ)^45 / (n : ℝ)^(5/2 : ℝ) + (Cτ : ℝ)^(3/20 : ℝ) / (n : ℝ)^(5/2 : ℝ) := by
+        (2^45 : ℝ) / (n : ℝ)^3 + (Cτ : ℝ)^(1/24 : ℝ) * (4 : ℝ)^45 / (n : ℝ)^(149/56 : ℝ) + eta n k +
+        (Cτ : ℝ)^(1/12 : ℝ) * (24 : ℝ)^45 / (n : ℝ)^(149/56 : ℝ) + (Cτ : ℝ)^(1/8 : ℝ) / (n : ℝ)^(149/56 : ℝ) := by
       have hparts := restProb_le_T_parts n k
       calc restProb n k
           ≤ (∑ lam ∈ (cycleTypes n).filter (fun lam => (lam.filter (large n)).card = 0), cycleTypeWeight n lam) +
@@ -5103,16 +5095,16 @@ theorem prop_exact_order :
             (∑ lam ∈ (cycleTypes n).filter (fun lam => lam.lcm = n - k ∧ n - k ∉ lam ∧ specialPair n k lam), cycleTypeWeight n lam) +
             (∑ lam ∈ (cycleTypes n).filter (fun lam => lam.lcm = n - k ∧ n - k ∉ lam ∧ (lam.filter (large n)).card = 2 ∧ ¬ specialPair n k lam), cycleTypeWeight n lam) +
             (∑ lam ∈ (cycleTypes n).filter (fun lam => lam.lcm = n - k ∧ n - k ∉ lam ∧ 3 ≤ (lam.filter (large n)).card), cycleTypeWeight n lam) := hparts
-        _ ≤ (2^45 : ℝ) / (n : ℝ)^3 + (Cτ : ℝ)^(1/20 : ℝ) * (4 : ℝ)^45 / (n : ℝ)^(5/2 : ℝ) + eta n k +
-            (Cτ : ℝ)^(1/10 : ℝ) * (24 : ℝ)^45 / (n : ℝ)^(5/2 : ℝ) + (Cτ : ℝ)^(3/20 : ℝ) / (n : ℝ)^(5/2 : ℝ) := by
+        _ ≤ (2^45 : ℝ) / (n : ℝ)^3 + (Cτ : ℝ)^(1/24 : ℝ) * (4 : ℝ)^45 / (n : ℝ)^(149/56 : ℝ) + eta n k +
+            (Cτ : ℝ)^(1/12 : ℝ) * (24 : ℝ)^45 / (n : ℝ)^(149/56 : ℝ) + (Cτ : ℝ)^(1/8 : ℝ) / (n : ℝ)^(149/56 : ℝ) := by
               nlinarith [hT0, hT1, hT2s, hT2r, hT3]
     have hdiff_le : restProb n k - eta n k ≤
-        (2^45 : ℝ) / (n : ℝ)^3 + (Cτ : ℝ)^(1/20 : ℝ) * (4 : ℝ)^45 / (n : ℝ)^(5/2 : ℝ) +
-        (Cτ : ℝ)^(1/10 : ℝ) * (24 : ℝ)^45 / (n : ℝ)^(5/2 : ℝ) + (Cτ : ℝ)^(3/20 : ℝ) / (n : ℝ)^(5/2 : ℝ) := by
+        (2^45 : ℝ) / (n : ℝ)^3 + (Cτ : ℝ)^(1/24 : ℝ) * (4 : ℝ)^45 / (n : ℝ)^(149/56 : ℝ) +
+        (Cτ : ℝ)^(1/12 : ℝ) * (24 : ℝ)^45 / (n : ℝ)^(149/56 : ℝ) + (Cτ : ℝ)^(1/8 : ℝ) / (n : ℝ)^(149/56 : ℝ) := by
       nlinarith [hrest]
     have hdiff_ge : -(restProb n k - eta n k) ≤
-        (2^45 : ℝ) / (n : ℝ)^3 + (Cτ : ℝ)^(1/20 : ℝ) * (4 : ℝ)^45 / (n : ℝ)^(5/2 : ℝ) +
-        (Cτ : ℝ)^(1/10 : ℝ) * (24 : ℝ)^45 / (n : ℝ)^(5/2 : ℝ) + 2 * (Cτ : ℝ)^(3/20 : ℝ) / (n : ℝ)^(5/2 : ℝ) := by
+        (2^45 : ℝ) / (n : ℝ)^3 + (Cτ : ℝ)^(1/24 : ℝ) * (4 : ℝ)^45 / (n : ℝ)^(149/56 : ℝ) +
+        (Cτ : ℝ)^(1/12 : ℝ) * (24 : ℝ)^45 / (n : ℝ)^(149/56 : ℝ) + 2 * (Cτ : ℝ)^(1/8 : ℝ) / (n : ℝ)^(149/56 : ℝ) := by
       have hrest_ge_T2s : (∑ lam ∈ (cycleTypes n).filter (fun lam => lam.lcm = n - k ∧ n - k ∉ lam ∧ specialPair n k lam), cycleTypeWeight n lam) ≤ restProb n k := by
         unfold restProb
         rw [← Finset.sum_filter]
@@ -5131,50 +5123,50 @@ theorem prop_exact_order :
       calc -(restProb n k - eta n k)
           = eta n k - restProb n k := by ring
         _ ≤ (∑ lam ∈ (cycleTypes n).filter (fun lam => lam.lcm = n - k ∧ n - k ∉ lam ∧ 3 ≤ (lam.filter (large n)).card), cycleTypeWeight n lam) := hη_rest
-        _ ≤ (Cτ : ℝ)^(3/20 : ℝ) / (n : ℝ)^(5/2 : ℝ) := hT3
-        _ ≤ (2^45 : ℝ) / (n : ℝ)^3 + (Cτ : ℝ)^(1/20 : ℝ) * (4 : ℝ)^45 / (n : ℝ)^(5/2 : ℝ) +
-            (Cτ : ℝ)^(1/10 : ℝ) * (24 : ℝ)^45 / (n : ℝ)^(5/2 : ℝ) + 2 * (Cτ : ℝ)^(3/20 : ℝ) / (n : ℝ)^(5/2 : ℝ) := by
-              have hX3le : (Cτ : ℝ)^(3/20 : ℝ) / (n : ℝ)^(5/2 : ℝ) ≤
-                  2 * (Cτ : ℝ)^(3/20 : ℝ) / (n : ℝ)^(5/2 : ℝ) := by
+        _ ≤ (Cτ : ℝ)^(1/8 : ℝ) / (n : ℝ)^(149/56 : ℝ) := hT3
+        _ ≤ (2^45 : ℝ) / (n : ℝ)^3 + (Cτ : ℝ)^(1/24 : ℝ) * (4 : ℝ)^45 / (n : ℝ)^(149/56 : ℝ) +
+            (Cτ : ℝ)^(1/12 : ℝ) * (24 : ℝ)^45 / (n : ℝ)^(149/56 : ℝ) + 2 * (Cτ : ℝ)^(1/8 : ℝ) / (n : ℝ)^(149/56 : ℝ) := by
+              have hX3le : (Cτ : ℝ)^(1/8 : ℝ) / (n : ℝ)^(149/56 : ℝ) ≤
+                  2 * (Cτ : ℝ)^(1/8 : ℝ) / (n : ℝ)^(149/56 : ℝ) := by
                 rw [div_le_div_iff₀ hpos5 hpos5]
-                have hC3 : (Cτ : ℝ)^(3/20 : ℝ) ≤ 2 * (Cτ : ℝ)^(3/20 : ℝ) := by
-                  nlinarith [Real.rpow_nonneg (Nat.cast_nonneg Cτ) (3/20 : ℝ)]
+                have hC3 : (Cτ : ℝ)^(1/8 : ℝ) ≤ 2 * (Cτ : ℝ)^(1/8 : ℝ) := by
+                  nlinarith [Real.rpow_nonneg (Nat.cast_nonneg Cτ) (1/8 : ℝ)]
                 exact mul_le_mul_of_nonneg_right hC3 (le_of_lt hpos5)
               nlinarith [hX0, hX1, hX2, hX3le]
     have hn1 : 1 ≤ (n : ℝ) := by exact_mod_cast (by omega : 1 ≤ n)
-    have h1' : (n : ℝ)^(5/2 : ℝ) ≤ (n : ℝ)^3 := by
+    have h1' : (n : ℝ)^(149/56 : ℝ) ≤ (n : ℝ)^3 := by
       have h3r : (n : ℝ)^3 = (n : ℝ)^(3 : ℝ) := (Real.rpow_natCast (n : ℝ) 3).symm
       rw [h3r]
       refine Real.rpow_le_rpow_of_exponent_le hn1 ?_
       norm_num
-    have h2' : (2^45 : ℝ) / (n : ℝ)^3 ≤ (4 : ℝ)^45 / (n : ℝ)^(5/2 : ℝ) := by
+    have h2' : (2^45 : ℝ) / (n : ℝ)^3 ≤ (4 : ℝ)^45 / (n : ℝ)^(149/56 : ℝ) := by
       rw [div_le_div_iff₀ hpos3 hpos5]
-      have hnum : (2^45 : ℝ) * (n : ℝ)^(5/2 : ℝ) ≤ (4 : ℝ)^45 * (n : ℝ)^3 := by
+      have hnum : (2^45 : ℝ) * (n : ℝ)^(149/56 : ℝ) ≤ (4 : ℝ)^45 * (n : ℝ)^3 := by
         have h23 : (2^45 : ℝ) ≤ (4 : ℝ)^45 := by norm_num
         exact mul_le_mul h23 h1' (le_of_lt hpos5) (by norm_num : 0 ≤ (4 : ℝ)^45)
       exact hnum
-    have hX3le : (Cτ : ℝ)^(3/20 : ℝ) / (n : ℝ)^(5/2 : ℝ) ≤
-        2 * (Cτ : ℝ)^(3/20 : ℝ) / (n : ℝ)^(5/2 : ℝ) := by
+    have hX3le : (Cτ : ℝ)^(1/8 : ℝ) / (n : ℝ)^(149/56 : ℝ) ≤
+        2 * (Cτ : ℝ)^(1/8 : ℝ) / (n : ℝ)^(149/56 : ℝ) := by
       rw [div_le_div_iff₀ hpos5 hpos5]
-      have hC3 : (Cτ : ℝ)^(3/20 : ℝ) ≤ 2 * (Cτ : ℝ)^(3/20 : ℝ) := by
-        nlinarith [Real.rpow_nonneg (Nat.cast_nonneg Cτ) (3/20 : ℝ)]
+      have hC3 : (Cτ : ℝ)^(1/8 : ℝ) ≤ 2 * (Cτ : ℝ)^(1/8 : ℝ) := by
+        nlinarith [Real.rpow_nonneg (Nat.cast_nonneg Cτ) (1/8 : ℝ)]
       exact mul_le_mul_of_nonneg_right hC3 (le_of_lt hpos5)
     rw [abs_le]
     constructor
-    · -- -(C₀/n^{5/2}) ≤ restProb - η
+    · -- -(C₀/n^{149/56}) ≤ restProb - η
       rw [neg_le]
       calc -(restProb n k - eta n k)
-          ≤ (2^45 : ℝ) / (n : ℝ)^3 + (Cτ : ℝ)^(1/20 : ℝ) * (4 : ℝ)^45 / (n : ℝ)^(5/2 : ℝ) +
-            (Cτ : ℝ)^(1/10 : ℝ) * (24 : ℝ)^45 / (n : ℝ)^(5/2 : ℝ) + 2 * (Cτ : ℝ)^(3/20 : ℝ) / (n : ℝ)^(5/2 : ℝ) := hdiff_ge
-        _ ≤ C₀ / (n : ℝ)^(5/2 : ℝ) := by
+          ≤ (2^45 : ℝ) / (n : ℝ)^3 + (Cτ : ℝ)^(1/24 : ℝ) * (4 : ℝ)^45 / (n : ℝ)^(149/56 : ℝ) +
+            (Cτ : ℝ)^(1/12 : ℝ) * (24 : ℝ)^45 / (n : ℝ)^(149/56 : ℝ) + 2 * (Cτ : ℝ)^(1/8 : ℝ) / (n : ℝ)^(149/56 : ℝ) := hdiff_ge
+        _ ≤ C₀ / (n : ℝ)^(149/56 : ℝ) := by
               dsimp [C₀]
               rw [add_div, add_div, add_div]
               nlinarith [h2']
-    · -- restProb - η ≤ C₀/n^{5/2}
+    · -- restProb - η ≤ C₀/n^{149/56}
       calc restProb n k - eta n k
-          ≤ (2^45 : ℝ) / (n : ℝ)^3 + (Cτ : ℝ)^(1/20 : ℝ) * (4 : ℝ)^45 / (n : ℝ)^(5/2 : ℝ) +
-            (Cτ : ℝ)^(1/10 : ℝ) * (24 : ℝ)^45 / (n : ℝ)^(5/2 : ℝ) + (Cτ : ℝ)^(3/20 : ℝ) / (n : ℝ)^(5/2 : ℝ) := hdiff_le
-        _ ≤ C₀ / (n : ℝ)^(5/2 : ℝ) := by
+          ≤ (2^45 : ℝ) / (n : ℝ)^3 + (Cτ : ℝ)^(1/24 : ℝ) * (4 : ℝ)^45 / (n : ℝ)^(149/56 : ℝ) +
+            (Cτ : ℝ)^(1/12 : ℝ) * (24 : ℝ)^45 / (n : ℝ)^(149/56 : ℝ) + (Cτ : ℝ)^(1/8 : ℝ) / (n : ℝ)^(149/56 : ℝ) := hdiff_le
+        _ ≤ C₀ / (n : ℝ)^(149/56 : ℝ) := by
               dsimp [C₀]
               rw [add_div, add_div, add_div]
               nlinarith [h2', hX3le]
@@ -5202,10 +5194,10 @@ lemma p_k0_gt_p_k :
   have hnk0_pos : 0 < ((n - k0 n : ℕ) : ℝ) := by exact_mod_cast (Nat.sub_pos_of_lt hk0_lt_n)
   have habs_k := hN n hnN k hk
   have habs_k0 := hN n hnN (k0 n) hk0mem
-  have hpk_le : p n (n - k) ≤ (1 : ℝ) / ((n - k : ℕ) : ℝ) + eta n k + C / (n : ℝ) ^ (5/2 : ℝ) := by
+  have hpk_le : p n (n - k) ≤ (1 : ℝ) / ((n - k : ℕ) : ℝ) + eta n k + C / (n : ℝ) ^ (149/56 : ℝ) := by
     have h := (abs_le.mp habs_k).2
     nlinarith
-  have hpk0_ge : (1 : ℝ) / ((n - k0 n : ℕ) : ℝ) + eta n (k0 n) - C / (n : ℝ) ^ (5/2 : ℝ) ≤ p n (n - k0 n) := by
+  have hpk0_ge : (1 : ℝ) / ((n - k0 n : ℕ) : ℝ) + eta n (k0 n) - C / (n : ℝ) ^ (149/56 : ℝ) ≤ p n (n - k0 n) := by
     have h := (abs_le.mp habs_k0).1
     nlinarith
   have halg : (1 : ℝ) / ((n - k0 n : ℕ) : ℝ) - (1 : ℝ) / ((n - k : ℕ) : ℝ) =
@@ -5219,7 +5211,7 @@ lemma p_k0_gt_p_k :
       ((1 : ℝ) / ((n - k : ℕ) : ℝ) + eta n k) ≥ (1 : ℝ) / ((n - k : ℕ) : ℝ) ^ 2 := by
     nlinarith [final_ineq n k (k0 n) hk hk0mem hlt, halg]
   have hdiff : p n (n - k0 n) - p n (n - k) ≥
-      (1 : ℝ) / ((n - k : ℕ) : ℝ) ^ 2 - (C / (n : ℝ) ^ (5/2 : ℝ) + C / (n : ℝ) ^ (5/2 : ℝ)) := by
+      (1 : ℝ) / ((n - k : ℕ) : ℝ) ^ 2 - (C / (n : ℝ) ^ (149/56 : ℝ) + C / (n : ℝ) ^ (149/56 : ℝ)) := by
     nlinarith [hpk_le, hpk0_ge, hmain']
   have h16 : (16 : ℝ) * C ^ 2 ≤ (n : ℝ) := by
     have hceil_lt : Nat.ceil ((16 : ℝ) * C ^ 2) < n := by omega
@@ -5236,8 +5228,8 @@ lemma p_k0_gt_p_k :
       congr 1
       norm_num
     rwa [← hleft]
-  have hC_le : C / (n : ℝ) ^ (5/2 : ℝ) + C / (n : ℝ) ^ (5/2 : ℝ) ≤ (1 : ℝ) / 2 / (n : ℝ) ^ 2 := by
-    have hn52pos : 0 < (n : ℝ) ^ (5/2 : ℝ) := Real.rpow_pos_of_pos hnRpos _
+  have hC_le : C / (n : ℝ) ^ (149/56 : ℝ) + C / (n : ℝ) ^ (149/56 : ℝ) ≤ (1 : ℝ) / 2 / (n : ℝ) ^ 2 := by
+    have hnpos149 : 0 < (n : ℝ) ^ (149/56 : ℝ) := Real.rpow_pos_of_pos hnRpos _
     have hn2pos : 0 < (n : ℝ) ^ 2 := pow_pos hnRpos 2
     have h2C : (2 : ℝ) * C ≤ (1 / 2) * (n : ℝ) ^ (1/2 : ℝ) := by nlinarith [hsqrt]
     have h3 : (2 : ℝ) * C * (n : ℝ) ^ 2 ≤ ((1 / 2) * (n : ℝ) ^ (1/2 : ℝ)) * (n : ℝ) ^ 2 :=
@@ -5248,13 +5240,21 @@ lemma p_k0_gt_p_k :
       rw [← Real.rpow_add hnRpos (1/2 : ℝ) (2 : ℝ)]
       congr 1
       norm_num
-    have hdiv : C / (n : ℝ) ^ (5/2 : ℝ) + C / (n : ℝ) ^ (5/2 : ℝ) = 2 * C / (n : ℝ) ^ (5/2 : ℝ) := by
-      field_simp [ne_of_gt hn52pos]
+    have h4b : (1 / 2) * (n : ℝ) ^ (5/2 : ℝ) ≤ (1 / 2) * (n : ℝ) ^ (149/56 : ℝ) := by
+      have hn1 : 1 ≤ (n : ℝ) := by exact_mod_cast (by omega : 1 ≤ n)
+      have h52r : (n : ℝ) ^ (5/2 : ℝ) = (n : ℝ) ^ ((5/2 : ℝ)) := rfl
+      have hpow_le : (n : ℝ) ^ (5/2 : ℝ) ≤ (n : ℝ) ^ (149/56 : ℝ) := by
+        refine Real.rpow_le_rpow_of_exponent_le hn1 ?_
+        norm_num
+      exact mul_le_mul_of_nonneg_left hpow_le (by norm_num : 0 ≤ (1/2 : ℝ))
+    have hdiv : C / (n : ℝ) ^ (149/56 : ℝ) + C / (n : ℝ) ^ (149/56 : ℝ) = 2 * C / (n : ℝ) ^ (149/56 : ℝ) := by
+      field_simp [ne_of_gt hnpos149]
       ring
     rw [hdiv]
-    rw [div_le_div_iff₀ hn52pos hn2pos]
-    rw [← h4]
-    exact h3
+    rw [div_le_div_iff₀ hnpos149 hn2pos]
+    calc (2 : ℝ) * C * (n : ℝ) ^ 2 ≤ ((1 / 2) * (n : ℝ) ^ (1/2 : ℝ)) * (n : ℝ) ^ 2 := h3
+      _ = (1 / 2) * (n : ℝ) ^ (5/2 : ℝ) := h4
+      _ ≤ (1 / 2) * (n : ℝ) ^ (149/56 : ℝ) := h4b
   have hden : (1 : ℝ) / ((n : ℝ) ^ 2) ≤ (1 : ℝ) / ((n - k : ℕ) : ℝ) ^ 2 := by
     have hle : ((n - k : ℕ) : ℝ) ^ 2 ≤ (n : ℝ) ^ 2 := by
       refine sq_le_sq' ?_ ?_
@@ -5262,8 +5262,8 @@ lemma p_k0_gt_p_k :
       · exact_mod_cast (Nat.sub_le n k)
     exact one_div_le_one_div_of_le (sq_pos_of_ne_zero (ne_of_gt hnk_pos)) hle
   have hpos : (0 : ℝ) < (1 : ℝ) / ((n - k : ℕ) : ℝ) ^ 2 -
-      (C / (n : ℝ) ^ (5/2 : ℝ) + C / (n : ℝ) ^ (5/2 : ℝ)) := by
-    have hC_le' : C / (n : ℝ) ^ (5/2 : ℝ) + C / (n : ℝ) ^ (5/2 : ℝ) ≤ (1 : ℝ) / 2 * (1 / (n : ℝ) ^ 2) := by
+      (C / (n : ℝ) ^ (149/56 : ℝ) + C / (n : ℝ) ^ (149/56 : ℝ)) := by
+    have hC_le' : C / (n : ℝ) ^ (149/56 : ℝ) + C / (n : ℝ) ^ (149/56 : ℝ) ≤ (1 : ℝ) / 2 * (1 / (n : ℝ) ^ 2) := by
       have h' : ((1 : ℝ) / 2) * (1 / (n : ℝ) ^ 2) = ((1 : ℝ) / 2) / (n : ℝ) ^ 2 := by
         rw [div_eq_mul_inv (a := (1 : ℝ)) (b := (n : ℝ) ^ 2)]
         rw [div_eq_mul_inv (a := (1 : ℝ) / 2) (b := (n : ℝ) ^ 2)]
@@ -5537,8 +5537,8 @@ theorem M_sub_one_div_le_log :
       field_simp [ne_of_gt hnRpos]
       ring
     exact le_trans hfrac (le_of_eq halg)
-  -- C₁ 误差截断：C₁ n^{-5/2} ≤ 1/n²
-  have hnC₁ : C₁ / (n : ℝ) ^ (5/2 : ℝ) ≤ 1 / (n : ℝ) ^ 2 := by
+  -- C₁ 误差截断：C₁ n^{-149/56} ≤ 1/n²
+  have hnC₁ : C₁ / (n : ℝ) ^ (149/56 : ℝ) ≤ 1 / (n : ℝ) ^ 2 := by
     have hn2 : C₁ ^ 2 ≤ (n : ℝ) := by
       have hceil : Nat.ceil (C₁ ^ 2) < n := by
         have hN₀ : N₀ ≤ n := hn
@@ -5566,8 +5566,15 @@ theorem M_sub_one_div_le_log :
       rw [← Real.rpow_add hnRpos (1/2 : ℝ) (2 : ℝ)]
       congr 1
       norm_num
-    rw [← h4]
-    simpa using h3
+    have h4b : (n : ℝ) ^ (5/2 : ℝ) ≤ (n : ℝ) ^ (149/56 : ℝ) := by
+      refine Real.rpow_le_rpow_of_exponent_le ?_ ?_
+      · exact by exact_mod_cast (by omega : 1 ≤ n)
+      · norm_num
+    have htotal : C₁ * (n : ℝ) ^ 2 ≤ (n : ℝ) ^ (149/56 : ℝ) := by
+      calc C₁ * (n : ℝ) ^ 2 ≤ (n : ℝ) ^ (1/2 : ℝ) * (n : ℝ) ^ 2 := h3
+        _ = (n : ℝ) ^ (5/2 : ℝ) := h4
+        _ ≤ (n : ℝ) ^ (149/56 : ℝ) := h4b
+    simpa using htotal
   -- log 界
   have hlog' : ((2 * Nat.log 2 n : ℕ) : ℝ) ≤ 4 * Real.log (n : ℝ) := by
     rw [Nat.cast_mul]
@@ -5586,7 +5593,7 @@ theorem M_sub_one_div_le_log :
     exact le_trans hlog3 hle
   -- 主分解
   have hmain1 : |M n - (1 : ℝ) / (n : ℝ)| ≤
-      C₁ / (n : ℝ) ^ (5/2 : ℝ) + eta n (k0 n) +
+      C₁ / (n : ℝ) ^ (149/56 : ℝ) + eta n (k0 n) +
       ((1 : ℝ) / ((n - k0 n : ℕ) : ℝ) - (1 : ℝ) / (n : ℝ)) := by
     rw [← hpEq]
     have habs : |(1 : ℝ) / ((n - k0 n : ℕ) : ℝ) + eta n (k0 n) - (1 : ℝ) / (n : ℝ)| ≤
@@ -5601,17 +5608,17 @@ theorem M_sub_one_div_le_log :
               ring
       _ ≤ |p n (n - k0 n) - ((1 : ℝ) / ((n - k0 n : ℕ) : ℝ) + eta n (k0 n))| +
           |(1 : ℝ) / ((n - k0 n : ℕ) : ℝ) + eta n (k0 n) - (1 : ℝ) / (n : ℝ)| := abs_add_le _ _
-      _ ≤ C₁ / (n : ℝ) ^ (5/2 : ℝ) + eta n (k0 n) +
+      _ ≤ C₁ / (n : ℝ) ^ (149/56 : ℝ) + eta n (k0 n) +
           ((1 : ℝ) / ((n - k0 n : ℕ) : ℝ) - (1 : ℝ) / (n : ℝ)) := by
             nlinarith [hpk0, habs]
   -- 收紧
-  have hsum : C₁ / (n : ℝ) ^ (5/2 : ℝ) + eta n (k0 n) +
+  have hsum : C₁ / (n : ℝ) ^ (149/56 : ℝ) + eta n (k0 n) +
       ((1 : ℝ) / ((n - k0 n : ℕ) : ℝ) - (1 : ℝ) / (n : ℝ)) ≤
       (15 : ℝ) * Real.log (n : ℝ) / (n : ℝ) ^ 2 := by
     have hn2pos : 0 < (n : ℝ) ^ 2 := pow_pos hnRpos 2
-    have h12 : C₁ / (n : ℝ) ^ (5/2 : ℝ) + eta n (k0 n) ≤ (1 : ℝ) / (n : ℝ) ^ 2 + (4 : ℝ) / (n : ℝ) ^ 2 :=
+    have h12 : C₁ / (n : ℝ) ^ (149/56 : ℝ) + eta n (k0 n) ≤ (1 : ℝ) / (n : ℝ) ^ 2 + (4 : ℝ) / (n : ℝ) ^ 2 :=
       add_le_add hnC₁ heta_le
-    have h123 : C₁ / (n : ℝ) ^ (5/2 : ℝ) + eta n (k0 n) +
+    have h123 : C₁ / (n : ℝ) ^ (149/56 : ℝ) + eta n (k0 n) +
         ((1 : ℝ) / ((n - k0 n : ℕ) : ℝ) - (1 : ℝ) / (n : ℝ)) ≤
         (1 : ℝ) / (n : ℝ) ^ 2 + (4 : ℝ) / (n : ℝ) ^ 2 +
         ((2 : ℝ) * ((2 * Nat.log 2 n : ℕ) : ℝ) + 2) / (n : ℝ) ^ 2 := by

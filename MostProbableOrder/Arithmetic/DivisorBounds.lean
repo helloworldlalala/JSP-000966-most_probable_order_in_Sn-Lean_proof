@@ -202,7 +202,10 @@ theorem tau_pow_sixteen_le : ∃ C : ℕ, ∀ m : ℕ, (tau m)^16 ≤ C * m := b
   refine ⟨2 ^ (130 * (2 ^ 16 + 1)), ?_⟩
   intro m
   by_cases hm : m = 0
-  · simp [hm, tau]
+  · rw [hm]
+    have htau0 : tau 0 = 0 := by simp [tau]
+    rw [htau0]
+    exact Nat.zero_le _
   · have hcard : #m.divisors = ∏ p ∈ m.primeFactors, (m.factorization p + 1) := Nat.card_divisors hm
     have htau : tau m = ∏ p ∈ m.primeFactors, (m.factorization p + 1) := by simpa [tau] using hcard
     rw [htau, ← Finset.prod_pow m.primeFactors 16 (fun p => m.factorization p + 1)]
@@ -321,7 +324,10 @@ theorem tau_pow_twenty_le : ∃ C : ℕ, ∀ m : ℕ, (tau m)^20 ≤ C * m := by
   refine ⟨(2 ^ 130) ^ (2 ^ 20 + 1), ?_⟩
   intro m
   by_cases hm : m = 0
-  · simp [hm, tau]
+  · rw [hm]
+    have htau0 : tau 0 = 0 := by simp [tau]
+    rw [htau0]
+    exact Nat.zero_le _
   · have hcard : #m.divisors = ∏ p ∈ m.primeFactors, (m.factorization p + 1) := Nat.card_divisors hm
     have htau : tau m = ∏ p ∈ m.primeFactors, (m.factorization p + 1) := by simpa [tau] using hcard
     rw [htau, ← Finset.prod_pow m.primeFactors 20 (fun p => m.factorization p + 1)]
@@ -395,6 +401,126 @@ theorem tau_pow_twenty_le : ∃ C : ℕ, ∀ m : ℕ, (tau m)^20 ≤ C * m := by
           mul_le_mul hsmall hlarge (Nat.zero_le _) (Nat.zero_le _)
       _ = 2^(130 * small.card) * m := hprod
       _ ≤ (2^130)^(2^20 + 1) * m := Nat.mul_le_mul_right m hpow_le
+
+private lemma succ_pow_twentyfour_le_two_mul {a : ℕ} (ha : 40 ≤ a) : (a + 1)^24 ≤ 2 * a^24 := by
+  have h41 : 40 * (a + 1) ≤ 41 * a := by omega
+  have hpow : (40 * (a + 1))^24 ≤ (41 * a)^24 := pow_le_pow_left₀ (by positivity) h41 24
+  have hle : 40^24 * (a + 1)^24 ≤ 41^24 * a^24 := by simpa [mul_pow] using hpow
+  have hconst : 41^24 ≤ 2 * 40^24 := by norm_num
+  have hle3 : 40^24 * (a + 1)^24 ≤ 40^24 * (2 * a^24) := by
+    calc 40^24 * (a + 1)^24 ≤ 41^24 * a^24 := hle
+      _ ≤ (2 * 40^24) * a^24 := Nat.mul_le_mul_right (a^24) hconst
+      _ = 40^24 * (2 * a^24) := by ac_rfl
+  exact Nat.le_of_mul_le_mul_left hle3 (by positivity : 0 < 40^24)
+
+set_option maxHeartbeats 800000 in
+private lemma succ_pow_twentyfour_le (a : ℕ) : (a + 1)^24 ≤ 2^(a + 130) := by
+  refine Nat.strong_induction_on a ?_
+  intro a ih
+  by_cases ha : a < 40
+  · have h1 : (a + 1)^24 ≤ 40^24 := pow_le_pow_left₀ (by positivity) (by omega : a + 1 ≤ 40) 24
+    have h2 : 40^24 ≤ 2^128 := by norm_num
+    have h3 : 2^128 ≤ 2^(a + 130) := pow_le_pow_right₀ (by norm_num : 1 ≤ (2 : ℕ)) (by omega)
+    linarith
+  · have ih' : a^24 ≤ 2^(a + 129) := by
+      have h := ih (a - 1) (Nat.sub_lt (by omega : 0 < a) (by norm_num : 0 < 1))
+      have h1 : a - 1 + 1 = a := by omega
+      have h2 : a - 1 + 130 = a + 129 := by omega
+      simpa [h1, h2] using h
+    have hstep : (a + 1)^24 ≤ 2 * a^24 := succ_pow_twentyfour_le_two_mul (by omega)
+    calc (a + 1)^24 ≤ 2 * a^24 := hstep
+      _ ≤ 2 * 2^(a + 129) := Nat.mul_le_mul_left 2 ih'
+      _ = 2^(a + 130) := by rw [mul_comm, ← pow_succ]
+
+/-- The absolute constant `(2^130)^(2^24+1)` used in the `τ^24` divisor bound.
+Wrapped in a `def` so that tactics never attempt to reduce the huge exponent. -/
+private def tau24Const : ℕ := (2 ^ 130) ^ (2 ^ 24 + 1)
+
+/-- **(stronger instance)** `τ(m) ≤ C·m^{1/24}`: there is an absolute constant `C` with
+`τ(m)^24 ≤ C·m` for every `m`. This is the `ε = 1/24` instance of `τ(m) = m^{o(1)}`, used
+together with the tightened threshold `δ = 1/2^20` to reach the optimal error
+`n^{-23/8 + 3/2^20}` in Proposition 4.1. -/
+theorem tau_pow_twentyfour_le : ∃ C : ℕ, ∀ m : ℕ, (tau m)^24 ≤ C * m := by
+  refine ⟨tau24Const, ?_⟩
+  intro m
+  by_cases hm : m = 0
+  · rw [hm]
+    have htau0 : tau 0 = 0 := by simp [tau]
+    rw [htau0]
+    exact Nat.zero_le _
+  · have hcard : #m.divisors = ∏ p ∈ m.primeFactors, (m.factorization p + 1) := Nat.card_divisors hm
+    have htau : tau m = ∏ p ∈ m.primeFactors, (m.factorization p + 1) := by simpa [tau] using hcard
+    rw [htau, ← Finset.prod_pow m.primeFactors 24 (fun p => m.factorization p + 1)]
+    let small : Finset ℕ := m.primeFactors.filter (fun p => p ≤ 2 ^ 24)
+    let large : Finset ℕ := m.primeFactors.filter (fun p => ¬ p ≤ 2 ^ 24)
+    have hsplit : (∏ p ∈ m.primeFactors, (m.factorization p + 1)^24) =
+        (∏ p ∈ small, (m.factorization p + 1)^24) * (∏ p ∈ large, (m.factorization p + 1)^24) := by
+      dsimp [small, large]
+      exact (Finset.prod_filter_mul_prod_filter_not m.primeFactors
+        (fun p => p ≤ 2 ^ 24) (fun p => (m.factorization p + 1)^24)).symm
+    rw [hsplit]
+    have hsmall : (∏ p ∈ small, (m.factorization p + 1)^24) ≤
+        ∏ p ∈ small, 2^130 * p^(m.factorization p) := by
+      refine Finset.prod_le_prod (fun p _ => by positivity) ?_
+      intro p hp
+      have hpf : p ∈ m.primeFactors := (Finset.mem_filter.mp hp).1
+      have hp2 : 2 ≤ p := two_le_of_mem_primeFactors hpf
+      have hA : (m.factorization p + 1)^24 ≤ 2^(m.factorization p + 130) :=
+        succ_pow_twentyfour_le (m.factorization p)
+      have hC : 2^(m.factorization p) ≤ p^(m.factorization p) :=
+        pow_le_pow_left₀ (by positivity) hp2 _
+      calc (m.factorization p + 1)^24 ≤ 2^(m.factorization p + 130) := hA
+        _ = 2^130 * 2^(m.factorization p) := by rw [pow_add, mul_comm]
+        _ ≤ 2^130 * p^(m.factorization p) := Nat.mul_le_mul_left _ hC
+    have hlarge : (∏ p ∈ large, (m.factorization p + 1)^24) ≤
+        ∏ p ∈ large, p^(m.factorization p) := by
+      refine Finset.prod_le_prod (fun p _ => by positivity) ?_
+      intro p hp
+      have hpf : p ∈ m.primeFactors := (Finset.mem_filter.mp hp).1
+      have hnot : ¬ p ≤ 2^24 := (Finset.mem_filter.mp hp).2
+      have h1 : m.factorization p + 1 ≤ 2^(m.factorization p) := succ_le_two_pow _
+      have h2 : (m.factorization p + 1)^24 ≤ (2^(m.factorization p))^24 :=
+        pow_le_pow_left₀ (by positivity) h1 24
+      have h4 : (2^(m.factorization p))^24 ≤ p^(m.factorization p) := by
+        rw [show (2^(m.factorization p))^24 = (2^24)^(m.factorization p) by
+          rw [← pow_mul, mul_comm, pow_mul]]
+        exact pow_le_pow_left₀ (by positivity : 0 ≤ (2 : ℕ)^24)
+          (Nat.le_of_lt (not_le.mp hnot)) _
+      exact le_trans h2 h4
+    have hprod : (∏ p ∈ small, 2^130 * p^(m.factorization p)) * (∏ p ∈ large, p^(m.factorization p))
+        = 2^(130 * small.card) * m := by
+      dsimp [small, large]
+      calc (∏ p ∈ m.primeFactors.filter (fun p => p ≤ 2^24), 2^130 * p^(m.factorization p))
+          * (∏ p ∈ m.primeFactors.filter (fun p => ¬ p ≤ 2^24), p^(m.factorization p))
+        = (2^130) ^ (m.primeFactors.filter (fun p => p ≤ 2^24)).card *
+            ((∏ p ∈ m.primeFactors.filter (fun p => p ≤ 2^24), p^(m.factorization p)) *
+              (∏ p ∈ m.primeFactors.filter (fun p => ¬ p ≤ 2^24), p^(m.factorization p))) := by
+            rw [Finset.prod_mul_distrib, Finset.prod_const]
+            ac_rfl
+        _ = 2^(130 * (m.primeFactors.filter (fun p => p ≤ 2^24)).card) *
+            (∏ p ∈ m.primeFactors, p^(m.factorization p)) := by
+            rw [← pow_mul]
+            rw [Finset.prod_filter_mul_prod_filter_not m.primeFactors (fun p => p ≤ 2^24)
+              (fun p => p^(m.factorization p))]
+        _ = 2^(130 * small.card) * m := by
+            rw [show (∏ p ∈ m.primeFactors, p^(m.factorization p)) = m by
+              simpa [Nat.support_factorization] using Nat.prod_factorization_pow_eq_self hm]
+    have hcard_le : small.card ≤ 2^24 + 1 := by
+      have hsub : small ⊆ Finset.range (2^24 + 1) := by
+        intro p hp
+        have hple : p ≤ 2^24 := (Finset.mem_filter.mp hp).2
+        simp only [Finset.mem_range]
+        omega
+      exact le_trans (Finset.card_le_card hsub) (by simp)
+    have hpow_le : 2 ^ (130 * small.card) ≤ (2 ^ 130) ^ (2 ^ 24 + 1) := by
+      calc 2 ^ (130 * small.card) = (2 ^ 130) ^ small.card := by rw [pow_mul]
+        _ ≤ (2 ^ 130) ^ (2 ^ 24 + 1) := by
+              exact pow_le_pow_right₀ (Nat.one_le_pow 130 2 (by norm_num : (0 : ℕ) < 2)) hcard_le
+    calc (∏ p ∈ small, (m.factorization p + 1)^24) * (∏ p ∈ large, (m.factorization p + 1)^24)
+        ≤ (∏ p ∈ small, 2^130 * p^(m.factorization p)) * (∏ p ∈ large, p^(m.factorization p)) :=
+          mul_le_mul hsmall hlarge (Nat.zero_le _) (Nat.zero_le _)
+      _ = 2^(130 * small.card) * m := hprod
+      _ ≤ (2^130)^(2^24 + 1) * m := Nat.mul_le_mul_right m hpow_le
 
 /-- `exp 1 < 3`. -/
 private lemma exp_one_lt_three : Real.exp 1 < 3 :=

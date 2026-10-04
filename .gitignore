@@ -11,3 +11,7 @@ build/
 *.trace
 scratch*.lean
 fix_*.py
+
+# External review/download materials (not part of the formalization)
+other_PR_check/
+Reference_Papers/
